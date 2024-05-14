@@ -1,0 +1,17 @@
+{
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/yarn.lock": true,
+    "**/.pnp.*": true,
+    ".git/**/*": true,
+    "**/node_modules": true,
+    "**/.gitignore": true
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "eslint.rules.customizations": [
+    {
+      "rule": "*",
+      "severity": "warn"
+    },
+  ],
+}

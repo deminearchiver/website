@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "@material-symbols/unplugin-icons",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "packageManager": "yarn@4.2.2",
+  "devDependencies": {
+    "astro": "^4.8.3",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}

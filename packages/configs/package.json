@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "@deminearchiver/configs",
+  "exports": {
+    "./typescript/*": "./typescript/*.json"
+  },
+  "packageManager": "yarn@4.2.2",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
