@@ -1,0 +1,118 @@
+---
+title: Test Post
+author: deminearchiver
+createdAt: 2024-05-15
+---
+
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+> Blockquote
+
+- Sint exercitation labore anim nisi velit in dolore esse irure proident. Id laborum eu minim nisi ut amet nulla sunt. Laboris exercitation cillum excepteur mollit. Enim est excepteur fugiat consequat ea.
+- 2
+- 3
+
+Exercitation [veniam](/) irure commodo Lorem sit deserunt sint non amet non reprehenderit cillum. Consectetur dolore fugiat nulla laboris sunt cillum ipsum anim adipisicing tempor ullamco et. Exercitation sit non ea voluptate do amet laboris. Laborum culpa do tempor nisi dolor tempor.
+Do ex qui nisi consequat et pariatur. Irure adipisicing aute aliquip voluptate id deserunt. Culpa anim dolore veniam cillum nulla sint duis sit culpa in.
+Voluptate et in aliqua proident amet et est reprehenderit. Culpa eu elit officia esse id quis. Anim ullamco Lorem aliquip ullamco ipsum ipsum. Non non veniam proident exercitation commodo occaecat.
+In pariatur proident consequat et nostrud magna nulla aute Lorem laborum quis ut. Exercitation amet reprehenderit cillum aliquip laborum Lorem elit sint veniam. Consectetur elit officia sunt veniam. Magna amet Lorem nulla sint nulla deserunt Lorem in minim dolor sint pariatur do.
+Irure enim esse aute officia dolore ipsum est sit non duis voluptate velit. Ex elit laboris eiusmod dolore eu nisi proident enim nisi. Lorem do irure est commodo. Culpa non adipisicing adipisicing occaecat pariatur eu veniam aliquip. Dolore officia labore ullamco cupidatat sunt.
+
+```astro title="Button.astro
+---
+import type { JSX } from "astro/jsx-runtime";
+import clsx from "clsx/lite";
+
+type ButtonVariant = "elevated" | "filled" | "tonal" | "outlined" | "text";
+
+interface Props extends JSX.ButtonHTMLAttributes {
+  variant: ButtonVariant;
+}
+
+const {
+  variant,
+  class: customClass,
+  ...rest
+} = Astro.props;
+
+const hasLeading = Astro.slots.has("leading");
+const hasTrailing = Astro.slots.has("trailing");
+
+const className = clsx(
+  "button", variant,
+  hasLeading && "with-leading",
+  hasTrailing && "with-trailing",
+  customClass,
+);
+---
+
+<button
+  class={className}
+  {...rest}>
+    <slot name="leading" />
+    <slot />
+    <slot name="trailing" />
+<button>
+
+<style>
+  @keyframes focus-grow {
+    from {
+      outline-width: 0px;
+    }
+    to {
+      outline-width: 8px;
+    }
+  }
+  @keyframes focus-shrink {
+    from {
+      outline-width: 8px;
+    }
+  }
+
+  .button {
+    position: relative;
+    height: 40px;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 20px;
+
+    &.with-leading {
+      padding-left: 16px;
+    }
+    &.with-trailing {
+      padding-right: 16px;
+    }
+
+    /* Focus ring */
+    &:focus-visible::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      outline: 3px solid var(--theme-color-secondary);
+      z-index: 1;
+
+      animation-name: focus-grow, focus-shrink;
+      animation-delay: 0ms, 150ms;
+      animation-duration: 150ms, 450ms;
+      animation-timing-function: cubic-bezier(0, 0.2, 0, 1);
+    }
+
+    /* Elevated */
+    &.elevated {
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+    }
+  }
+</style>
+```

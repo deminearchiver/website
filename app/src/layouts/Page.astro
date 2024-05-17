@@ -1,0 +1,22 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import { Head } from "../components/head";
+
+import "../styles/theme/theme.css";
+import "../styles/reset.css";
+import "normalize.css";
+
+import "@fontsource-variable/roboto-flex/grad.css";
+---
+
+<html lang="en">
+  <head>
+    <Head
+      title="deminearchiver"
+      description="" />
+    <ViewTransitions />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,119 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+import clsx from "clsx/lite";
+import { nanoid } from "nanoid/non-secure";
+
+interface Props extends JSX.AnchorHTMLAttributes {
+  variant?: "regular" | "filled" | "tonal" | "outlined";
+}
+
+const {
+  variant = "regular",
+  class: customClass,
+  ...rest
+} = Astro.props;
+
+const className = clsx(
+  "icon-button", variant,
+  customClass,
+);
+---
+<a
+  class={className}
+  {...rest}>
+    <slot />
+</a>
+
+<style>
+  .icon-button {
+    -webkit-tap-highlight-color: transparent;
+
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px;
+
+    border-radius: 9999px;
+
+    background-color: transparent;
+    color: transparent;
+
+    transition: background-color 15ms linear;
+
+    &.regular {
+      color: var(--color-on-surface-variant);
+      @media (hover: hover) {
+        &:hover {
+          background-color: color-mix(in srgb, transparent, var(--color-on-surface-variant) 8%);
+        }
+      }
+      &:active {
+        background-color: color-mix(in srgb, transparent, var(--color-on-surface-variant) 10%);
+      }
+    }
+    &.filled {
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 8%);
+        }
+      }
+      &:active {
+        background-color: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 10%);
+      }
+    }
+    &.tonal {
+      background-color: var(--color-secondary-container);
+      color: var(--color-on-secondary-container);
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 8%);
+        }
+      }
+      &:active {
+        background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 10%);
+      }
+    }
+    &.outlined {
+      color: var(--color-on-surface-variant);
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: color-mix(in srgb, transparent, var(--color-on-surface-variant) 8%);
+        }
+      }
+
+      &:active {
+        background-color: color-mix(in srgb, transparent, var(--color-on-surface-variant) 10%);
+      }
+
+      &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border: 1px solid var(--color-outline);
+        border-radius: inherit;
+        box-sizing: border-box;
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: max(48px, 100%);
+      height: max(48px, 100%);
+    }
+  }
+</style>

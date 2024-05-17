@@ -1,0 +1,82 @@
+---
+import { IconButton } from "../icon-button";
+import { ThemeSelect } from "../theme";
+
+import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
+
+interface Props {
+
+}
+---
+
+<header id="header">
+  <div class=""></div>
+  <nav>
+    <ul>
+      <li>
+        <a>Blog</a>
+      </li>
+      <li>
+        <a>Blog</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="options">
+    <IconButton
+      variant="tonal"
+      href="/rss.xml">
+        <RssFeedIcon />
+    </IconButton>
+    <ThemeSelect client:load />
+    <!-- <ThemeSelect client:only="solid-js" /> -->
+  </div>
+</header>
+
+<script>
+  const normalize = (value: number, min: number, max: number) => (value - min) / (max - min);
+  const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+  const header = document.getElementById("header")!;
+
+  let offset: number = -1;
+  const onScroll = () => {
+    const rect = header.getBoundingClientRect();
+    if(offset < 0) offset = rect.top;
+    const scroll = rect.top === 0 ? window.scrollY - offset : 0;
+    const value = clamp(normalize(scroll, 0, rect.height), 0, 1);
+    header.style.setProperty("--header-scrolled-under-mix", `${value * 100}%`);
+  }
+  onScroll();
+  window.addEventListener("scroll", onScroll);
+</script>
+
+<style>
+  #header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+
+    background-color: color-mix(in srgb, var(--color-surface), var(--color-surface-container) var(--header-scrolled-under-mix, 0%));
+  }
+
+  nav {
+
+  }
+
+  .options {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+</style>

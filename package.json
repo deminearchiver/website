@@ -5,7 +5,8 @@
   "workspaces": [
     "app",
     "packages/*",
-    "packages/material/*"
+    "packages/material/*",
+    "packages/material/material-color-utilities/typescript"
   ],
   "scripts": {
     ":": "yarn workspace",
@@ -19,6 +20,7 @@
     "eslint": "^9.2.0",
     "eslint-plugin-astro": "^1.2.0",
     "eslint-plugin-solid": "^0.14.0",
+    "fontaine": "^0.5.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha"
   }
