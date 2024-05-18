@@ -48,6 +48,7 @@
   - [ ] Add Changelog
 - Long-standing goals
   - [ ] Full-text search via [**pagefind**](https://pagefind.app/)
+  - [ ] RSS feeds
   - [ ] Multi-language support
 
 See the [open issues](https://github.com/deminearchiver/website/issues) for a full list of proposed features (and known issues).

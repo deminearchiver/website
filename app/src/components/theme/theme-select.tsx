@@ -11,7 +11,7 @@ import { Switch as Match, Match as When } from "solid-js";
 
 import { Switch } from "@material/solid/components/switch";
 import { isServer, type Falsy, type FalsyValue } from "@solid-primitives/utils";
-import { themeSelectLabelStyle, themeSelectStyle, themeSelectSubtitleStyle } from "./theme-select.css";
+import { themeSelectControlStyle, themeSelectLabelStyle, themeSelectStyle, themeSelectSubtitleStyle } from "./theme-select.css";
 import { Splash } from "@material/solid/components/splash";
 
 import { createBreakpoint } from "@material/solid/utils";
@@ -20,10 +20,6 @@ type Theme = "light" | "dark";
 
 const STORAGE_KEY = "theme_auto";
 
-const ICONS: Record<Theme, Component<ComponentProps<"svg">>> = {
-  light: LightModeIcon,
-  dark: DarkModeIcon,
-};
 
 const themeFromPrefersDark = (prefersDark: boolean, inverse: boolean = false) => {
   return inverse
@@ -32,7 +28,11 @@ const themeFromPrefersDark = (prefersDark: boolean, inverse: boolean = false) =>
 }
 
 
-export const ThemeSelect: Component = () => {
+export interface ThemeSelectProps {
+  type?: "small" | "medium" | "large";
+}
+
+export const ThemeSelect: Component<ThemeSelectProps> = (props) => {
   let ref!: HTMLElement;
 
   const [useAuto, setUseAuto] = makePersisted(
@@ -52,8 +52,17 @@ export const ThemeSelect: Component = () => {
     document.documentElement.dataset.theme = theme();
   });
 
+  const showLarge = createMemo(() => {
+    return (props.type && props.type !== "small") || breakpoint.gt("compact");
+  });
+  const showWide = () =>
+    (!props.type && breakpoint.gte("large")) || (props.type === "large");
+
   const Control: Component = () => (
     <Switch
+      class={themeSelectControlStyle({
+        contained: showLarge(),
+      })}
       selected={useAuto()}
       onChanged={value => void setUseAuto(value)}
       title="Theme">
@@ -63,21 +72,23 @@ export const ThemeSelect: Component = () => {
 
   const label = () => `${useAuto() ? "Auto" : "Manual"} (${theme()})`;
 
+
+
   return (
     <>
       <Show
-        when={breakpoint.gt("compact")}
+        when={showLarge()}
         fallback={<Control />}>
           <label
             ref={ref as HTMLLabelElement}
             class={themeSelectStyle({
-              wide: breakpoint.gte("large"),
+              wide: showWide(),
             })}
             title={label()}>
               <Splash for={ref} />
               <div class={themeSelectLabelStyle}>
                 <p>Theme</p>
-                <Show when={breakpoint.gte("large")}>
+                <Show when={showWide()}>
                   <p class={themeSelectSubtitleStyle}>{label()}</p>
                 </Show>
               </div>

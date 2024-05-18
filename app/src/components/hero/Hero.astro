@@ -4,10 +4,67 @@ interface Props {
 }
 ---
 
-<div>
-
+<div class="hero">
+  <section class="content">
+    <h1 set:text="deminearchiver." />
+  </section>
 </div>
 
 <style>
+  .hero {
+    min-height: 460px;
+    max-height: 960px;
+    height: 70vh;
+    padding: 32px 40px
+  }
 
+  .content {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @property --hero-gradient-1 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #668FFF;
+  }
+  @property --hero-gradient-2 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #FF0027;
+  }
+
+  h1 {
+    position: relative;
+
+    /* font-family: var(--text-display-large-family); */
+    font-family: "Fira Code Variable", monospace;
+    font-variant-ligatures: contextual;
+    font-size: var(--text-display-medium-size);
+    font-weight: 400;
+    line-height: var(--text-display-medium-line-height);
+    letter-spacing: 0;
+
+    width: fit-content;
+
+
+    color: transparent;
+
+    background-image: linear-gradient(to right, var(--hero-gradient-1), var(--hero-gradient-2));
+    background-clip: text;
+
+
+    transition-property: font-weight, --hero-gradient-1, --hero-gradient-2;
+    transition-duration: 300ms;
+    transition-timing-function: var(--easing-standard);
+
+    &:hover {
+      font-weight: 700;
+      --hero-gradient-1: blue;
+      --hero-gradient-2: red;
+    }
+  }
 </style>

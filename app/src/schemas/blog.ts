@@ -1,19 +1,41 @@
 import { defineCollection, z, type SchemaContext } from "astro:content";
 import { imageSchema } from "./utils";
 
-export const blogCollection = () =>
-  defineCollection({
-    type: "content",
-    schema: blogSchema,
+import deminearchiverAvatar from "../assets/images/avatars/deminearchiver.png";
+
+const authorSchema = (context: SchemaContext) =>
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    avatar: imageSchema(context).optional(),
   });
+
+type Author = z.infer<ReturnType<typeof authorSchema>>
+const AUTHORS = {
+  deminearchiver: {
+    id: "deminearchiver",
+    name: "deminearchiver"
+  },
+} satisfies Record<string, Author>;
+type AuthorsKey = keyof typeof AUTHORS;
+const authorsKeys = Object.keys(AUTHORS) as [AuthorsKey, ...AuthorsKey[]];
 
 export const blogSchema = (context: SchemaContext) => {
   const { image } = context;
   return z.object({
     title: z.string(),
-    author: z.string(),
-    // image: imageSchema(context),
+    authors: z.array(authorSchema(context)).min(1),
+    // author:
+    //   z.enum(authorsKeys)
+    //     .transform(author => AUTHORS[author])
+    //     .pipe(authorSchema(context)),
     createdAt: z.date(),
-    editedAt: z.coerce.date().optional(),
+    editedAt: z.date().optional(),
   });
 }
+
+export const blogCollection = () =>
+  defineCollection({
+    type: "content",
+    schema: blogSchema,
+  });

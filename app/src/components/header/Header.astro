@@ -2,49 +2,119 @@
 import { IconButton } from "../icon-button";
 import { ThemeSelect } from "../theme";
 
+import NavLink from "./NavLink.astro";
+
+import MenuIcon from "~icons/material-symbols-rounded/menu:outlined";
+import HomeIcon from "~icons/material-symbols-rounded/home:outlined";
+import FeedIcon from "~icons/material-symbols-rounded/feed:outlined";
+import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
+import SearchIcon from "~icons/material-symbols-rounded/search:outlined";
 import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 
-interface Props {
+import { Logo } from "../logo";
+import { NavigationDrawer } from "../drawer";
 
-}
+interface Props {}
+
+
 ---
 
 <header id="header">
-  <div class=""></div>
+  <div class="leading">
+    <NavigationDrawer
+      client:load
+      class="drawer"
+      url={Astro.url}
+      destinations={[
+        {
+          href: "/",
+          icon: HomeIcon,
+          label: "Home",
+          selected: Astro.url.pathname === "/",
+        },
+        {
+          href: "/blog",
+          icon: FeedIcon,
+          label: "Blog",
+          selected: Astro.url.pathname.startsWith("/blog"),
+        },
+        {
+          href: "/about",
+          icon: InfoIcon,
+          label: "About",
+          selected: Astro.url.pathname === "/about",
+        },
+      ]}>
+        <IconButton>
+          <MenuIcon />
+        </IconButton>
+      </NavigationDrawer>
+    <Logo class="logo" />
+  </div>
   <nav>
     <ul>
       <li>
-        <a>Blog</a>
+        <NavLink href="/">
+          <HomeIcon />
+          <span>Home</span>
+        </NavLink>
       </li>
       <li>
-        <a>Blog</a>
+        <NavLink href="/blog" selected={url => url.pathname.startsWith("/blog")}>
+          <FeedIcon />
+          <span>Blog</span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink href="/about">
+          <InfoIcon />
+          <span>About</span>
+        </NavLink>
       </li>
     </ul>
   </nav>
   <div class="options">
     <IconButton
+      class="option search"
+      variant="tonal"
+      href="/search">
+        <SearchIcon />
+    </IconButton>
+    <IconButton
+      class="option rss"
       variant="tonal"
       href="/rss.xml">
         <RssFeedIcon />
     </IconButton>
-    <ThemeSelect client:load />
-    <!-- <ThemeSelect client:only="solid-js" /> -->
+    <!-- <ThemeSelect client:load /> -->
+    <ThemeSelect client:only="solid-js" transition:persist />
   </div>
 </header>
 
 <script>
-  const normalize = (value: number, min: number, max: number) => (value - min) / (max - min);
-  const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+  // const normalize = (value: number, min: number, max: number) => (value - min) / (max - min);
+  // const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
+  // const header = document.getElementById("header")!;
+
+  // let offset: number = -1;
+  // const onScroll = () => {
+  //   const rect = header.getBoundingClientRect();
+  //   if(offset < 0) offset = rect.top;
+  //   const scroll = rect.top === 0 ? window.scrollY - offset : 0;
+  //   const value = clamp(normalize(scroll, 0, rect.height), 0, 1);
+  //   header.style.setProperty("--header-scrolled-under-mix", `${value * 100}%`);
+  // }
+  // onScroll();
+  // window.addEventListener("scroll", onScroll);
+</script>
+
+<script>
   const header = document.getElementById("header")!;
-
-  let offset: number = -1;
   const onScroll = () => {
-    const rect = header.getBoundingClientRect();
-    if(offset < 0) offset = rect.top;
-    const scroll = rect.top === 0 ? window.scrollY - offset : 0;
-    const value = clamp(normalize(scroll, 0, rect.height), 0, 1);
-    header.style.setProperty("--header-scrolled-under-mix", `${value * 100}%`);
+    header.style.backgroundColor = window.scrollY > 0
+        ? "var(--color-surface-container)"
+        : "var(--color-surface)";
   }
   onScroll();
   window.addEventListener("scroll", onScroll);
@@ -62,13 +132,41 @@ interface Props {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
+    padding-inline-start: 24px;
 
-    background-color: color-mix(in srgb, var(--color-surface), var(--color-surface-container) var(--header-scrolled-under-mix, 0%));
+    /* background-color: color-mix(in srgb, var(--color-surface), var(--color-surface-container) var(--header-scrolled-under-mix, 0%)); */
+    background-color: var(--color-surface);
+    transition: background-color 300ms var(--easing-standard);
+
+    z-index: 1;
   }
 
-  nav {
+  .leading {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
 
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+
+  nav, li {
+    display: contents;
+  }
+
+  nav > ul {
+    height: 100%;
+
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
   }
 
   .options {
@@ -78,5 +176,21 @@ interface Props {
     align-items: center;
     justify-content: center;
     gap: 16px;
+  }
+
+  @media only screen and (min-width: 840px) {
+    .drawer {
+      display: none;
+    }
+  }
+  @media only screen and not (min-width: 840px) {
+    nav {
+      display: none;
+    }
+  }
+  @media only screen and not (max-width: 600px) {
+    .rss {
+      display: none;
+    }
   }
 </style>

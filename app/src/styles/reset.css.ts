@@ -42,9 +42,16 @@ globalStyle(
   {
     backgroundColor: THEME.color.surface,
     color: THEME.color.onSurface,
+    overflowX: "clip",
     minHeight: "100dvh",
   }
-)
+);
+globalStyle(
+  `body[data-dialog-open]`,
+  {
+    overflow: "hidden",
+  }
+);
 
 
 

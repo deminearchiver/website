@@ -1,0 +1,19 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+
+type Props = Omit<JSX.ScriptHTMLAttributes, "type" | "is:raw">;
+
+---
+
+<script
+  is:inline
+  type="module"
+  {...Astro.props}>
+    document.addEventListener(
+      "astro:page-load",
+      async () => {
+        await import("/pagefind/pagefind-highlight.js");
+        new PagefindHighlight({ highlightParam: "highlight" });
+      }
+    );
+</script>

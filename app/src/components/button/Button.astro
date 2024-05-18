@@ -1,0 +1,237 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+import clsx from "clsx/lite";
+
+
+type BaseProps = {
+  variant: "elevated" | "filled" | "tonal" | "outlined" | "text";
+  acrylic?: boolean;
+};
+
+type Props = BaseProps & (JSX.ButtonHTMLAttributes | JSX.AnchorHTMLAttributes);
+
+const {
+  variant,
+  acrylic = false,
+  class: customClass,
+  ...props
+} = Astro.props;
+
+const hasLeading = Astro.slots.has("leading");
+const hasTrailing = Astro.slots.has("trailing");
+
+const className = clsx(
+  "button", variant, acrylic && "acrylic",
+  hasLeading && "with-leading",
+  hasTrailing && "with-trailing",
+  customClass,
+);
+---
+
+{
+  "href" in props
+  ? <a
+      {...props}
+      class={className}>
+        <slot name="leading" />
+        <slot />
+        <slot name="trailing" />
+    </a>
+  : <button
+      {...props as JSX.ButtonHTMLAttributes}
+      class={className}>
+        <slot name="leading" />
+        <slot />
+        <slot name="trailing" />
+    </button>
+}
+
+<style>
+  @keyframes focus-grow {
+    from {
+      outline-width: 0px;
+    }
+    to {
+      outline-width: 8px;
+    }
+  }
+  @keyframes focus-shrink {
+    from {
+      outline-width: 8px;
+    }
+  }
+
+  .button {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    height: 40px;
+    border-radius: 9999px;
+
+    padding: 0 24px;
+
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+
+    outline: none;
+
+    font: var(--theme-text-label-large-font);
+    letter-spacing: var(--theme-text-label-large-letter-spacing);
+
+    &.with-leading {
+      padding-left: 16px;
+    }
+    &.with-trailing {
+      padding-right: 16px;
+    }
+
+    &:focus-visible::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      outline: 3px solid var(--theme-color-secondary);
+      z-index: 1;
+
+      animation-name: focus-grow, focus-shrink;
+      animation-delay: 0ms, 150ms;
+      animation-duration: 150ms, 450ms;
+      animation-timing-function: cubic-bezier(0, 0.2, 0, 1);
+    }
+  }
+
+  .button.acrylic {
+    backdrop-filter: blur(8px);
+  }
+  .elevated {
+    background-color: var(--theme-color-surface-container-low);
+    color: var(--theme-color-primary);
+
+    /* box-shadow: 0px 1px 2px 0px black; */
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-surface-container-low), var(--theme-color-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-surface-container-low), var(--theme-color-primary) 10%);
+    }
+  }
+  .elevated.acrylic {
+    background-color: color-mix(in srgb, var(--theme-color-surface-container-low) 60%, transparent);
+    color: var(--elevatedText);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-surface-container-low) 60%, var(--theme-color-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-surface-container-low) 60%, var(--theme-color-primary) 10%);
+    }
+  }
+  .filled {
+    background-color: var(--theme-color-primary);
+    color: var(--theme-color-on-primary);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-primary), var(--theme-color-on-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-primary), var(--theme-color-on-primary) 10%);
+    }
+  }
+  .tonal {
+    background-color: var(--theme-color-secondary-container);
+    color: var(--theme-color-on-secondary-container);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-secondary-container), var(--theme-color-on-secondary-container) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-secondary-container), var(--theme-color-on-secondary-container) 10%);
+    }
+  }
+  .tonal.acrylic {
+    background-color: color-mix(in srgb, var(--theme-color-secondary-container) 62%, transparent);
+    color: var(--theme-color-on-secondary-container);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-secondary-container) 62%, var(--theme-color-on-secondary-container) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-secondary-container) 62%, var(--theme-color-on-secondary-container) 10%);
+    }
+  }
+  .outlined {
+    background-color: transparent;
+    color: var(--theme-color-primary);
+    border: 1px solid var(--theme-color-outline);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, transparent, var(--theme-color-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, transparent, var(--theme-color-primary) 10%);
+    }
+  }
+  .outlined.acrylic {
+    background-color: color-mix(in srgb, var(--theme-color-surface) 32%, transparent);
+    color: var(--theme-color-primary);
+    border: 1px solid var(--theme-color-outline);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-surface) 32%, var(--theme-color-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-surface) 32%, var(--theme-color-primary) 10%);
+    }
+  }
+  .text {
+    background-color: transparent;
+    color: var(--theme-color-primary);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, transparent, var(--theme-color-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, transparent, var(--theme-color-primary) 10%);
+    }
+  }
+  .text.acrylic {
+    background-color: color-mix(in srgb, var(--theme-color-surface) 24%, transparent);
+    color: var(--theme-color-primary);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--theme-color-surface) 24%, var(--theme-color-primary) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--theme-color-surface) 24%, var(--theme-color-primary) 10%);
+    }
+  }
+</style>

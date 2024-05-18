@@ -629,11 +629,13 @@ __metadata:
     "@material-symbols/unplugin-icons": "workspace:*"
     "@material/material-color-utilities": "workspace:*"
     "@material/solid": "workspace:*"
+    "@pagefind/astro": "workspace:*"
     "@playform/compress": "npm:^0.0.4"
     "@solid-primitives/bounds": "npm:^0.0.121"
     "@solid-primitives/event-listener": "npm:^2.3.3"
     "@solid-primitives/media": "npm:^2.2.9"
     "@solid-primitives/pagination": "npm:^0.3.0"
+    "@solid-primitives/presence": "npm:^0.0.6"
     "@solid-primitives/refs": "npm:^1.0.8"
     "@solid-primitives/scheduled": "npm:^1.4.3"
     "@solid-primitives/scroll": "npm:^2.0.23"
@@ -644,7 +646,7 @@ __metadata:
     "@vanilla-extract/recipes": "npm:^0.5.2"
     "@vanilla-extract/sprinkles": "npm:^1.6.1"
     "@vanilla-extract/vite-plugin": "npm:^4.0.9"
-    astro: "npm:^4.8.3"
+    astro: "npm:^4.8.6"
     astro-expressive-code: "npm:^0.35.3"
     astro-meta-tags: "npm:^0.3.0"
     clsx: "npm:^2.1.1"
@@ -1884,9 +1886,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@material-symbols/unplugin-icons@workspace:packages/material-symbols"
   dependencies:
-    astro: "npm:^4.8.3"
+    astro: "npm:^4.8.6"
     typescript: "npm:^5.4.5"
     zod: "npm:^3.23.8"
+  languageName: unknown
+  linkType: soft
+
+"@material/astro@workspace:packages/material/astro":
+  version: 0.0.0-use.local
+  resolution: "@material/astro@workspace:packages/material/astro"
   languageName: unknown
   linkType: soft
 
@@ -1897,7 +1905,7 @@ __metadata:
     "@types/jasmine": "npm:^3.10.3"
     "@types/node": "npm:^18.7.17"
     jasmine: "npm:^4.0.2"
-    typescript: "npm:^4.5.5"
+    typescript: "npm:^5.4.5"
     wireit: "npm:^0.9.5"
   languageName: unknown
   linkType: soft
@@ -2004,6 +2012,57 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagefind/astro@workspace:*, @pagefind/astro@workspace:packages/astro/pagefind":
+  version: 0.0.0-use.local
+  resolution: "@pagefind/astro@workspace:packages/astro/pagefind"
+  dependencies:
+    "@types/node": "npm:^20.12.12"
+    astro: "npm:^4.8.6"
+    astro-integration-kit: "npm:^0.13.2"
+    nanoid: "npm:^5.0.7"
+    pagefind: "npm:^1.1.0"
+    pathe: "npm:^1.1.2"
+    sirv: "npm:^2.0.4"
+    solid-js: "npm:^1.8.17"
+    typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"@pagefind/darwin-arm64@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@pagefind/darwin-arm64@npm:1.1.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@pagefind/darwin-x64@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@pagefind/darwin-x64@npm:1.1.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@pagefind/linux-arm64@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@pagefind/linux-arm64@npm:1.1.0"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@pagefind/linux-x64@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@pagefind/linux-x64@npm:1.1.0"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@pagefind/windows-x64@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@pagefind/windows-x64@npm:1.1.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -2045,6 +2104,13 @@ __metadata:
     deepmerge-ts: "npm:5.1.0"
     fast-glob: "npm:3.3.2"
   checksum: 10c0/6a7cf8fbc9c6cc4ef35df6b2266eecb1a49b91aea5130e935c82399af8048783629c3435526b3308e44de11b3be1a54a3d1d7f2f6ac0f0381f51ae565d321970
+  languageName: node
+  linkType: hard
+
+"@polka/url@npm:^1.0.0-next.24":
+  version: 1.0.0-next.25
+  resolution: "@polka/url@npm:1.0.0-next.25"
+  checksum: 10c0/ef61f0a0fe94bb6e1143fc5b9d5a12e6ca9dbd2c57843ebf81db432c21b9f1005c09e8a1ef8b6d5ddfa42146ca65b640feb2d353bd0d3546da46ba59e48a5349
   languageName: node
   linkType: hard
 
@@ -2238,6 +2304,17 @@ __metadata:
   peerDependencies:
     solid-js: ^1.6.12
   checksum: 10c0/b4a3bc56769b75dfbb52122adba8ebbee2c208b020f92187bbc85d88bc46b50086ff0758ab4ccd8a2cee9441db578c2ef5f71773b4ef104337bb709bf09e02eb
+  languageName: node
+  linkType: hard
+
+"@solid-primitives/presence@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@solid-primitives/presence@npm:0.0.6"
+  dependencies:
+    "@solid-primitives/utils": "npm:^6.2.3"
+  peerDependencies:
+    solid-js: ^1.6.12
+  checksum: 10c0/f3cc4115543ef078a4415fa1180496ae801066dadb52697be1a358bc04dc67fd1a3a17799f841c3b49a0e1ccbcde3f531f2c29931f2e65fc4dba6f40aa346a02
   languageName: node
   linkType: hard
 
@@ -2589,7 +2666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^20.12.12":
   version: 20.12.12
   resolution: "@types/node@npm:20.12.12"
   dependencies:
@@ -3517,6 +3594,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ast-types@npm:^0.16.1":
+  version: 0.16.1
+  resolution: "ast-types@npm:0.16.1"
+  dependencies:
+    tslib: "npm:^2.0.1"
+  checksum: 10c0/abcc49e42eb921a7ebc013d5bec1154651fb6dbc3f497541d488859e681256901b2990b954d530ba0da4d0851271d484f7057d5eff5e07cb73e8b10909f711bf
+  languageName: node
+  linkType: hard
+
 "astring@npm:^1.8.0":
   version: 1.8.6
   resolution: "astring@npm:1.8.6"
@@ -3555,6 +3641,22 @@ __metadata:
   peerDependencies:
     astro: ^4.0.0-beta || ^3.3.0
   checksum: 10c0/de278f6860524cd27a04c5c4a3db7ad00f2a5ff7d21008d21d8bce64c2e1fed4b4d4d04e381d26aaa228599ea0e2343f1034de5ff5aae7a3b112e566baed98ac
+  languageName: node
+  linkType: hard
+
+"astro-integration-kit@npm:^0.13.2":
+  version: 0.13.2
+  resolution: "astro-integration-kit@npm:0.13.2"
+  dependencies:
+    pathe: "npm:^1.1.2"
+    recast: "npm:^0.23.5"
+  peerDependencies:
+    "@astrojs/db": ^0.9 || ^0.10 || ^0.11
+    astro: ^4.4.1
+  peerDependenciesMeta:
+    "@astrojs/db":
+      optional: true
+  checksum: 10c0/534d78fbf4fc89e56148ff3d17e18446e99bf032658f9370865ef4363166be53f44bbfd3a4b722a2a2085788abcaaebead720a4ae5372d4bd60beac86bbc8bd0
   languageName: node
   linkType: hard
 
@@ -3644,9 +3746,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^4.8.3":
-  version: 4.8.3
-  resolution: "astro@npm:4.8.3"
+"astro@npm:^4.8.6":
+  version: 4.8.6
+  resolution: "astro@npm:4.8.6"
   dependencies:
     "@astrojs/compiler": "npm:^2.8.0"
     "@astrojs/internal-helpers": "npm:0.4.0"
@@ -3717,7 +3819,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/050fd8b57e9c32087b442cf81c4a0d91c8bfaae8a2602ac30922fd7beb7d650de7380dfe5c590cb429e954bc314782a0f781b17fb69d8b33020c0bd4d36b4179
+  checksum: 10c0/4d5db593524f305a178973fd2044604a08a45b07031bcbac9d1550a88ef363c7ff398e9f8c7cf0d1ed07dc783816f6add4c98e78b8c23bbaa510e157965b2241
   languageName: node
   linkType: hard
 
@@ -4584,6 +4686,7 @@ __metadata:
     typescript: "npm:^5.4.5"
     typescript-eslint: "npm:^8.0.0-alpha"
     vercel: "npm:^34.2.0"
+    wrangler: "npm:^3.57.0"
   languageName: unknown
   linkType: soft
 
@@ -5549,7 +5652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esprima@npm:^4.0.0":
+"esprima@npm:^4.0.0, esprima@npm:~4.0.0":
   version: 4.0.1
   resolution: "esprima@npm:4.0.1"
   bin:
@@ -8538,6 +8641,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^5.0.7":
+  version: 5.0.7
+  resolution: "nanoid@npm:5.0.7"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 10c0/a3fb1c157e3e35378f44e5a7130c70f80c9037f66c9a37285e5e3d8298e8405fcb2399baaa420980b0fe5fd9c2e4186a6a31c3526f21de03cf34c1b459871401
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -8912,6 +9024,32 @@ __metadata:
   version: 2.2.0
   resolution: "p-try@npm:2.2.0"
   checksum: 10c0/c36c19907734c904b16994e6535b02c36c2224d433e01a2f1ab777237f4d86e6289fd5fd464850491e940379d4606ed850c03e0f9ab600b0ebddb511312e177f
+  languageName: node
+  linkType: hard
+
+"pagefind@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "pagefind@npm:1.1.0"
+  dependencies:
+    "@pagefind/darwin-arm64": "npm:1.1.0"
+    "@pagefind/darwin-x64": "npm:1.1.0"
+    "@pagefind/linux-arm64": "npm:1.1.0"
+    "@pagefind/linux-x64": "npm:1.1.0"
+    "@pagefind/windows-x64": "npm:1.1.0"
+  dependenciesMeta:
+    "@pagefind/darwin-arm64":
+      optional: true
+    "@pagefind/darwin-x64":
+      optional: true
+    "@pagefind/linux-arm64":
+      optional: true
+    "@pagefind/linux-x64":
+      optional: true
+    "@pagefind/windows-x64":
+      optional: true
+  bin:
+    pagefind: lib/runner/bin.cjs
+  checksum: 10c0/fc8ddd8205664d81c8acbdfe1985197225f17e407165993bd6114ebbdf5fd3612b0c91c14914e36abe13f14f53f851a08759b884fca9722d075a247e610d4d80
   languageName: node
   linkType: hard
 
@@ -9368,6 +9506,19 @@ __metadata:
   dependencies:
     picomatch: "npm:^2.2.1"
   checksum: 10c0/6fa848cf63d1b82ab4e985f4cf72bd55b7dcfd8e0a376905804e48c3634b7e749170940ba77b32804d5fe93b3cc521aa95a8d7e7d725f830da6d93f3669ce66b
+  languageName: node
+  linkType: hard
+
+"recast@npm:^0.23.5":
+  version: 0.23.7
+  resolution: "recast@npm:0.23.7"
+  dependencies:
+    ast-types: "npm:^0.16.1"
+    esprima: "npm:~4.0.0"
+    source-map: "npm:~0.6.1"
+    tiny-invariant: "npm:^1.3.3"
+    tslib: "npm:^2.0.1"
+  checksum: 10c0/5a807e3596b699a8fd076c76aed1f258d35a471671f0354b783a318d110418493a5d93a7dea427ebc0ebbad80cf79c93a925d525ccaf35ca208311735461af5f
   languageName: node
   linkType: hard
 
@@ -10074,6 +10225,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sirv@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "sirv@npm:2.0.4"
+  dependencies:
+    "@polka/url": "npm:^1.0.0-next.24"
+    mrmime: "npm:^2.0.0"
+    totalist: "npm:^3.0.0"
+  checksum: 10c0/68f8ee857f6a9415e9c07a1f31c7c561df8d5f1b1ba79bee3de583fa37da8718def5309f6b1c6e2c3ef77de45d74f5e49efc7959214443aa92d42e9c99180a4e
+  languageName: node
+  linkType: hard
+
 "sisteransi@npm:^1.0.5":
   version: 1.0.5
   resolution: "sisteransi@npm:1.0.5"
@@ -10171,7 +10333,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:0.6.1, source-map@npm:^0.6.0, source-map@npm:^0.6.1, source-map@npm:~0.6.0":
+"source-map@npm:0.6.1, source-map@npm:^0.6.0, source-map@npm:^0.6.1, source-map@npm:~0.6.0, source-map@npm:~0.6.1":
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 10c0/ab55398007c5e5532957cb0beee2368529618ac0ab372d789806f5718123cc4367d57de3904b4e6a4170eb5a0b0f41373066d02ca0735a0c4d75c7d328d3e011
@@ -10549,6 +10711,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-invariant@npm:^1.3.3":
+  version: 1.3.3
+  resolution: "tiny-invariant@npm:1.3.3"
+  checksum: 10c0/65af4a07324b591a059b35269cd696aba21bef2107f29b9f5894d83cc143159a204b299553435b03874ebb5b94d019afa8b8eff241c8a4cfee95872c2e1c1c4a
+  languageName: node
+  linkType: hard
+
 "to-fast-properties@npm:^2.0.0":
   version: 2.0.0
   resolution: "to-fast-properties@npm:2.0.0"
@@ -10569,6 +10738,13 @@ __metadata:
   version: 1.0.0
   resolution: "toidentifier@npm:1.0.0"
   checksum: 10c0/27a37b8b21126e7216d40c02f410065b1de35b0f844368d0ccaabba7987595703006d45e5c094b086220cbbc5864d4b99766b460110e4bc15b9db574c5c58be2
+  languageName: node
+  linkType: hard
+
+"totalist@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "totalist@npm:3.0.1"
+  checksum: 10c0/4bb1fadb69c3edbef91c73ebef9d25b33bbf69afe1e37ce544d5f7d13854cda15e47132f3e0dc4cafe300ddb8578c77c50a65004d8b6e97e77934a69aa924863
   languageName: node
   linkType: hard
 
@@ -10680,7 +10856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3, tslib@npm:^2.2.0, tslib@npm:^2.4.0, tslib@npm:^2.6.2":
+"tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.2.0, tslib@npm:^2.4.0, tslib@npm:^2.6.2":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
@@ -10747,7 +10923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.5, typescript@npm:^4.5.5":
+"typescript@npm:4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -10767,7 +10943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.5.5#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"
   bin:

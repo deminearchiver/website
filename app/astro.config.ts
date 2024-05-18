@@ -12,6 +12,8 @@ import solid from "@astrojs/solid-js";
 import sitemap from "@astrojs/sitemap";
 import metaTags from "astro-meta-tags";
 
+import pagefind from "@pagefind/astro/integration";
+
 import { vanillaExtractPlugin as vanillaExtract} from "@vanilla-extract/vite-plugin";
 
 import unpluginIcons from "unplugin-icons/vite";
@@ -59,6 +61,7 @@ export default defineConfig({
     solid(),
     sitemap(),
     metaTags(),
+    pagefind(),
   ],
   vite: {
     plugins: [
@@ -67,10 +70,10 @@ export default defineConfig({
         compiler: "solid",
         customCollections: materialSymbols(),
       }),
-      fontaine.vite({
-        fallbacks: ["Arial"],
-        resolvePath: id => new URL(`./public${id}`, import.meta.url),
-      }),
+      // fontaine.vite({
+      //   fallbacks: ["Arial"],
+      //   resolvePath: id => new URL(`./public${id}`, import.meta.url),
+      // }),
     ],
     css: {
       transformer: "lightningcss",

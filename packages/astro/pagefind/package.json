@@ -1,5 +1,23 @@
 {
   "private": true,
   "name": "@pagefind/astro",
-  "packageManager": "yarn@4.2.2"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./integration": "./src/integration.ts"
+  },
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "astro": "^4.8.6",
+    "astro-integration-kit": "^0.13.2",
+    "nanoid": "^5.0.7",
+    "pagefind": "^1.1.0",
+    "pathe": "^1.1.2",
+    "sirv": "^2.0.4",
+    "solid-js": "^1.8.17"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.4.5"
+  }
 }

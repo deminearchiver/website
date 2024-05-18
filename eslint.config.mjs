@@ -17,6 +17,7 @@ export default typescript.config(
             "./tsconfig.eslint.json",
             "./app/tsconfig.json",
             "./packages/*/tsconfig.json",
+            "./packages/astro/*/tsconfig.json",
             "./packages/material/*/tsconfig.json",
           ],
           tsconfigRootDir: import.meta.dirname,

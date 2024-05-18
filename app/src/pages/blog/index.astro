@@ -1,0 +1,174 @@
+---
+import Page from "../../layouts/Page.astro";
+import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+const posts = await getCollection("blog");
+
+---
+
+<Page>
+  <Header />
+  <main>
+    <h1>Blog</h1>
+    <ul class="posts">
+      {
+        posts.map(({ slug, data: post }) => {
+          const postUrl = `/blog/${slug}/`;
+          const [author, ...authors] = post.authors;
+          return (
+            <li>
+              <div class="post">
+                <a
+                  class="card"
+                  href={postUrl}>
+                    <div class="cover"></div>
+                    <div class="content">
+                      <h3 class="title">{post.title}</h3>
+                    </div>
+                </a>
+                <div class="authors">
+                  <a class="author" href={`/blog/tags/author/${author.id}/`}>
+                      {
+                        author.avatar
+                          && <Image
+                                class="avatar"
+                                src={author.avatar.src}
+                                alt={author.avatar.alt ?? ""} />
+                      }
+                      {author.name}
+                  </a>
+                  {
+                    authors.length > 0
+                      && <a class="author more" href={postUrl}>+{authors.length} more</a>
+                  }
+                </div>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </main>
+  <Footer></Footer>
+</Page>
+
+<style>
+  main {
+    display: block;
+    height: 1000px;
+  }
+
+  .posts {
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+
+    width: 100%;
+    max-width: 840px;
+
+    margin: 0 auto;
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .card {
+    text-decoration: none;
+    color: var(--color-on-surface);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-outline-variant);
+    border-radius: 28px;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-secondary-container);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 10%);
+    }
+  }
+
+  .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: red;
+    border-radius: 28px;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .title {
+    font-family: var(--text-headline-small-family);
+    font-size: var(--text-headline-small-size);
+    /* font-weight: var(--text-headline-small-weight); */
+    font-weight: 500;
+    line-height: var(--text-headline-small-line-height);
+    letter-spacing: var(--text-headline-small-letter-spacing);
+  }
+
+  .authors {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .author {
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    font-family: var(--text-label-large-family);
+    font-size: var(--text-label-large-size);
+    font-weight: var(--text-label-large-weight);
+    line-height: var(--text-label-large-line-height);
+    letter-spacing: var(--text-label-large-letter-spacing);
+    text-decoration: none;
+    color: var(--color-on-surface-variant);
+
+    padding: 8px;
+    border-radius: 9999px;
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--color-surface), var(--color-on-surface-variant) 8%);
+        color: var(--color-primary);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--color-surface), var(--color-on-surface-variant) 10%);
+    }
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+</style>

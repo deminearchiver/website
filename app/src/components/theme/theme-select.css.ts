@@ -33,6 +33,7 @@ export const themeSelectStyle = recipe({
       false: {
         borderRadius: 9999,
         padding: "8px 16px",
+        marginInline: 16,
       },
       true: {
         justifyContent: "space-between",
@@ -43,6 +44,16 @@ export const themeSelectStyle = recipe({
       },
     },
   },
+});
+
+export const themeSelectControlStyle = recipe({
+  variants: {
+    contained: {
+      false: {
+        marginInlineEnd: 16,
+      },
+    }
+  }
 });
 
 export const themeSelectLabelStyle = style({
