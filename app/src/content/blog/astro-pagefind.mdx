@@ -1,0 +1,228 @@
+---
+title: Integrating Pagefind into Astro with SolidJS
+authors:
+  - id: deminearchiver
+    name: deminearchiver
+    avatar:
+      src: ../../assets/images/avatars/deminearchiver.png
+createdAt: 2024-05-18
+---
+
+import { Aside } from "../../components/aside";
+
+<Aside variant="caution">
+  This blog post is **WORK IN PROGRESS**. It may contain unfinished and inaccurate content.
+</Aside>
+
+<Aside variant="note">
+  All examples in this blog post use the [**Yarn**](https://yarnpkg.com/) package manager. Multiple package managers coming soon!
+</Aside>
+
+[**Astro**](https://astro.build/) is a framework for building blazingly fast statically generated sites. It is a great choice when building content-driven websites (this site is built with Astro!). But, when it comes to searching your site, there aren't many great picks except for [**Pagefind**](https://pagefind.app/), a full-text search library written in Rust which helps it reach outstanding performance.
+
+Pagefind is really easy to integrate with *any* framework, because the only requirement is, well, static site generation! Just run the following command in your terminal (assuming that your generated site files reside in `./dist`):
+
+```bash showLineNumbers=false
+yarn dlx pagefind --site dist
+```
+
+The above command will generate a `pagefind` directory in our `dist` folder. This directory contains everything related to Pagefind: binaries (WASM), scripts (JS), indexes. It also contains Pagefind's modular UI library (`pagefind-modular-ui.js`), but we won't need that today. Only 2 files out of this whole directory are actually in our field of interest: `pagefind.js` and `pagefind-highlight.js`. The first one is the primary Pagefind library, which we'll need to implement searching, and the last one is the highlighting library used by Pagefind. For highlighting, skip to [**Highlighting**](#highlighting).
+
+## Search UI
+
+### Getting started
+
+Now that we know the basics, let's get to the interesting part: **Building the UI**. I'll use [**Solid**](https://solidjs.com/) as our main UI framework because it is modern, fast and performant. If you haven't already, install Astro's integration for Solid by running the following command:
+
+```bash
+yarn astro add solid
+```
+
+This will automatically add `@astrojs/solid-js` integration to our project.
+
+Now, let's create our Search component:
+
+```ts title="components/search/index.ts"
+// This file is need so we can have
+// "components/search" instead of "components/search/search" in our imports
+export * from "./search.tsx";
+```
+```tsx title="components/search/search.tsx"
+import type { Component } from "solid-js";
+
+export const Search: Component = () => {
+  return <></>;
+}
+```
+
+The search component will handle all functionality related to searching, and on top of that - handling the search dialog. Because we will use it inside of Astro components, we can't rely on Solid's refs, that's why we will gonna use a different approach: the search *"anchor"* will be passed as a child element, and we will attach event listeners to it. To simplify the above process, let's add a couple of [**Solid Primitives**](https://primitives.solidjs.community/):
+
+```bash
+yarn add @solid-primitives/event-listener @solid-primitives/refs @solid-primitives/utils
+```
+
+```diff lang="tsx" title="components/search/search.tsx"
+-import type { Component } from "solid-js";
++import type { Component, JSX } from "solid-js";
++import { resolveFirst } from "@solid-primitives/refs";
++import { createEventListener } from "@solid-primitives/event-listener";
+
++type SearchProps = {
++  children: JSX.Element;
++} & Omit<JSX.HTMLAttributes<HTMLDivElement>, "children">;
+
+-export const Search: Component = () => {
++export const Search: Component<SearchProps> = (props) => {
+  const anchor = resolveFirst<HTMLElement>(
+    () => props.children,
+    (item): item is HTMLElement => item instanceof HTMLElement
+  );
+
+  createEventListener(
+    () => anchor()!,
+    "click",
+    () => {
+      console.log("Clicked!");
+    },
+  );
+
+-  return <></>;
++  return (
++    <>
++      {anchor()}
++    </>
++  );
+}
+```
+
+<Aside variant="tip">
+  If you want to be able to pass props to the underlying component, you can make use of `splitProps`.
+</Aside>
+
+```diff lang="tsx" title="components/search/search.tsx"
+-import type { Component, JSX } from "solid-js";
++import { type Component, type JSX, splitProps } from "solid-js";
+import { resolveFirst } from "@solid-primitives/refs";
+import { createEventListener } from "@solid-primitives/event-listener";
+
+type SearchProps = {
+  children: JSX.Element;
+} & Omit<JSX.HTMLAttributes<HTMLDivElement>, "children">;
+
+export const Search: Component<SearchProps> = (props) => {
++  const [localProps, otherProps] = splitProps(
++    props,
++    [
++      "class",
++      "children",
++    ],
++  );
+
+  const anchor = resolveFirst<HTMLElement>(
+-    () => props.children,
++    () => localProps.children,
+    (item): item is HTMLElement => item instanceof HTMLElement
+  );
+
+  createEventListener(
+    () => anchor()!,
+    "click",
+    () => {
+      console.log("Clicked!");
+    },
+  );
+
+  return (
+    <>
+      {anchor()}
+    </>
+  );
+}
+```
+
+### Search dialog
+
+Now, let's add a search dialog. We will use the newest and coolest [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog/), of course!
+
+We want our dialog to appear modal, which means it will block all other content on the page. For that there exists a convinient [`<HTMLDialogElement>.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal/) method. After opening the dialog, a new pseudo element will be accessable to us in CSS: [`::backdrop`](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop/).
+
+Another challenge is hiding the window scrollbar when the dialog gets opened. For this case we can toggle a data attribute on `<body>` element. We'll call that attribute `data-dialog-open`, because it might be useful for handling other dialogs in the future.
+
+
+
+## Highlighting
+
+Now that we have our search working, we can move on to add results highlighting!
+
+```astro title="components/Highlight.astro"
+---
+import type { JSX } from "astro/jsx-runtime";
+
+type Props = Omit<JSX.ScriptHTMLAttributes, "type" | "is:raw">;
+---
+
+<script is:inline type="module" {...Astro.props}> {/* Add `is:inline` here so the framework won't yell at us */}
+  document.addEventListener(
+    "astro:page-load",
+    async () => {
+      await import("/pagefind/pagefind-highlight.js");
+      new PagefindHighlight({ highlightParam: "highlight" });
+    }
+  );
+</script>
+```
+
+The Pagefind Highlighter will add the `pagefind-highlight` class to all highlighted elements, so we can style them appropriately.
+
+Then, we just need to insert the `Highlight` component into our page's `head` element:
+```diff lang="astro" title="layouts/Page.astro"
+---
+import Head from "../components/Head.astro";
++import Highlight from "../components/Highlight.astro";
+---
+
+<html lang="en">
+  <head>
+    <Head />
++    <Highlight />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+```
+
+If you are not happy with the default highlight styles (which are quite nice!), you can give the highlight some shiny new styles.
+
+<Aside variant="important">
+  In order to style elements globally, we need to add an `is:global` attribute to our `<style>` element.
+</Aside>
+
+```diff lang="astro" title="layouts/Page.astro" collapse={1-13}
+---
+import Head from "../components/Head.astro";
+import Highlight from "../components/Highlight.astro";
+---
+
+<html lang="en">
+  <head>
+    <Head />
+    <Highlight />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
++<style is:global>
++  .pagefind-highlight { }
++</style>
+```
+
+Here's a basic example of custom highlight styles:
+
+```css title="layouts/Page.astro" startLineNumber=17
+.pagefind-highlight {
+
+}
+```

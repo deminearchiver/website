@@ -7,123 +7,168 @@
 </div>
 
 <style is:global>
+  .markdown {
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: var(--text-body-large-weight);
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
+  }
+
   .markdown
-	:not(a, strong, em, del, span, input, code)
-	+ :not(a, strong, em, del, span, input, code, :where(.not-content *)) {
-	margin-top: 1rem;
-}
+    :not(a, strong, em, del, span, input, code *, pre)
+    + :not(a, strong, em, del, span, input, code *, pre, :where(.not-content *)) {
+    margin-top: 1rem;
+  }
 
-/* Headings after non-headings have more spacing. */
-.markdown
-	:not(h1, h2, h3, h4, h5, h6)
-	+ :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
-	margin-top: 1.5em;
-}
+  .markdown a[href] {
+    color: var(--color-primary);
 
-.markdown li + li:not(:where(.not-content *)),
-.markdown dt + dt:not(:where(.not-content *)),
-.markdown dt + dd:not(:where(.not-content *)),
-.markdown dd + dd:not(:where(.not-content *)) {
-	margin-top: 0.25rem;
-}
+    &:hover {
+      color: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 8%);
+    }
+    &:active{
+      color: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 10%);
+    }
+  }
+  .markdown
+    :not(h1, h2, h3, h4, h5, h6)
+    + :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+    margin-top: 1.5em;
+  }
 
-.markdown li:not(:where(.not-content *)) {
-	overflow-wrap: anywhere;
-}
+  .markdown li + li:not(:where(.not-content *)),
+  .markdown dt + dt:not(:where(.not-content *)),
+  .markdown dt + dd:not(:where(.not-content *)),
+  .markdown dd + dd:not(:where(.not-content *)) {
+    margin-top: 0.25rem;
+  }
 
-.markdown
-	li
-	> :last-child:not(li, ul, ol):not(a, strong, em, del, span, input, :where(.not-content *)) {
-	margin-bottom: 1.25rem;
-}
+  .markdown li:not(:where(.not-content *)) {
+    overflow-wrap: anywhere;
+  }
 
-.markdown dt:not(:where(.not-content *)) {
-	font-weight: 700;
-}
-.markdown dd:not(:where(.not-content *)) {
-	padding-inline-start: 1rem;
-}
+  .markdown
+    li
+    > :last-child:not(li, ul, ol):not(
+      a,
+      strong,
+      em,
+      del,
+      span,
+      input,
+      :where(.not-content *)
+    ) {
+    margin-bottom: 1.25rem;
+  }
 
-.markdown :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
-	color: var(--sl-color-white);
-	line-height: var(--sl-line-height-headings);
-	font-weight: 600;
-}
+  .markdown dt:not(:where(.not-content *)) {
+    font-weight: 700;
+  }
+  .markdown dd:not(:where(.not-content *)) {
+    padding-inline-start: 1rem;
+  }
 
-.markdown :is(img, picture, video, canvas, svg, iframe):not(:where(.not-content *)) {
-	display: block;
-	max-width: 100%;
-	height: auto;
-}
+  .markdown :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+    color: var(--color-on-surface);
+  }
 
-.markdown h1:not(:where(.not-content *)) {
-	font-size: var(--sl-text-h1);
-}
-.markdown h2:not(:where(.not-content *)) {
-	font-size: var(--sl-text-h2);
-}
-.markdown h3:not(:where(.not-content *)) {
-	font-size: var(--sl-text-h3);
-}
-.markdown h4:not(:where(.not-content *)) {
-	font-size: var(--sl-text-h4);
-}
-.markdown h5:not(:where(.not-content *)) {
-	font-size: var(--sl-text-h5);
-}
-.markdown h6:not(:where(.not-content *)) {
-	font-size: var(--sl-text-h6);
-}
+  .markdown
+    :is(img, picture, video, canvas, svg, iframe):not(:where(.not-content *)) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
 
-.markdown a:not(:where(.not-content *)) {
-	color: var(--sl-color-text-accent);
-}
-.markdown a:hover:not(:where(.not-content *)) {
-	color: var(--sl-color-white);
-}
+  .markdown h1:not(:where(.not-content *)) {
+    font-family: var(--text-headline-large-family);
+    font-size: var(--text-headline-large-size);
+    font-weight: var(--text-headline-large-weight);
+    line-height: var(--text-headline-large-line-height);
+    letter-spacing: var(--text-headline-large-letter-spacing);
+  }
+  .markdown h2:not(:where(.not-content *)) {
+    font-family: var(--text-headline-small-family);
+    font-size: var(--text-headline-small-size);
+    font-weight: var(--text-headline-small-weight);
+    line-height: var(--text-headline-small-line-height);
+    letter-spacing: var(--text-headline-small-letter-spacing);
+  }
+  .markdown h3:not(:where(.not-content *)) {
+    font-family: var(--text-title-large-family);
+    font-size: var(--text-title-large-size);
+    font-weight: var(--text-title-large-weight);
+    line-height: var(--text-title-large-line-height);
+    letter-spacing: var(--text-title-large-letter-spacing);
+  }
+  .markdown h4:not(:where(.not-content *)) {
+    font-family: var(--text-title-medium-family);
+    font-size: var(--text-title-medium-size);
+    font-weight: var(--text-title-medium-weight);
+    line-height: var(--text-title-medium-line-height);
+    letter-spacing: var(--text-title-medium-letter-spacing);
+  }
+  .markdown h5:not(:where(.not-content *)) {
+    font-family: var(--text-title-small-family);
+    font-size: var(--text-title-small-size);
+    font-weight: var(--text-title-small-weight);
+    line-height: var(--text-title-small-line-height);
+    letter-spacing: var(--text-title-small-letter-spacing);
+  }
+  .markdown h6:not(:where(.not-content *)) {
+    font-family: var(--text-label-medium-family);
+    font-size: var(--text-label-medium-size);
+    font-weight: var(--text-label-medium-weight);
+    line-height: var(--text-label-medium-line-height);
+    letter-spacing: var(--text-label-medium-letter-spacing);
+  }
 
-.markdown code:not(:where(.not-content *)) {
-	background-color: var(--sl-color-bg-inline-code);
-	margin-block: -0.125rem;
-	padding: 0.125rem 0.375rem;
-	font-size: var(--sl-text-code-sm);
-}
-.markdown :is(h1, h2, h3, h4, h5, h6) code {
-	font-size: inherit;
-}
+  .markdown a:not(:where(.not-content *)) {
+    color: var(--sl-color-text-accent);
+  }
+  .markdown a:hover:not(:where(.not-content *)) {
+    color: var(--sl-color-white);
+  }
 
-.markdown pre:not(:where(.not-content *)) {
-	border: 1px solid var(--sl-color-gray-5);
-	padding: 0.75rem 1rem;
-	font-size: var(--sl-text-code);
-	tab-size: 2;
-}
+  .markdown code:not(:where(.not-content *)) {
+    background-color: var(--sl-color-bg-inline-code);
+    margin-block: -0.125rem;
+    padding: 0.125rem 0.375rem;
+    font-size: var(--sl-text-code-sm);
+  }
+  .markdown code {
+    letter-spacing: 0;
+  }
 
-.markdown pre code:not(:where(.not-content *)) {
-	all: unset;
-	font-family: var(--__sl-font-mono);
-}
+  .markdown pre {
+    tab-size: 2;
+  }
 
-.markdown blockquote:not(:where(.not-content *)) {
-	border-inline-start: 1px solid var(--sl-color-gray-5);
-	padding-inline-start: 1rem;
-}
+  /* .markdown pre {
+    all: unset;
+    font-family: var(--__sl-font-mono);
+  } */
 
-.markdown table:not(:where(.not-content *)) {
-	display: block;
-	overflow: auto;
-	border-collapse: collapse;
-}
-.markdown tr:nth-child(2n):not(:where(.not-content *)) {
-	background-color: var(--sl-color-gray-7, var(--sl-color-gray-6));
-}
-.markdown :is(th, td):not(:where(.not-content *)) {
-	border: 1px solid var(--sl-color-hairline-light);
-	padding: 0.375rem 0.8125rem;
-}
+  .markdown blockquote:not(:where(.not-content *)) {
+    border-inline-start: 1px solid var(--sl-color-gray-5);
+    padding-inline-start: 1rem;
+  }
 
-.markdown hr:not(:where(.not-content *)) {
-	border: 0;
-	border-bottom: 1px solid var(--sl-color-hairline);
-}
+  .markdown table:not(:where(.not-content *)) {
+    display: block;
+    overflow: auto;
+    border-collapse: collapse;
+  }
+  .markdown tr:nth-child(2n):not(:where(.not-content *)) {
+    background-color: var(--sl-color-gray-7, var(--sl-color-gray-6));
+  }
+  .markdown :is(th, td):not(:where(.not-content *)) {
+    border: 1px solid var(--sl-color-hairline-light);
+    padding: 0.375rem 0.8125rem;
+  }
+
+  .markdown hr:not(:where(.not-content *)) {
+    border: 0;
+    border-bottom: 1px solid var(--sl-color-hairline);
+  }
 </style>

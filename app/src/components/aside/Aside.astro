@@ -1,0 +1,117 @@
+---
+import type { Component, ComponentProps } from "solid-js";
+
+import { AstroError } from "astro/errors";
+
+import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
+import RocketIcon from "~icons/material-symbols-rounded/rocket:outlined";
+import FeedbackIcon from "~icons/material-symbols-rounded/feedback:outlined";
+import WarningIcon from "~icons/material-symbols-rounded/warning:outlined";
+import ReportIcon from "~icons/material-symbols-rounded/report:outlined";
+
+const ICONS: Record<AsideVariant, Component<ComponentProps<"svg">>> = {
+  note: InfoIcon,
+  tip: RocketIcon,
+  important: FeedbackIcon,
+  warning: WarningIcon,
+  caution: ReportIcon,
+}
+
+const variants = ["note", "tip", "important", "warning", "caution"] as const;
+type AsideVariant = typeof variants[number];
+
+interface Props {
+	variant: AsideVariant;
+	title?: string;
+}
+const getTitle = (variant: AsideVariant) => {
+  if(variant === "note") return "Note";
+  if(variant === "tip") return "Tip";
+  if(variant === "important") return "Important";
+  if(variant === "warning") return "Warning";
+  if(variant === "caution") return "Caution";
+}
+const {
+  variant = "note",
+  title = getTitle(variant),
+} = Astro.props;
+
+if (!variants.includes(variant)) {
+	throw new AstroError(
+		'Invalid `variant` prop passed to the `<Aside>` component.\n',
+		`Received: ${JSON.stringify(variant)}\n`
+    + `Expected one of ${variants.map((variant) => JSON.stringify(variant)).join(', ')}`,
+	);
+}
+
+const Icon = ICONS[variant];
+
+
+---
+
+<aside
+  class:list={["aside", variant]}
+  aria-label={title}>
+	<p class="title" aria-hidden="true">
+		<Icon
+      width={24}
+      height={24} />
+    <span>{title}</span>
+	</p>
+	<section class="content">
+		<slot />
+	</section>
+</aside>
+
+<style>
+  .aside {
+    padding: 16px;
+    border-radius: 12px;
+
+    &.note {
+      background-color: var(--color-secondary-container);
+    }
+    &.note .title {
+      color: var(--color-secondary);
+    }
+    &.note .content {
+      color: var(--color-on-secondary-container);
+    }
+
+    /* &.tip {
+      background-color: ;
+    } */
+
+    &.important {
+      background-color: var(--color-primary-container);
+    }
+    &.important .title {
+      color: var(--color-primary);
+    }
+    &.important .content {
+      color: var(--color-on-primary-container);
+    }
+
+    &.caution {
+      background-color: var(--color-error-container);
+    }
+    &.caution .title {
+      color: var(--color-error);
+    }
+    &.caution .content {
+      color: var(--color-on-error-container);
+    }
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: 500;
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
+  }
+</style>
