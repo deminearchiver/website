@@ -14,6 +14,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: latest
+      - run: corepack enable && corepack install
+      - uses: actions/setup-node@v4
+        with:
           cache: yarn
       - name: Install dependencies
         run: yarn install
