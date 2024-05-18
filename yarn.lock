@@ -592,7 +592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@deminearchiver/configs@workspace:*, @deminearchiver/configs@workspace:packages/configs":
+"@deminearchiver/configs@workspace:^, @deminearchiver/configs@workspace:packages/configs":
   version: 0.0.0-use.local
   resolution: "@deminearchiver/configs@workspace:packages/configs"
   dependencies:
@@ -600,11 +600,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@deminearchiver/utils@workspace:*, @deminearchiver/utils@workspace:packages/utils":
+"@deminearchiver/utils@workspace:^, @deminearchiver/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@deminearchiver/utils@workspace:packages/utils"
   dependencies:
-    "@deminearchiver/configs": "workspace:*"
+    "@deminearchiver/configs": "workspace:^"
     typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft
@@ -618,7 +618,7 @@ __metadata:
     "@astrojs/rss": "npm:^4.0.5"
     "@astrojs/sitemap": "npm:^3.1.4"
     "@astrojs/solid-js": "npm:^4.2.0"
-    "@deminearchiver/utils": "workspace:*"
+    "@deminearchiver/utils": "workspace:^"
     "@expressive-code/plugin-collapsible-sections": "npm:^0.35.3"
     "@expressive-code/plugin-line-numbers": "npm:^0.35.3"
     "@fontsource-variable/fira-code": "npm:^5.0.18"
@@ -626,10 +626,10 @@ __metadata:
     "@fontsource/roboto": "npm:^5.0.13"
     "@iconify-json/material-symbols": "npm:^1.1.80"
     "@iconify-json/simple-icons": "npm:^1.1.101"
-    "@material-symbols/unplugin-icons": "workspace:*"
-    "@material/material-color-utilities": "workspace:*"
-    "@material/solid": "workspace:*"
-    "@pagefind/astro": "workspace:*"
+    "@material-symbols/unplugin-icons": "workspace:^"
+    "@material/material-color-utilities": "workspace:^"
+    "@material/solid": "workspace:^"
+    "@pagefind/astro": "workspace:^"
     "@playform/compress": "npm:^0.0.4"
     "@solid-primitives/bounds": "npm:^0.0.121"
     "@solid-primitives/event-listener": "npm:^2.3.3"
@@ -1826,7 +1826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material-symbols/unplugin-icons@workspace:*, @material-symbols/unplugin-icons@workspace:packages/material-symbols":
+"@material-symbols/unplugin-icons@workspace:^, @material-symbols/unplugin-icons@workspace:packages/material-symbols":
   version: 0.0.0-use.local
   resolution: "@material-symbols/unplugin-icons@workspace:packages/material-symbols"
   dependencies:
@@ -1842,7 +1842,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@material/material-color-utilities@workspace:*, @material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript":
+"@material/material-color-utilities@workspace:^, @material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript":
   version: 0.0.0-use.local
   resolution: "@material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript"
   dependencies:
@@ -1854,12 +1854,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@material/solid@workspace:*, @material/solid@workspace:packages/material/solid":
+"@material/solid@workspace:^, @material/solid@workspace:packages/material/solid":
   version: 0.0.0-use.local
   resolution: "@material/solid@workspace:packages/material/solid"
   dependencies:
-    "@deminearchiver/configs": "workspace:*"
-    "@material/material-color-utilities": "workspace:*"
+    "@deminearchiver/configs": "workspace:^"
+    "@material/material-color-utilities": "workspace:^"
     "@solid-primitives/event-listener": "npm:^2.3.3"
     "@solid-primitives/media": "npm:^2.2.9"
     "@solid-primitives/raf": "npm:^2.1.16"
@@ -1956,7 +1956,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagefind/astro@workspace:*, @pagefind/astro@workspace:packages/astro/pagefind":
+"@pagefind/astro@workspace:^, @pagefind/astro@workspace:packages/astro/pagefind":
   version: 0.0.0-use.local
   resolution: "@pagefind/astro@workspace:packages/astro/pagefind"
   dependencies:

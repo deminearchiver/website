@@ -6,7 +6,7 @@
   },
   "packageManager": "yarn@4.2.2",
   "devDependencies": {
-    "@deminearchiver/configs": "workspace:*",
+    "@deminearchiver/configs": "workspace:^",
     "typescript": "^5.4.5"
   }
 }
