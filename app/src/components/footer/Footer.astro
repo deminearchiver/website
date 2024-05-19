@@ -1,19 +1,84 @@
 ---
+import { IconButton } from "../icon-button";
+import type { Component } from "solid-js";
+import type { ComponentProps } from "solid-js";
+import type { JSX } from "astro/jsx-runtime";
+
+import GitHubIcon from "~icons/simple-icons/github";
+import YouTubeIcon from "~icons/simple-icons/youtube";
+import TwitchIcon from "~icons/simple-icons/twitch";
+
+type SocialLink = {
+  icon: Component<ComponentProps<"svg">>;
+  label: string;
+  href: string;
+};
+
+const SOCIAL_LINKS: SocialLink[] = [
+  {
+    icon: GitHubIcon,
+    label: "GitHub",
+    href: "https://github.com/deminearchiver",
+  },
+  {
+    icon: YouTubeIcon,
+    label: "YouTube",
+    href: "https://youtube.com/@deminearchiver",
+  },
+  {
+    icon: TwitchIcon,
+    label: "Twitch",
+    href: "https://twitch.tv/deminearchiver",
+  },
+];
+
 interface Props {}
 
 const year = new Date().getFullYear();
 ---
 
 <footer>
-  Copyright &copy; {year} deminearchiver
+  <p class="copyright">Copyright &copy; {year} deminearchiver</p>
+  <ul class="links">
+    <li>{
+      SOCIAL_LINKS.map(link => (
+        <IconButton
+          href={link.href}
+          target="_blank"
+          title={link.label}>
+            <link.icon width={24} height={24} />
+        </IconButton>
+      ))
+    }</li>
+  </ul>
 </footer>
 
 <style>
   footer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 16px;
 
     padding: 24px;
+  }
+
+  .copyright {
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: var(--text-body-large-weight);
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
+    color: var(--color-on-surface-variant);
+  }
+
+  .links {
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 </style>

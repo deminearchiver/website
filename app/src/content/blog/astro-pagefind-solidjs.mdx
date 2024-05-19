@@ -1,5 +1,6 @@
 ---
 title: Astro + Pagefind + Solid = 🤯
+description: Build a search UI for your Astro site using Pagefind and SolidJS
 authors:
   - id: deminearchiver
     name: deminearchiver
@@ -9,6 +10,9 @@ createdAt: 2024-05-18 # Don't change! It's an actual creation date!
 ---
 
 import { Aside } from "../../components/aside";
+import { Button } from "../../components/button";
+
+import ReadMoreIcon from "~icons/material-symbols-rounded/read-more:outlined";
 
 <Aside variant="caution">
   This blog post is **WORK IN PROGRESS**. It may contain unfinished and inaccurate content.
@@ -30,115 +34,41 @@ The above command will generate a `pagefind` directory in our `dist` folder. Thi
 
 ## Search UI
 
+Now that we know the basics, it's time to create the search UI!
+
+## Our stack
+
+First, let's settle on **all** libraries we will use for building the search UI. I haven't included **Astro** in this list because the search UI will be able to be consumed outside of an Astro project.
+
+We will use [**Solid**](https://solidjs.com/) as our UI framework. I also recommend you to install the following [**Solid Primitives**](https://primitives.solidjs.community/), as they will greatly simplify the process: `refs`, `media`, `event-listener` and `utils`.
+
+### Setting up
+
+Now that we know our stack, let's install everything:
+
+```bash
+yarn astro add solid # Will add solid-js and @astrojs/solid-js
+yarn add @solid-primitives/media @solid-primitives/refs @solid-primitives/event-listener @solid-primitives/utils
+yarn add @vanilla-extract/css @vanilla-extract/recipes
+yarn add -D @vanilla-extract/vite-plugin
+```
+
 ### Getting started
 
-Now that we know the basics, let's get to the interesting part: **Building the UI**. I'll use [**Solid**](https://solidjs.com/) as our main UI framework because it is modern, fast and performant. If you haven't already, install Astro's integration for Solid by running the following command:
 
-```bash
-yarn astro add solid
-```
-
-This will automatically add `@astrojs/solid-js` integration to our project.
-
-Now, let's create our Search component:
-
-```ts title="components/search/index.ts"
-// This file is need so we can have
-// "components/search" instead of "components/search/search" in our imports
-export * from "./search.tsx";
-```
-```tsx title="components/search/search.tsx"
-import type { Component } from "solid-js";
-
-export const Search: Component = () => {
-  return <></>;
-}
-```
-
-The search component will handle all functionality related to searching, and on top of that - handling the search dialog. Because we will use it inside of Astro components, we can't rely on Solid's refs, that's why we will gonna use a different approach: the search *"anchor"* will be passed as a child element, and we will attach event listeners to it. To simplify the above process, let's add a couple of [**Solid Primitives**](https://primitives.solidjs.community/):
-
-```bash
-yarn add @solid-primitives/event-listener @solid-primitives/refs @solid-primitives/utils
-```
-
-```diff lang="tsx" title="components/search/search.tsx"
--import type { Component } from "solid-js";
-+import type { Component, JSX } from "solid-js";
-+import { resolveFirst } from "@solid-primitives/refs";
-+import { createEventListener } from "@solid-primitives/event-listener";
-
-+type SearchProps = {
-+  children: JSX.Element;
-+} & Omit<JSX.HTMLAttributes<HTMLDivElement>, "children">;
-
--export const Search: Component = () => {
-+export const Search: Component<SearchProps> = (props) => {
-  const anchor = resolveFirst<HTMLElement>(
-    () => props.children,
-    (item): item is HTMLElement => item instanceof HTMLElement
-  );
-
-  createEventListener(
-    () => anchor()!,
-    "click",
-    () => {
-      console.log("Clicked!");
-    },
-  );
-
--  return <></>;
-+  return (
-+    <>
-+      {anchor()}
-+    </>
-+  );
-}
-```
 
 <Aside variant="tip">
-  If you want to be able to pass props to the underlying component, you can make use of `splitProps`.
+  <>If you want to be able to pass props to the underlying component, you can make use of `splitProps`.</>
+  <Button
+    slot="action"
+    variant="text"
+    class="not-content"
+    href="https://docs.solidjs.com/concepts/components/props/#splitprops"
+    target="_blank">
+      <ReadMoreIcon slot="leading" />
+      <>Learn more</>
+  </Button>
 </Aside>
-
-```diff lang="tsx" title="components/search/search.tsx"
--import type { Component, JSX } from "solid-js";
-+import { type Component, type JSX, splitProps } from "solid-js";
-import { resolveFirst } from "@solid-primitives/refs";
-import { createEventListener } from "@solid-primitives/event-listener";
-
-type SearchProps = {
-  children: JSX.Element;
-} & Omit<JSX.HTMLAttributes<HTMLDivElement>, "children">;
-
-export const Search: Component<SearchProps> = (props) => {
-+  const [localProps, otherProps] = splitProps(
-+    props,
-+    [
-+      "class",
-+      "children",
-+    ],
-+  );
-
-  const anchor = resolveFirst<HTMLElement>(
--    () => props.children,
-+    () => localProps.children,
-    (item): item is HTMLElement => item instanceof HTMLElement
-  );
-
-  createEventListener(
-    () => anchor()!,
-    "click",
-    () => {
-      console.log("Clicked!");
-    },
-  );
-
-  return (
-    <>
-      {anchor()}
-    </>
-  );
-}
-```
 
 ### Search dialog
 
@@ -192,10 +122,21 @@ import Head from "../components/Head.astro";
 </html>
 ```
 
+## Styling
+
 If you are not happy with the default highlight styles (which are quite nice!), you can give the highlight some shiny new styles.
 
 <Aside variant="important">
-  In order to style elements globally, we need to add an `is:global` attribute to our `<style>` element.
+  <>In order to style elements globally, we need to add an `is:global` attribute to our `<style>` element.</>
+  <Button
+    slot="action"
+    variant="text"
+    class="not-content"
+    href="https://docs.astro.build/en/guides/styling/#global-styles"
+    target="_blank">
+      <ReadMoreIcon slot="leading" />
+      <>Learn more</>
+  </Button>
 </Aside>
 
 ```diff lang="astro" title="layouts/Page.astro" collapse={1-13}
@@ -225,4 +166,61 @@ Here's a basic example of custom highlight styles:
 .pagefind-highlight {
 
 }
+```
+
+## Going further: automatic indexing
+
+If you want to automatically run Pagefind after building your site, you could write a simple Astro integration.
+First, we need to install `@types/node`:
+```bash
+yarn add -D @types/node
+```
+
+```ts title="integrations/pagefind.ts"
+import type { AstroIntegration } from "astro";
+
+export default function astroPagefind(): AstroIntegration {
+  return {
+    name: "astro-pagefind",
+    hooks: {
+      "astro:build:done": async ({ dir }) => {
+          const targetDir = fileURLToPath(dir);
+          const cwd = dirname(fileURLToPath(import.meta.url));
+          const relativeDir = relative(cwd, targetDir);
+          return new Promise<void>(resolve => {
+            spawn(
+              "yarn", ["dlx", "pagefind", "--site", relativeDir],
+              {
+                stdio: "inherit", // Needed so we can see the output of the command
+                shell: true,
+                cwd,
+              }
+            ).on("close", () => resolve());
+          });
+      }
+    }
+  }
+}
+```
+
+Then, add it to your Astro config:
+```diff lang="ts" title="astro.config.ts"
+import { defineConfig } from "astro/config";
+
+import solidJs from "@astrojs/solid-js";
++import pagefind from "./src/integrations/pagefind";
+
+export default defineConfig({
+  integrations: [
+    solidJs(),
++    pagefind(),
+  ],
+  /* ... */
+});
+```
+
+And that's it! Now Pagefind will run right after your site has been built. Try it out:
+
+```bash
+yarn build
 ```

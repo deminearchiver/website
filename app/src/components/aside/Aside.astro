@@ -45,7 +45,7 @@ if (!variants.includes(variant)) {
 }
 
 const Icon = ICONS[variant];
-
+const hasActions = Astro.slots.has("action");
 
 ---
 
@@ -61,6 +61,11 @@ const Icon = ICONS[variant];
 	<section class="content">
 		<slot />
 	</section>
+  {hasActions && (
+    <div class="actions">
+      <slot name="action" />
+    </div>
+  )}
 </aside>
 
 <style>
@@ -127,5 +132,14 @@ const Icon = ICONS[variant];
     font-weight: 500;
     line-height: var(--text-body-large-line-height);
     letter-spacing: var(--text-body-large-letter-spacing);
+  }
+
+  .actions {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 </style>

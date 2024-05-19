@@ -5,6 +5,10 @@ import { getCollection } from "astro:content"
 import Markdown from "../../components/markdown/Markdown.astro";
 import Page from "../../layouts/Page.astro";
 import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
+import { IconButton } from "../../components/icon-button";
+
+import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined&opticalSize=40";
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -27,12 +31,17 @@ const { Content } = await post.render();
   <Header />
   <main>
     <div class="content">
-      <h1>{post.data.title}</h1>
+      <IconButton class="back" href="/blog">
+        <ArrowBackIcon width={40} height={40} />
+      </IconButton>
+      <h1 class="title">{post.data.title}</h1>
+      {post.data.description && <p class="description">{post.data.description}</p>}
       <Markdown>
         <Content />
       </Markdown>
     </div>
   </main>
+  <Footer />
 </Page>
 
 <style>
@@ -45,15 +54,26 @@ const { Content } = await post.render();
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin: 96px 48px;
+    margin: 24px 24px 96px 24px;
   }
 
-  h1 {
+  .back {
+    align-self: flex-start;
+  }
+
+  .title {
     font-family: var(--text-display-medium-family);
     font-size: var(--text-display-medium-size);
     /* font-weight: var(--text-display-medium-weight); */
     font-weight: 500;
     line-height: var(--text-display-medium-line-height);
     letter-spacing: var(--text-display-medium-letter-spacing);
+  }
+  .description {
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: var(--text-body-large-weight);
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
   }
 </style>

@@ -24,6 +24,7 @@ export const blogSchema = (context: SchemaContext) => {
   const { image } = context;
   return z.object({
     title: z.string(),
+    description: z.string().optional(),
     authors: z.array(authorSchema(context)).min(1),
     // author:
     //   z.enum(authorsKeys)

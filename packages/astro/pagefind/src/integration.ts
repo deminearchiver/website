@@ -63,6 +63,6 @@ const runPagefind = (targetDir: string) => {
         cwd,
       }
     ).on("close", () => resolve());
-  })
+  });
 }
 
