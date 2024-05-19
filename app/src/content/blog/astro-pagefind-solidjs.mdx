@@ -72,13 +72,7 @@ yarn add -D @vanilla-extract/vite-plugin
 
 ### Search dialog
 
-Now, let's add a search dialog. We will use the newest and coolest [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog/), of course!
-
-We want our dialog to appear modal, which means it will block all other content on the page. For that there exists a convinient [`<HTMLDialogElement>.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal/) method. After opening the dialog, a new pseudo element will be accessable to us in CSS: [`::backdrop`](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop/).
-
-Another challenge is hiding the window scrollbar when the dialog gets opened. For this case we can toggle a data attribute on `<body>` element. We'll call that attribute `data-dialog-open`, because it might be useful for handling other dialogs in the future.
-
-
+### Animation
 
 ## Highlighting
 
