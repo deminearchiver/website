@@ -13,6 +13,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@deminearchiver/utils": "workspace:^",
     "@material/material-color-utilities": "workspace:^",
     "@solid-primitives/event-listener": "^2.3.3",
     "@solid-primitives/media": "^2.2.9",

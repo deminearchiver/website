@@ -2011,6 +2011,7 @@ __metadata:
   resolution: "@material/solid@workspace:packages/material/solid"
   dependencies:
     "@deminearchiver/configs": "workspace:^"
+    "@deminearchiver/utils": "workspace:^"
     "@material/material-color-utilities": "workspace:^"
     "@solid-primitives/event-listener": "npm:^2.3.3"
     "@solid-primitives/media": "npm:^2.2.9"

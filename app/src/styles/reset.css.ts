@@ -1,5 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
-import { THEME } from "./theme/theme.css";
+import { THEME } from "./theme";
 
 globalStyle(
   `:root[data-theme="light"]`,

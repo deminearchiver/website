@@ -1,17 +1,6 @@
-import { globalStyle, createGlobalTheme, assignVars } from "@vanilla-extract/css";
-import { createMaterialTheme } from "@material/solid/theme";
-import { Hct } from "@material/material-color-utilities";
+import { assignVars, createGlobalTheme, globalStyle } from "@vanilla-extract/css";
+import { DARK_THEME, LIGHT_THEME, THEME } from ".";
 import { test } from "./astro.css";
-
-const { contract, dark, light } = createMaterialTheme({
-  color: {
-    seed: Hct.fromInt(0xFF7D73FE),
-  }
-});
-
-export const THEME = contract();
-export const LIGHT_THEME = light();
-export const DARK_THEME = dark();
 
 const createSelector = (theme: "light" | "dark"): string => {
   return `:root[data-theme="${theme}"], [data-theme="${theme}"] ::backdrop`;
@@ -48,4 +37,4 @@ globalStyle(
   {
     vars: test(THEME),
   }
-)
+);

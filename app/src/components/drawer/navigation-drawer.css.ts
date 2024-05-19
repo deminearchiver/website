@@ -1,6 +1,6 @@
 import { keyframes, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { THEME } from "../../styles/theme/theme.css";
+import { THEME } from "../../styles/theme";
 import { splashTheme } from "@material/solid/components/splash";
 
 const OPEN_DURATION = "600ms";

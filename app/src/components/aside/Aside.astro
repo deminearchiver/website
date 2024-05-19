@@ -77,10 +77,15 @@ const Icon = ICONS[variant];
     &.note .content {
       color: var(--color-on-secondary-container);
     }
-
-    /* &.tip {
-      background-color: ;
-    } */
+    &.tip {
+      background-color: var(--color-success-container);
+    }
+    &.tip .title {
+      color: var(--color-success);
+    }
+    &.tip .content {
+      color: var(--color-on-success-container);
+    }
 
     &.important {
       background-color: var(--color-primary-container);
@@ -90,6 +95,15 @@ const Icon = ICONS[variant];
     }
     &.important .content {
       color: var(--color-on-primary-container);
+    }
+    &.warning {
+      background-color: var(--color-warning-container);
+    }
+    &.warning .title {
+      color: var(--color-warning);
+    }
+    &.warning .content {
+      color: var(--color-on-warning-container);
     }
 
     &.caution {

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { THEME } from "../../styles/theme/theme.css";
+import { THEME } from "../../styles/theme";
 import { splashTheme } from "@material/solid/components/splash";
 import { recipe } from "@vanilla-extract/recipes";
 

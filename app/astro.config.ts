@@ -50,13 +50,10 @@ export default defineConfig({
       themeCssSelector: (theme, context) =>
         `[data-code-theme="${theme.name}"]`,
       styleOverrides: {
-        borderRadius: "12px",
-        frames: {
-          editorTabsMarginInlineStart: "16px",
-          editorTabBorderRadius: "0",
-        },
-        codeFontFamily: `"Fira Code Variable", monospace`,
-        codeFontSize: `var(--text-body-large-size)`,
+        codeFontFamily: `"Fira Code Variable"`,
+        codeFontSize: `var(--text-body-medium-size)`,
+        uiFontFamily: "var(--text-body-medium-family)",
+        uiFontSize: "var(--text-body-medium-size)"
       },
       defaultProps: {
         showLineNumbers: false,
