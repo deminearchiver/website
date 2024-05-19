@@ -56,7 +56,7 @@ export const ThemeSelect: Component<ThemeSelectProps> = (props) => {
     return (props.type && props.type !== "small") || breakpoint.gt("compact");
   });
   const showWide = () =>
-    (!props.type && breakpoint.gte("large")) || (props.type === "large");
+    (!props.type && breakpoint.gte("extraLarge")) || (props.type === "large");
 
   const Control: Component = () => (
     <Switch

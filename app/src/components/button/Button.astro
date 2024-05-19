@@ -2,13 +2,24 @@
 import type { JSX } from "astro/jsx-runtime";
 import clsx from "clsx/lite";
 
+import { AstroError } from "astro/errors";
 
-type BaseProps = {
-  variant: "elevated" | "filled" | "tonal" | "outlined" | "text";
+const VARIANTS = [
+  "elevated",
+  "filled",
+  "tonal",
+  "outlined",
+  "text",
+  "error",
+  "success",
+] as const;
+
+export type ButtonVariant = typeof VARIANTS[number];
+
+type Props = {
+  variant: ButtonVariant;
   acrylic?: boolean;
-};
-
-type Props = BaseProps & (JSX.ButtonHTMLAttributes | JSX.AnchorHTMLAttributes);
+} & (JSX.ButtonHTMLAttributes | JSX.AnchorHTMLAttributes);
 
 const {
   variant,
@@ -17,10 +28,20 @@ const {
   ...props
 } = Astro.props;
 
+if (!VARIANTS.includes(variant)) {
+	throw new AstroError(
+		"Invalid `variant` prop passed to the `<Button>` component.\n",
+		`Received: ${JSON.stringify(variant)}\n`
+    + `Expected one of ${VARIANTS.map((variant) => JSON.stringify(variant)).join(', ')}`,
+	);
+}
+
+
 const hasLeading = Astro.slots.has("leading");
 const hasTrailing = Astro.slots.has("trailing");
 
 const className = clsx(
+  "not-content",
   "button", variant, acrylic && "acrylic",
   hasLeading && "with-leading",
   hasTrailing && "with-trailing",
@@ -235,6 +256,33 @@ const className = clsx(
     }
     &:active {
       background-color: color-mix(in srgb, var(--color-surface) 24%, var(--color-primary) 10%);
+    }
+  }
+
+  .error {
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--color-error), var(--color-on-error) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--color-error), var(--color-on-error) 10%);
+    }
+  }
+  .success {
+    background-color: var(--color-success);
+    color: var(--color-on-success);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, var(--color-success), var(--color-on-success) 8%);
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, var(--color-success), var(--color-on-success) 10%);
     }
   }
 </style>

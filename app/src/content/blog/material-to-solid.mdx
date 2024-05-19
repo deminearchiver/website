@@ -9,7 +9,18 @@ createdAt: 2024-05-18
 ---
 
 import { Aside } from "../../components/aside";
+import { Button } from "../../components/button";
+
+import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined";
 
 <Aside variant="caution">
-  This blog post is **WORK IN PROGRESS**. It may contain unfinished and inaccurate content.
+  <>This blog post is **WORK IN PROGRESS**. It may contain unfinished and inaccurate content.</>
+  <Button
+    slot="action"
+    variant="error"
+    class="not-content"
+    href="/blog">
+      <ArrowBackIcon slot="leading" width={18} height={18} />
+      <>Go back</>
+  </Button>
 </Aside>

@@ -103,6 +103,9 @@ Here are some low-priority goals:
 - [ ] Add changelog
   - [ ] On the web ([**/changelog**](https://deminearchiver.pages.dev/changelog) or in the form of blog posts)
   - [ ] To the repo ([**CHANGELOG.md**](CHANGELOG.md))
+- [ ] Add issue templates
+  - [x] Default templates
+  - [ ] Replace with custom issue forms
 - [ ] Dependabot
   - [ ] Alerts
   - [ ] Version updates

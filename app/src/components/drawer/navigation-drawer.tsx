@@ -6,6 +6,7 @@ import { createPresence } from "@solid-primitives/presence";
 import { drawerContentStyle, drawerDestinationContentStyle, drawerDestinationStyle, drawerDialogStyle, drawerListStyle, passthroughStyle } from "./navigation-drawer.css";
 import { Splash } from "@material/solid/components/splash";
 
+
 import clsx from "clsx/lite";
 import { Dynamic } from "solid-js/web";
 
@@ -144,7 +145,6 @@ const NavigationDrawerDestination: Component<NavigationDrawerDestinationProps> =
       href={localProps.destination.href}
       {...otherProps}>
         <Splash for={ref} />
-        <div></div>
         <div class={drawerDestinationContentStyle({
           animation: localProps.state,
         })}>

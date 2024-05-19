@@ -7,10 +7,10 @@
 </div>
 
 <style is:global>
-  .markdown {
+  .markdown :not(:where(.not-content *)) {
     font-family: var(--text-body-large-family);
     font-size: var(--text-body-large-size);
-    font-weight: var(--text-body-large-weight);
+    /* font-weight: var(--text-body-large-weight); */
     line-height: var(--text-body-large-line-height);
     letter-spacing: var(--text-body-large-letter-spacing);
   }
@@ -21,7 +21,7 @@
     margin-top: 1rem;
   }
 
-  .markdown a[href]:not(:where(.not-content *)) {
+  .markdown a:not(:where(.not-content, .not-content *)) {
     color: var(--color-primary);
 
     &:hover {
@@ -90,7 +90,8 @@
   .markdown h2:not(:where(.not-content *)) {
     font-family: var(--text-headline-small-family);
     font-size: var(--text-headline-small-size);
-    font-weight: var(--text-headline-small-weight);
+    /* font-weight: var(--text-headline-small-weight); */
+    font-weight: 500;
     line-height: var(--text-headline-small-line-height);
     letter-spacing: var(--text-headline-small-letter-spacing);
   }
@@ -121,13 +122,6 @@
     font-weight: var(--text-label-medium-weight);
     line-height: var(--text-label-medium-line-height);
     letter-spacing: var(--text-label-medium-letter-spacing);
-  }
-
-  .markdown a:not(:where(.not-content *)) {
-    color: var(--sl-color-text-accent);
-  }
-  .markdown a:hover:not(:where(.not-content *)) {
-    color: var(--sl-color-white);
   }
 
   .markdown code:not(:where(.not-content *)) {

@@ -260,5 +260,5 @@ export type PagefindModule = {
    * @param {number} [timeout=300] - A custom debounce timeout
    * @returns
    */
-  debouncedSearch: (term: string, options?: PagefindSearchOptions, timeout?: number) => Promise<PagefindSearchResults>;
+  debouncedSearch: (term: string, options?: PagefindSearchOptions, timeout?: number) => Promise<PagefindSearchResults | null>;
 }

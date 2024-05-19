@@ -17,8 +17,8 @@ const ICONS: Record<AsideVariant, Component<ComponentProps<"svg">>> = {
   caution: ReportIcon,
 }
 
-const variants = ["note", "tip", "important", "warning", "caution"] as const;
-type AsideVariant = typeof variants[number];
+const VARIANTS = ["note", "tip", "important", "warning", "caution"] as const;
+type AsideVariant = typeof VARIANTS[number];
 
 interface Props {
 	variant: AsideVariant;
@@ -36,11 +36,11 @@ const {
   title = getTitle(variant),
 } = Astro.props;
 
-if (!variants.includes(variant)) {
+if (!VARIANTS.includes(variant)) {
 	throw new AstroError(
-		'Invalid `variant` prop passed to the `<Aside>` component.\n',
+		"Invalid `variant` prop passed to the `<Aside>` component.\n",
 		`Received: ${JSON.stringify(variant)}\n`
-    + `Expected one of ${variants.map((variant) => JSON.stringify(variant)).join(', ')}`,
+    + `Expected one of ${VARIANTS.map((variant) => JSON.stringify(variant)).join(', ')}`,
 	);
 }
 

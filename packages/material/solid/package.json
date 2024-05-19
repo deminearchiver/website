@@ -5,7 +5,10 @@
     "./theme": "./theme/index.ts",
     "./utils": "./utils/index.ts",
     "./components/splash": "./components/splash/index.ts",
-    "./components/switch": "./components/switch/index.ts"
+    "./components/switch": "./components/switch/index.ts",
+    "./components/button": "./components/button/index.ts",
+    "./components/icon-button": "./components/icon-button/index.ts",
+    "./components/list": "./components/list/index.ts"
   },
   "packageManager": "yarn@4.2.2",
   "devDependencies": {

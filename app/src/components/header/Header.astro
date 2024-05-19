@@ -13,6 +13,7 @@ import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 
 import { Logo } from "../logo";
 import { NavigationDrawer } from "../drawer";
+import { Search, SearchAnchor } from "../search";
 
 interface Props {}
 
@@ -48,8 +49,10 @@ interface Props {}
         <IconButton>
           <MenuIcon />
         </IconButton>
-      </NavigationDrawer>
-    <Logo class="logo" />
+    </NavigationDrawer>
+    <a href="/">
+      <Logo class="logo" />
+    </a>
   </div>
   <nav>
     <ul>
@@ -74,18 +77,15 @@ interface Props {}
     </ul>
   </nav>
   <div class="options">
-    <IconButton
-      class="option search"
-      variant="tonal"
-      href="/search">
-        <SearchIcon />
-    </IconButton>
-    <IconButton
+    <!-- <IconButton
       class="option rss"
       variant="tonal"
       href="/rss.xml">
         <RssFeedIcon />
-    </IconButton>
+    </IconButton> -->
+    <Search client:only="solid-js" transition:persist>
+      <SearchAnchor client:load />
+    </Search>
     <!-- <ThemeSelect client:load /> -->
     <ThemeSelect client:only="solid-js" transition:persist />
   </div>
@@ -126,7 +126,7 @@ interface Props {}
     top: 0;
     left: 0;
     right: 0;
-    height: 64px;
+    height: 72px;
 
 
     display: flex;
@@ -156,7 +156,7 @@ interface Props {}
   }
 
 
-  nav, li {
+  li {
     display: contents;
   }
 
@@ -184,13 +184,32 @@ interface Props {}
       display: none;
     }
   }
-  @media only screen and not (min-width: 840px) {
+
+  nav {
+    display: none;
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .rss {
+    display: none;
+  }
+
+  @media only screen and (min-width: 840px) {
     nav {
-      display: none;
+      display: contents;
     }
 
     .rss {
-      display: none;
+      display: inline-flex;
+      animation: appear 300ms linear;
     }
   }
 </style>
