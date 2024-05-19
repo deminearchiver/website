@@ -84,7 +84,10 @@ interface Props {}
         <RssFeedIcon />
     </IconButton> -->
     <Search client:only="solid-js" transition:persist>
-      <SearchAnchor client:load />
+      <!-- <SearchAnchor client:load /> -->
+      <IconButton variant="tonal">
+        <SearchIcon width={24} height={24} />
+      </IconButton>
     </Search>
     <!-- <ThemeSelect client:load /> -->
     <ThemeSelect client:only="solid-js" transition:persist />
