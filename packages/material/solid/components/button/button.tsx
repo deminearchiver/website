@@ -2,7 +2,6 @@ import { type JSX, createMemo, createSignal, splitProps, type ParentComponent, t
 import { Splash } from "../splash";
 import { buttonStyle } from "./button.css";
 import clsx from "clsx/lite";
-import { mergeRefs } from "@solid-primitives/refs";
 import { Dynamic } from "solid-js/web";
 
 type ButtonVariant = "elevated" | "filled" | "tonal" | "outlined" | "text";
@@ -48,8 +47,7 @@ export const Button: ParentComponent<ButtonProps> = (props) => {
         localProps.class
       )}
       {...otherProps}>
-      <Splash
-        for={ref} />
+      <Splash for={ref} />
       {localProps.leading}
       {localProps.children}
       {localProps.trailing}

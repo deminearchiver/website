@@ -1,0 +1,141 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+import clsx from "clsx/lite";
+import type { NavigationDestination } from "./destinations";
+
+type Props = {
+  destination: NavigationDestination;
+} & Omit<JSX.AnchorHTMLAttributes, "href" | "children">
+
+const SUBPATH_REGEX = /[^\/]+/g;
+
+const {
+  destination,
+  class: customClass,
+  ...rest
+} = Astro.props;
+
+const isSelected = destination.test(Astro.url);
+const className = clsx(
+  "navigation-tab", isSelected && "selected",
+  customClass,
+);
+---
+
+<a
+  class={className}
+  href={destination.href}
+  {...rest}>
+    <destination.icon width={24} height={24} />
+    <span>{destination.label}</span>
+</a>
+
+<style>
+  @keyframes focus-grow {
+    from {
+      outline-width: 0px;
+    }
+    to {
+      outline-width: 8px;
+    }
+  }
+  @keyframes focus-shrink {
+    from {
+      outline-width: 8px;
+    }
+  }
+
+  .navigation-tab {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 9999px;
+    padding: 0 24px;
+
+    text-decoration: none;
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: var(--text-body-large-weight);
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
+    color: var(--color-on-surface);
+
+    outline: none;
+
+    font-variation-settings: "GRAD" 0;
+
+    transition:
+      background-color 15ms linear,
+      color 300ms var(--easing-standard),
+      font-variation-settings 300ms var(--easing-standard);
+
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: color-mix(in srgb, transparent, var(--color-on-surface) 8%);
+        font-variation-settings: "GRAD" 50;
+
+        &.selected {
+          background-color: color-mix(in srgb, transparent, var(--color-primary) 8%);
+        }
+      }
+    }
+    &:active {
+      background-color: color-mix(in srgb, transparent, var(--color-on-surface) 10%);
+      font-variation-settings: "GRAD" 150;
+      color: var(--color-primary);
+
+      &.selected {
+        background-color: color-mix(in srgb, transparent, var(--color-primary) 10%);
+      }
+    }
+
+    &:focus-visible {
+      font-variation-settings: "GRAD" 150;
+    }
+    &:not(.selected):focus-visible::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      outline: 3px solid var(--color-secondary);
+      z-index: 1;
+
+      animation-name: focus-grow, focus-shrink;
+      animation-delay: 0ms, 150ms;
+      animation-duration: 150ms, 450ms;
+      animation-timing-function: var(--easing-standard);
+    }
+
+    &.selected {
+      font-weight: 500;
+      color: var(--color-primary);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: var(--color-primary);
+        border-radius: 9999px;
+
+        transition: height 300ms var(--easing-standard);
+
+        z-index: 2;
+      }
+
+      &:is(:hover,:focus-visible)::after {
+        height: 8px;
+      }
+    }
+}
+</style>

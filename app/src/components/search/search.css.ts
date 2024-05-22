@@ -3,7 +3,7 @@ import { THEME } from "../../styles/theme/contract.css";
 import { createVar, keyframes, style } from "@vanilla-extract/css";
 import { listItemTheme } from "@material/solid/components/list";
 
-const OPEN_DURATION = "500ms";
+const OPEN_DURATION = "600ms";
 const CLOSE_DURATION = "200ms";
 
 const backdropEnter = keyframes({
@@ -59,21 +59,41 @@ export const searchDialogStyle = recipe({
   },
 });
 
-const viewEnter = keyframes({
+const DOCKED_BORDER_RADIUS = "calc(min(100dvw, 720px) / 4)";
+
+const viewDockedEnter = keyframes({
   from: {
-    scale: 0,
-    opacity: 0,
-    borderRadius: 28,
+    scale: "0.5 0",
+    translate: "0 -50%",
+    // opacity: 0,
+    borderRadius: 112,
   },
 });
-const viewExit = keyframes({
+const viewDockedExit = keyframes({
   to: {
-    scale: 0.35,
+    translate: "0 -32.5%",
+    scale: "0.5 0.35",
     opacity: 0,
-    borderRadius: 28,
+    borderRadius: 112,
   },
 });
 
+const FULLSCREEN_BORDER_RADIUS = "0 0 50dvw 50dvw";
+
+const viewFullscreenEnter = keyframes({
+  from: {
+    height: 72,
+    opacity: 0,
+    borderRadius: FULLSCREEN_BORDER_RADIUS,
+  },
+});
+const viewFullscreenExit = keyframes({
+  to: {
+    height: "35%",
+    opacity: 0,
+    borderRadius: FULLSCREEN_BORDER_RADIUS,
+  },
+});
 
 export const searchViewStyle = recipe({
   base: {
@@ -90,13 +110,13 @@ export const searchViewStyle = recipe({
     flexDirection: "column",
 
     "@media": {
-      "screen and (max-width: 600px)": {
+      "screen and (max-width: 599px)": {
         position: "absolute",
         minWidth: "100%",
         maxWidth: "100%",
         width: "100%",
         height: "100%",
-        minHeight: "100%",
+        // minHeight: "100%",
         maxHeight: "100%",
         inset: 0,
         borderRadius: 0,
@@ -106,10 +126,21 @@ export const searchViewStyle = recipe({
   variants: {
     state: {
       entering: {
-        animation: `${viewEnter} ${OPEN_DURATION} ${THEME.easing.emphasizedDecelerate} forwards`,
+        animation: `${viewDockedEnter} ${OPEN_DURATION} ${THEME.easing.emphasizedDecelerate} forwards`,
+        "@media": {
+          "screen and (max-width: 599px)": {
+            animation: `${viewFullscreenEnter} ${OPEN_DURATION} ${THEME.easing.emphasizedDecelerate} forwards`,
+          },
+        },
       },
       exiting: {
-        animation: `${viewExit} ${CLOSE_DURATION} ${THEME.easing.emphasizedAccelerate} forwards`,
+        animation: `${viewDockedExit} ${CLOSE_DURATION} ${THEME.easing.emphasizedAccelerate} forwards`,
+        "@media": {
+          "screen and (max-width: 599px)": {
+            animation: `${viewFullscreenExit} ${CLOSE_DURATION} ${THEME.easing.emphasizedAccelerate} forwards`,
+          },
+        },
+
       },
     }
   }
@@ -123,7 +154,7 @@ export const searchViewBarStyle = style({
   justifyContent: "flex-start",
   gap: 8, // see below
   padding: "0px 8px", // 24 + 8 + 8 = 40 (left / right padding of the icon is 8px) => 16 (bar) = 8 (bar) + 8 (icon) => bar padding must be 8px
-  color: THEME.color.onSurface,
+  // color: THEME.color.onSurface,
   backgroundColor: THEME.color.surfaceContainerHigh,
   width: "100%",
   minHeight: 56,
@@ -136,7 +167,7 @@ export const searchViewBarStyle = style({
   letterSpacing: THEME.text.body.large.letterSpacing,
   zIndex: 1,
   "@media": {
-    "screen and (max-width: 600px)": {
+    "screen and (max-width: 599px)": {
       minHeight: 72,
       height: 72,
     },
@@ -167,17 +198,16 @@ export const searchViewResultsStyle = style({
 });
 
 const appearAnimation = keyframes({
-  from: {
-    translate: "0 10px",
-  },
   to: {
     opacity: 1,
-  }
+    translate: 0,
+  },
 });
 
 export const searchResultIndex = createVar();
 export const searchResultStyle = style({
   opacity: 0,
+  translate: "0 32px",
   animationName: appearAnimation,
   animationDuration: "600ms",
   animationTimingFunction: THEME.easing.emphasizedDecelerate,

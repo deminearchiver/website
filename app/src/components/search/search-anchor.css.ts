@@ -45,26 +45,26 @@ export const searchAnchorStyle = style({
     [splashTheme.pressedColor]: THEME.color.onSecondaryContainer,
   },
   "@media": {
-    "only screen and (min-width: 840px)": {
+    "only screen and (min-width: 1200px)": {
       paddingInline: "16px 24px",
       gap: 8,
       gridTemplateColumns: "18px 1fr",
       minWidth: 100, // TODO: somehow make it auto or smth
     },
-    "only screen and (min-width: 1200px)": {
-      gridTemplateColumns: "24px 1fr",
-      height: 56,
-      minWidth: 360,
-      maxWidth: 720,
-      paddingInline: 16,
-      backgroundColor: THEME.color.surfaceContainerHigh,
-      color: THEME.color.onSurfaceVariant,
-      gap: 16,
-      vars: {
-        [splashTheme.hoverColor]: THEME.color.onSurfaceVariant,
-        [splashTheme.pressedColor]: THEME.color.onSurfaceVariant,
-      },
-    },
+    // "only screen and (min-width: 1200px)": {
+    //   gridTemplateColumns: "24px 1fr",
+    //   height: 56,
+    //   minWidth: 360,
+    //   maxWidth: 720,
+    //   paddingInline: 16,
+    //   backgroundColor: THEME.color.surfaceContainerHigh,
+    //   color: THEME.color.onSurfaceVariant,
+    //   gap: 16,
+    //   vars: {
+    //     [splashTheme.hoverColor]: THEME.color.onSurfaceVariant,
+    //     [splashTheme.pressedColor]: THEME.color.onSurfaceVariant,
+    //   },
+    // },
   },
 });
 
@@ -80,15 +80,15 @@ export const searchAnchorIconStyle = style({
 
 
   "@media": {
-    "only screen and (min-width: 840px)": {
+    "only screen and (min-width: 1200px)": {
       width: 18,
       height: 18,
     },
-    "only screen and (min-width: 1200px)": {
-      width: 24,
-      height: 24,
-      color: THEME.color.onSurface,
-    },
+    // "only screen and (min-width: 1200px)": {
+    //   width: 24,
+    //   height: 24,
+    //   color: THEME.color.onSurface,
+    // },
   },
 });
 export const searchAnchorLabelStyle = style({
@@ -116,17 +116,17 @@ export const searchAnchorLabelStyle = style({
   opacity: 0,
 
   "@media": {
-    "only screen and (min-width: 840px)": {
+    "only screen and (min-width: 1200px)": {
       width: "100%",
       translate: 0,
       opacity: 1,
     },
-    "only screen and (min-width: 1200px)": {
-      fontFamily: THEME.text.body.large.family,
-      fontSize: THEME.text.body.large.size,
-      fontWeight: THEME.text.body.large.weight,
-      lineHeight: THEME.text.body.large.lineHeight,
-      letterSpacing: THEME.text.body.large.letterSpacing,
-    }
+    // "only screen and (min-width: 1200px)": {
+    //   fontFamily: THEME.text.body.large.family,
+    //   fontSize: THEME.text.body.large.size,
+    //   fontWeight: THEME.text.body.large.weight,
+    //   lineHeight: THEME.text.body.large.lineHeight,
+    //   letterSpacing: THEME.text.body.large.letterSpacing,
+    // },
   },
 });

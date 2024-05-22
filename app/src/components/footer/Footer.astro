@@ -42,12 +42,16 @@ const year = new Date().getFullYear();
   <ul class="links">
     <li>{
       SOCIAL_LINKS.map(link => (
-        <IconButton
-          href={link.href}
-          target="_blank"
-          title={link.label}>
-            <link.icon width={24} height={24} />
-        </IconButton>
+        // <IconButton
+        //   href={link.href}
+        //   target="_blank"
+        //   title={link.label}>
+        //     <link.icon width={24} height={24} />
+        // </IconButton>
+        <a class="link" href={link.href} target="_blank" title={link.label}>
+          <link.icon class="icon" />
+          <span class="label">{link.label}</span>
+        </a>
       ))
     }</li>
   </ul>
@@ -80,5 +84,95 @@ const year = new Date().getFullYear();
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 8px;
   }
+
+  li {
+    display: contents;
+  }
+
+  .link {
+    -webkit-tap-highlight-color: transparent;
+
+    font-family: var(--text-label-large-family);
+    font-size: var(--text-label-large-size);
+    font-weight: var(--text-label-large-weight);
+    line-height: var(--text-label-large-line-height);
+    letter-spacing: var(--text-label-large-letter-spacing);
+
+    color: var(--color-on-surface-variant);
+    text-decoration: none;
+
+
+
+
+    height: 40px;
+    border-radius: 20px;
+    padding-inline: 8px;
+    gap: 0;
+
+    display: grid;
+    place-items: center;
+    place-content: center;
+    grid-template-columns: 24px 0fr;
+
+    overflow: hidden;
+
+    font-variation-settings: "GRAD" 0;
+
+    transition-property: grid-template-columns, padding-inline, gap;
+    transition-duration: 600ms;
+    transition-timing-function: var(--easing-emphasized);
+
+    &:hover {
+      gap: 16px;
+      padding-inline: 16px 24px;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+
+      background-color: color-mix(in srgb, transparent, var(--color-primary) 8%);
+      color: var(--color-primary);
+    }
+    &:active {
+      background-color: color-mix(in srgb, transparent, var(--color-primary) 10%);
+      font-variation-settings: "GRAD" 0;
+    }
+
+    & .icon {
+      grid-column: 1;
+      width: 24px;
+      height: 24px;
+
+      transition-property: width, height;
+      transition-duration: 600ms;
+      transition-timing-function: var(--easing-emphasized);
+    }
+
+    &:hover .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    & .label {
+      min-width: 0;
+      width: 0;
+      opacity: 0;
+      grid-column: 2;
+      translate: 16px;
+
+      display: flex;
+      align-items: center;
+
+      transition-property: width, opacity, translate;
+      transition-duration: 600ms;
+      transition-timing-function: var(--easing-emphasized);
+    }
+
+    &:hover .label {
+      translate: 0;
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
 </style>

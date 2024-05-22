@@ -1,7 +1,7 @@
-import { type Component, type JSX, createSignal, splitProps, onMount, createMemo, createEffect } from "solid-js";
-import { splashStyle, surfaceHoveredStyle, surfacePressedStyle, surfaceStyle } from "./splash.css";
-import { createEventListener, createEventListenerMap, makeEventListenerStack } from "@solid-primitives/event-listener";
-import { access, type MaybeAccessor } from "@solid-primitives/utils";
+import { type Component, type JSX, createSignal, splitProps, createEffect } from "solid-js";
+import { splashStyle, surfaceStyle } from "./splash.css";
+import { createEventListenerMap } from "@solid-primitives/event-listener";
+import { type MaybeAccessor } from "@solid-primitives/utils";
 import { mergeRefs } from "@solid-primitives/refs";
 import clsx from "clsx/lite";
 import { createMediaQuery } from "@solid-primitives/media";
@@ -17,13 +17,6 @@ const SOFT_EDGE_CONTAINER_RATIO = 0.35;
 const PRESS_PSEUDO = "::after";
 const ANIMATION_FILL = "forwards";
 const TOUCH_DELAY_MS = 150;
-
-// enum State {
-//   INACTIVE,
-//   TOUCH_DELAY,
-//   HOLDING,
-//   WAITING_FOR_CLICK,
-// }
 
 type State = "inactive" | "touchDelay" | "holding" | "waitingForClick";
 
@@ -210,10 +203,10 @@ export const Splash: Component<SplashProps> = (props) => {
     if(localProps.disabled) return;
 
     if (state() === "waitingForClick") {
-      endPressAnimation();
+      void endPressAnimation();
     } else if (state() === "inactive") {
       startPressAnimation();
-      endPressAnimation();
+      void endPressAnimation();
     }
   }
 
@@ -266,12 +259,14 @@ export const Splash: Component<SplashProps> = (props) => {
     setHovered(false);
 
     // release a held mouse or pen press that moves outside the element
-    if (state() !== "inactive") endPressAnimation();
+    if (state() !== "inactive") {
+      void endPressAnimation();
+    }
   }
 
   const onPointerCancel = (event: PointerEvent) => {
     if (!shouldReactToEvent(event)) return;
-    endPressAnimation();
+    void endPressAnimation();
   }
 
   createEffect(() => {
@@ -296,11 +291,10 @@ export const Splash: Component<SplashProps> = (props) => {
       class={clsx(splashStyle, otherProps.class)}>
       <div
         ref={surfaceRef as HTMLDivElement}
-        class={surfaceStyle}
-        classList={{
-          [surfaceHoveredStyle]: hovered(),
-          [surfacePressedStyle]: pressed(),
-        }} />
+        class={surfaceStyle({
+          hovered: hovered(),
+          pressed: pressed(),
+        })} />
     </div>
   );
 };

@@ -1,70 +1,111 @@
-import { type ComplexStyleRule, fallbackVar, style } from "@vanilla-extract/css";
+import { fallbackVar, style } from "@vanilla-extract/css";
 import { splashTheme } from "./theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
-const sharedStyles: ComplexStyleRule = {
+const sharedStyles = style({
   borderRadius: "inherit",
   inset: 0,
   position: "absolute",
   overflow: "hidden",
-};
+});
 
-const sharedPseudoStyles: ComplexStyleRule = {
-  content: "",
-  opacity: 0,
-  position: "absolute",
-};
+// const sharedPseudoStyles = {
+//   content: "",
+//   opacity: 0,
+//   position: "absolute",
+// } as const;
 
+export const splashStyle = style([
+  sharedStyles,
+  {
+    display: "flex",
+    margin: "auto",
+    pointerEvents: "none",
 
-export const splashStyle = style({
-  ...sharedStyles,
-
-  display: "flex",
-  margin: "auto",
-  pointerEvents: "none",
-
-  "@media": {
-    "(forced-colors: active)": {
-      display: "none",
+    "@media": {
+      "(forced-colors: active)": {
+        display: "none",
+      },
     },
   },
-});
+]);
 
+// export const surfaceStyle = recipe([
+//   sharedStyles,
+//   {
+//     WebkitTapHighlightColor: "transparent",
+//     "::before": {
+//       content: "",
+//       opacity: 0,
+//       position: "absolute",
 
-export const surfaceStyle = style({
-  ...sharedStyles,
-  WebkitTapHighlightColor: "transparent",
-  "::before": {
-    ...sharedPseudoStyles,
-    backgroundColor: splashTheme.hoverColor,
+//       backgroundColor: splashTheme.hoverColor,
+//       inset: 0,
+//       transition: "opacity 15ms linear, background-color 15ms linear"
+//     },
+//     "::after": {
+//       content: "",
+//       opacity: 0,
+//       position: "absolute",
+
+//       background: `radial-gradient(
+//         closest-side,
+//         ${splashTheme.pressedColor} max(calc(100% - 70px), 65%),
+//         transparent 100%
+//       )`,
+//       transformOrigin: "center center",
+//       transition: "opacity 375ms linear",
+//     },
+//   }
+// ]);
+
+export const surfaceStyle = recipe({
+  base: {
+    borderRadius: "inherit",
     inset: 0,
-    transition: "opacity 15ms linear, background-color 15ms linear"
-  },
-  "::after": {
-    ...sharedPseudoStyles,
-    background: `radial-gradient(
-      closest-side,
-      ${splashTheme.pressedColor} max(calc(100% - 70px), 65%),
-      transparent 100%
-    )`,
-    // background: css.radialGradient(
-    //   { size: "closest-side" },
-    //   [`${theme.color.onSurface}`, "max(calc(100% - 70px), 65%)"],
-    //   ["transparent", "100%"]
-    // ),
-    transformOrigin: "center center",
-    transition: "opacity 375ms linear",
-  },
-});
+    position: "absolute",
+    overflow: "hidden",
+    WebkitTapHighlightColor: "transparent",
 
-export const surfaceHoveredStyle = style({
-  "::before": {
-    backgroundColor: splashTheme.hoverColor,
-    opacity: fallbackVar(splashTheme.hoverOpacity, "0.08"),
+    "::before": {
+      content: "",
+      opacity: 0,
+      position: "absolute",
+
+      backgroundColor: splashTheme.hoverColor,
+      inset: 0,
+      transition: "opacity 15ms linear, background-color 15ms linear",
+    },
+    "::after": {
+      content: "",
+      opacity: 0,
+      position: "absolute",
+
+      background: `radial-gradient(
+            closest-side,
+            ${splashTheme.pressedColor} max(calc(100% - 70px), 65%),
+            transparent 100%
+          )`,
+      transformOrigin: "center center",
+      transition: "opacity 375ms linear",
+    },
   },
-});
-export const surfacePressedStyle = style({
-  "::after": {
-    opacity: fallbackVar(splashTheme.pressedOpacity, "0.1"),
-    transitionDuration: "105ms",
+  variants: {
+    hovered: {
+      true: {
+        "::before": {
+          backgroundColor: splashTheme.hoverColor,
+          opacity: fallbackVar(splashTheme.hoverOpacity, "0.08"),
+        },
+      },
+    },
+    pressed: {
+      true: {
+        "::after": {
+          opacity: fallbackVar(splashTheme.pressedOpacity, "0.1"),
+          transitionDuration: "105ms",
+        },
+      },
+    }
   },
 });

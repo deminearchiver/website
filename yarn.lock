@@ -132,9 +132,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/mdx@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@astrojs/mdx@npm:3.0.0"
+"@astrojs/mdx@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@astrojs/mdx@npm:3.0.1"
   dependencies:
     "@astrojs/markdown-remark": "npm:5.1.0"
     "@mdx-js/mdx": "npm:^3.0.1"
@@ -153,7 +153,7 @@ __metadata:
     vfile: "npm:^6.0.1"
   peerDependencies:
     astro: ^4.8.0
-  checksum: 10c0/2494a924cb7cf063b9cac625218d7b3a782e8bd4e642eb6a504934c3c88772e08fa96ea273dc355b4a7a556841171689952cf5a3acf9ad18c6e0a5892e2b4ba5
+  checksum: 10c0/2641fe31439246ba93c401b84641320ac43dffaaf52d409d1f11123b513a2592cc8514e53046077774ff8c6fd626b7b5c42222defad7f0319ddd4bc9aea70c3f
   languageName: node
   linkType: hard
 
@@ -176,14 +176,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/sitemap@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "@astrojs/sitemap@npm:3.1.4"
+"@astrojs/sitemap@npm:^3.1.5":
+  version: 3.1.5
+  resolution: "@astrojs/sitemap@npm:3.1.5"
   dependencies:
     sitemap: "npm:^7.1.1"
     stream-replace-string: "npm:^2.0.0"
-    zod: "npm:^3.22.4"
-  checksum: 10c0/883ce35c18957212c1c2d87048a3e783d3cbdf05a796a0af8d0dc6aa5f6fcf2e13d2adc152a9446beacf7ec90dac8f59d5cc932b615c062edff042350ec63fc7
+    zod: "npm:^3.23.8"
+  checksum: 10c0/1ae7ff76f645cf30a40e80a93779583db79f2c85c81288f6785a76649fbd64f702a7067f7d450c5c40dbc443915f20320918e65f0ceb71f2b19ba76fa9a766b6
   languageName: node
   linkType: hard
 
@@ -592,7 +592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@deminearchiver/configs@workspace:^, @deminearchiver/configs@workspace:packages/configs":
+"@deminearchiver/configs@workspace:*, @deminearchiver/configs@workspace:packages/configs":
   version: 0.0.0-use.local
   resolution: "@deminearchiver/configs@workspace:packages/configs"
   dependencies:
@@ -600,11 +600,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@deminearchiver/utils@workspace:^, @deminearchiver/utils@workspace:packages/utils":
+"@deminearchiver/utils@workspace:*, @deminearchiver/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@deminearchiver/utils@workspace:packages/utils"
   dependencies:
-    "@deminearchiver/configs": "workspace:^"
+    "@deminearchiver/configs": "workspace:*"
     typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft
@@ -614,11 +614,11 @@ __metadata:
   resolution: "@deminearchiver/website@workspace:app"
   dependencies:
     "@astrojs/check": "npm:^0.6.0"
-    "@astrojs/mdx": "npm:^3.0.0"
+    "@astrojs/mdx": "npm:^3.0.1"
     "@astrojs/rss": "npm:^4.0.5"
-    "@astrojs/sitemap": "npm:^3.1.4"
+    "@astrojs/sitemap": "npm:^3.1.5"
     "@astrojs/solid-js": "npm:^4.2.0"
-    "@deminearchiver/utils": "workspace:^"
+    "@deminearchiver/utils": "workspace:*"
     "@expressive-code/plugin-collapsible-sections": "npm:^0.35.3"
     "@expressive-code/plugin-line-numbers": "npm:^0.35.3"
     "@fontsource-variable/fira-code": "npm:^5.0.18"
@@ -626,10 +626,10 @@ __metadata:
     "@fontsource/roboto": "npm:^5.0.13"
     "@iconify-json/material-symbols": "npm:^1.1.80"
     "@iconify-json/simple-icons": "npm:^1.1.101"
-    "@material-symbols/unplugin-icons": "workspace:^"
-    "@material/material-color-utilities": "workspace:^"
-    "@material/solid": "workspace:^"
-    "@pagefind/astro": "workspace:^"
+    "@material-symbols/unplugin-icons": "workspace:*"
+    "@material/material-color-utilities": "workspace:*"
+    "@material/solid": "workspace:*"
+    "@pagefind/astro": "workspace:*"
     "@playform/compress": "npm:^0.0.4"
     "@solid-primitives/bounds": "npm:^0.0.121"
     "@solid-primitives/event-listener": "npm:^2.3.3"
@@ -646,7 +646,7 @@ __metadata:
     "@vanilla-extract/recipes": "npm:^0.5.2"
     "@vanilla-extract/sprinkles": "npm:^1.6.1"
     "@vanilla-extract/vite-plugin": "npm:^4.0.9"
-    astro: "npm:^4.8.6"
+    astro: "npm:^4.8.7"
     astro-expressive-code: "npm:^0.35.3"
     astro-meta-tags: "npm:^0.3.0"
     clsx: "npm:^2.1.1"
@@ -1978,11 +1978,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material-symbols/unplugin-icons@workspace:^, @material-symbols/unplugin-icons@workspace:packages/material-symbols":
+"@material-symbols/unplugin-icons@workspace:*, @material-symbols/unplugin-icons@workspace:packages/material-symbols":
   version: 0.0.0-use.local
   resolution: "@material-symbols/unplugin-icons@workspace:packages/material-symbols"
   dependencies:
-    astro: "npm:^4.8.6"
+    astro: "npm:^4.8.7"
     typescript: "npm:^5.4.5"
     zod: "npm:^3.23.8"
   languageName: unknown
@@ -1994,7 +1994,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@material/material-color-utilities@workspace:^, @material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript":
+"@material/material-color-utilities@workspace:*, @material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript":
   version: 0.0.0-use.local
   resolution: "@material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript"
   dependencies:
@@ -2006,13 +2006,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@material/solid@workspace:^, @material/solid@workspace:packages/material/solid":
+"@material/solid@workspace:*, @material/solid@workspace:packages/material/solid":
   version: 0.0.0-use.local
   resolution: "@material/solid@workspace:packages/material/solid"
   dependencies:
-    "@deminearchiver/configs": "workspace:^"
-    "@deminearchiver/utils": "workspace:^"
-    "@material/material-color-utilities": "workspace:^"
+    "@deminearchiver/configs": "workspace:*"
+    "@deminearchiver/utils": "workspace:*"
+    "@material/material-color-utilities": "workspace:*"
     "@solid-primitives/event-listener": "npm:^2.3.3"
     "@solid-primitives/media": "npm:^2.2.9"
     "@solid-primitives/raf": "npm:^2.1.16"
@@ -2109,12 +2109,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagefind/astro@workspace:^, @pagefind/astro@workspace:packages/astro/pagefind":
+"@pagefind/astro@workspace:*, @pagefind/astro@workspace:packages/astro/pagefind":
   version: 0.0.0-use.local
   resolution: "@pagefind/astro@workspace:packages/astro/pagefind"
   dependencies:
     "@types/node": "npm:^20.12.12"
-    astro: "npm:^4.8.6"
+    astro: "npm:^4.8.7"
     astro-integration-kit: "npm:^0.13.2"
     nanoid: "npm:^5.0.7"
     pagefind: "npm:^1.1.0"
@@ -3476,9 +3476,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^4.8.6":
-  version: 4.8.6
-  resolution: "astro@npm:4.8.6"
+"astro@npm:^4.8.7":
+  version: 4.8.7
+  resolution: "astro@npm:4.8.7"
   dependencies:
     "@astrojs/compiler": "npm:^2.8.0"
     "@astrojs/internal-helpers": "npm:0.4.0"
@@ -3549,7 +3549,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/4d5db593524f305a178973fd2044604a08a45b07031bcbac9d1550a88ef363c7ff398e9f8c7cf0d1ed07dc783816f6add4c98e78b8c23bbaa510e157965b2241
+  checksum: 10c0/95643cb713802aaf53116ad807b859c99df8d1fd3d675d28a4546f1e1857f3bbe1588f06c51cda8eaddbe55558bfd73380345520dc6d567b77c7037ba5df911f
   languageName: node
   linkType: hard
 
@@ -10648,7 +10648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.20.6, zod@npm:^3.22.4, zod@npm:^3.23.8":
+"zod@npm:^3.20.6, zod@npm:^3.23.8":
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69

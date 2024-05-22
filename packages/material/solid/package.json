@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@material/solid",
+  "type": "module",
   "exports": {
     "./theme": "./theme/index.ts",
     "./utils": "./utils/index.ts",
@@ -8,16 +9,17 @@
     "./components/switch": "./components/switch/index.ts",
     "./components/button": "./components/button/index.ts",
     "./components/icon-button": "./components/icon-button/index.ts",
-    "./components/list": "./components/list/index.ts"
+    "./components/list": "./components/list/index.ts",
+    "./components/empty": "./components/empty/index.ts"
   },
   "packageManager": "yarn@4.2.2",
   "devDependencies": {
-    "@deminearchiver/configs": "workspace:^",
+    "@deminearchiver/configs": "workspace:*",
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@deminearchiver/utils": "workspace:^",
-    "@material/material-color-utilities": "workspace:^",
+    "@deminearchiver/utils": "workspace:*",
+    "@material/material-color-utilities": "workspace:*",
     "@solid-primitives/event-listener": "^2.3.3",
     "@solid-primitives/media": "^2.2.9",
     "@solid-primitives/raf": "^2.1.16",

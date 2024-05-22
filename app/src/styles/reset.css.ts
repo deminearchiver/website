@@ -2,6 +2,13 @@ import { globalStyle } from "@vanilla-extract/css";
 import { THEME } from "./theme";
 
 globalStyle(
+  `*, *::before, *::after`,
+  {
+    boxSizing: "border-box",
+  }
+);
+
+globalStyle(
   `:root[data-theme="light"]`,
   {
     colorScheme: "light",
@@ -33,7 +40,10 @@ globalStyle(
       "not (prefers-reduced-motion)": {
         scrollBehavior: "smooth",
       },
-    }
+      "only screen and (min-width: 600px)": {
+        scrollbarGutter: "stable",
+      },
+    },
   }
 );
 
@@ -55,12 +65,7 @@ globalStyle(
 
 
 
-globalStyle(
-  `*, *::before, *::after`,
-  {
-    boxSizing: "border-box",
-  }
-);
+
 
 globalStyle(
   `*`,

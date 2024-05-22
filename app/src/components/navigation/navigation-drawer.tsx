@@ -1,6 +1,6 @@
 import { createEventListener } from "@solid-primitives/event-listener";
 import { mergeRefs, resolveFirst } from "@solid-primitives/refs";
-import { For, createComponent, createEffect, createMemo, createSignal, onMount, splitProps, type Component, type ComponentProps, type JSX, type ParentComponent } from "solid-js";
+import { For, createEffect, createMemo, createSignal, splitProps, type Component, type JSX } from "solid-js";
 
 import { createPresence } from "@solid-primitives/presence";
 import { drawerContentStyle, drawerDestinationContentStyle, drawerDestinationStyle, drawerDialogStyle, drawerListStyle, passthroughStyle } from "./navigation-drawer.css";
@@ -9,13 +9,8 @@ import { Splash } from "@material/solid/components/splash";
 
 import clsx from "clsx/lite";
 import { Dynamic } from "solid-js/web";
+import type { NavigationDestination } from "./destinations";
 
-export interface NavigationDestination {
-  href: string;
-  icon?: Component<ComponentProps<"svg">>;
-  label: string;
-  selected?: boolean;
-}
 export type NavigationDrawerProps = {
   url: URL;
   destinations: NavigationDestination[];
@@ -49,6 +44,7 @@ export const NavigationDrawer: Component<NavigationDrawerProps> = (props) => {
     openDrawer,
   );
 
+  console.log(localProps.destinations);
 
   const {
     isMounted,
@@ -102,6 +98,7 @@ export const NavigationDrawer: Component<NavigationDrawerProps> = (props) => {
               destination => (
                 <li class={passthroughStyle}>
                   <NavigationDrawerDestination
+                    url={localProps.url}
                     state={state()}
                     destination={destination}
                     onClick={closeDrawer} />
@@ -117,6 +114,7 @@ export const NavigationDrawer: Component<NavigationDrawerProps> = (props) => {
 
 type NavigationDrawerDestinationProps =  {
   state: "enter" | "exit" | undefined;
+  url: URL;
   destination: NavigationDestination;
 } & Omit<JSX.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "children">;
 
@@ -125,6 +123,7 @@ const NavigationDrawerDestination: Component<NavigationDrawerDestinationProps> =
     props,
     [
       "ref",
+      "url",
       "class",
       "state",
       "destination",
@@ -133,12 +132,14 @@ const NavigationDrawerDestination: Component<NavigationDrawerDestinationProps> =
 
   let ref!: HTMLElement;
 
+  console.log(localProps.destination);
+
   return (
     <a
       ref={mergeRefs(localProps.ref, element => ref = element)}
       class={clsx(
         drawerDestinationStyle({
-          selected: localProps.destination.selected,
+          selected: localProps.destination.test(localProps.url),
         }),
         localProps.class,
       )}

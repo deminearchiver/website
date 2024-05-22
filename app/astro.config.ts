@@ -73,11 +73,11 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
-      vanillaExtract(),
       unpluginIcons({
         compiler: "solid",
         customCollections: materialSymbols(),
       }),
+      vanillaExtract(),
       // fontaine.vite({
       //   fallbacks: ["Arial"],
       //   resolvePath: id => new URL(`./public${id}`, import.meta.url),

@@ -70,9 +70,9 @@ export const ThemeSelect: Component<ThemeSelectProps> = (props) => {
     </Switch>
   );
 
-  const label = () => `${useAuto() ? "Auto" : "Manual"} (${theme()})`;
-
-
+  const label = createMemo(
+    () => `${useAuto() ? "Auto" : "Inverse"} (${theme()})`
+  );
 
   return (
     <>

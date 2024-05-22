@@ -59,12 +59,12 @@ export const Search: Component<SearchProps> = (props) => {
     openView
   );
 
-  const enterDuration = createMemo(() =>
-    breakpoint() === "compact" ? 0 : 500
-  );
-  const exitDuration = createMemo(() =>
-    breakpoint() === "compact" ? 0 : 200
-  );
+  // const enterDuration = createMemo(() =>
+  //   breakpoint() === "compact" ? 0 : 500
+  // );
+  // const exitDuration = createMemo(() =>
+  //   breakpoint() === "compact" ? 0 : 200
+  // );
 
 
   const {
@@ -72,12 +72,12 @@ export const Search: Component<SearchProps> = (props) => {
     isExiting,
     isMounted,
   } = createPresence(open, {
-    enterDuration: enterDuration,
-    exitDuration: exitDuration,
+    enterDuration: 600,
+    exitDuration: 200,
   });
 
   const state = createMemo(() => {
-    if(breakpoint() === "compact") return;
+    // if(breakpoint() === "compact") return;
     if(isEntering()) return "entering"
     if(isExiting()) return "exiting";
   });

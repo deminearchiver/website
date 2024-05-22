@@ -33,7 +33,7 @@ export const themeSelectStyle = recipe({
       false: {
         borderRadius: 9999,
         padding: "8px 16px",
-        marginInline: 16,
+        marginInlineEnd: 16,
       },
       true: {
         justifyContent: "space-between",
