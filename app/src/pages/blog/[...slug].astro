@@ -44,6 +44,16 @@ const { Content } = await post.render();
   <Footer />
 </Page>
 
+<script is:inline>
+  const back = document.querySelector(".back");
+  document.addEventListener(
+    "astro:after-preparation",
+    event => {
+      event.direction = "backward";
+    }
+  );
+</script>
+
 <style>
   main {
     max-width: 960px;

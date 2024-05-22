@@ -1,13 +1,11 @@
 ---
 import type { JSX } from "astro/jsx-runtime";
 import clsx from "clsx/lite";
-import type { NavigationDestination } from "./destinations";
+import type { StaticNavigationDestination } from "./destinations";
 
 type Props = {
-  destination: NavigationDestination;
+  destination: StaticNavigationDestination;
 } & Omit<JSX.AnchorHTMLAttributes, "href" | "children">
-
-const SUBPATH_REGEX = /[^\/]+/g;
 
 const {
   destination,
@@ -15,9 +13,8 @@ const {
   ...rest
 } = Astro.props;
 
-const isSelected = destination.test(Astro.url);
 const className = clsx(
-  "navigation-tab", isSelected && "selected",
+  "navigation-tab", destination.selected && "selected",
   customClass,
 );
 ---

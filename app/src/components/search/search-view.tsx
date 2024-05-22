@@ -217,7 +217,10 @@ export const SearchView: Component<SearchViewProps> = (props) => {
                 <ul class={searchViewResultsStyle}>
                   <For each={pages()}>{
                     (page, index) => (
-                      <SearchResult index={index()} result={page} />
+                      <SearchResult
+                        index={index()}
+                        result={page}
+                        close={closeView} />
                     )
                   }</For>
                   <Show when={!end()}>
@@ -237,6 +240,7 @@ export const SearchView: Component<SearchViewProps> = (props) => {
 type SearchResultProps = {
   index: number;
   result: PagefindSearchFragment;
+  close: () => void;
 }
 
 const SearchResult: Component<SearchResultProps> = (props) => {
@@ -249,6 +253,7 @@ const SearchResult: Component<SearchResultProps> = (props) => {
       })
     }>
       <ListItem
+        onClick={() => props.close()}
         type="link"
         leading={<DescriptionIcon width={24} height={24} />}
         title={props.result.meta.title}
@@ -256,6 +261,7 @@ const SearchResult: Component<SearchResultProps> = (props) => {
       <For each={props.result.sub_results}>{
         (subResult) => (
           <ListItem
+            onClick={() => props.close()}
             class={searchSubResultStyle}
             type="link"
             leading={<SearchIcon width={24} height={24} />}

@@ -85,6 +85,14 @@ export const drawerContentStyle = recipe({
 
 });
 
+export const drawerHeaderStyle = style({
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  gap: 16,
+  padding: 8,
+});
+
 export const drawerListStyle = style({
   listStyle: "none",
   width: "100%",
@@ -93,7 +101,7 @@ export const drawerListStyle = style({
   alignItems: "center",
   justifyContent: "flex-start",
 });
-export const drawerDestinationStyle = recipe({
+export const drawerItemStyle = recipe({
   base: {
     WebkitTapHighlightColor: "transparent",
     position: "relative",
@@ -101,11 +109,14 @@ export const drawerDestinationStyle = recipe({
     height: 56,
     borderRadius: 9999,
     textDecoration: "none",
+    backgroundColor: "transparent",
+    border: "none",
     outline: "none",
   },
   variants: {
     selected: {
       false: {
+        cursor: "pointer",
         color: THEME.color.onSurfaceVariant,
         vars: {
           [splashTheme.hoverColor]: THEME.color.onSecondaryContainer,
@@ -143,7 +154,7 @@ const destinationExit = keyframes({
   },
 });
 
-export const drawerDestinationContentStyle = recipe({
+export const drawerItemContentStyle = recipe({
   base: {
     position: "absolute",
     inset: 0,

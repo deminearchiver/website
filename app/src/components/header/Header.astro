@@ -13,9 +13,9 @@ import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 
 import { Logo } from "../logo";
 import { NavigationDrawer } from "../navigation";
-import { SearchView, SearchAnchor } from "../search";
+import { SearchView, SearchAnchor, Search } from "../search";
 import { NavigationTab } from "../navigation";
-import { NAVIGATION_DESTINATIONS } from "../navigation/destinations";
+import { dynamicToStatic, NAVIGATION_DESTINATIONS } from "../navigation/destinations";
 import { fade } from "astro/virtual-modules/transitions.js";
 import type { TransitionAnimationPair } from "astro";
 import { THEME } from "../../styles/theme";
@@ -38,15 +38,16 @@ const animate = {
   backwards: fadeOver,
 }
 
+const destinations = dynamicToStatic(Astro.url, NAVIGATION_DESTINATIONS);
+
 ---
 
 <header id="header" transition:name="header" transition:animate={animate}>
   <div class="leading">
     <NavigationDrawer
-      client:only="solid-js"
+      client:load
       class="drawer"
-      url={Astro.url}
-      destinations={[]}>
+      destinations={destinations}>
         <IconButton>
           <MenuIcon />
         </IconButton>
@@ -58,7 +59,7 @@ const animate = {
   <nav>
     <ul>
       {
-        NAVIGATION_DESTINATIONS.map(destination => (
+        destinations.map(destination => (
           <li>
             <NavigationTab destination={destination} />
           </li>
@@ -73,9 +74,7 @@ const animate = {
       href="/rss.xml">
         <RssFeedIcon />
     </IconButton> -->
-    <SearchView client:only="solid-js">
-      <SearchAnchor client:load />
-    </SearchView>
+    <Search client:only="solid-js" />
     <ThemeSelect client:only="solid-js" />
   </div>
 </header>
