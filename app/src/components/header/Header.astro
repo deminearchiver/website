@@ -13,36 +13,40 @@ import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 
 import { Logo } from "../logo";
 import { NavigationDrawer } from "../navigation";
-import { Search, SearchAnchor } from "../search";
+import { SearchView, SearchAnchor } from "../search";
 import { NavigationTab } from "../navigation";
 import { NAVIGATION_DESTINATIONS } from "../navigation/destinations";
+import { fade } from "astro/virtual-modules/transitions.js";
+import type { TransitionAnimationPair } from "astro";
+import { THEME } from "../../styles/theme";
 
 interface Props {}
 
+const fadeOver: TransitionAnimationPair = {
+  old: {
+    name: "none",
+  },
+  new: {
+    name: "fade-over",
+    duration: THEME.duration.short2,
+    easing: THEME.easing.standard,
+    fillMode: "both",
+  },
+};
+const animate = {
+  forwards: fadeOver,
+  backwards: fadeOver,
+}
 
 ---
 
-<header id="header">
+<header id="header" transition:name="header" transition:animate={animate}>
   <div class="leading">
     <NavigationDrawer
       client:only="solid-js"
       class="drawer"
       url={Astro.url}
-      destinations={[
-          {
-    icon: FeedIcon,
-    label: "Blog",
-    href: "/blog",
-    test: url => url.pathname.startsWith("/blog")
-  },
-  {
-    icon: InfoIcon,
-    label: "About",
-    href: "/about",
-    test: url => url.pathname.startsWith("/about")
-
-  },
-      ]}>
+      destinations={[]}>
         <IconButton>
           <MenuIcon />
         </IconButton>
@@ -69,14 +73,10 @@ interface Props {}
       href="/rss.xml">
         <RssFeedIcon />
     </IconButton> -->
-    <Search client:only="solid-js" transition:persist>
+    <SearchView client:only="solid-js">
       <SearchAnchor client:load />
-      <!-- <IconButton variant="tonal">
-        <SearchIcon width={24} height={24} />
-      </IconButton> -->
-    </Search>
-    <!-- <ThemeSelect client:load /> -->
-    <ThemeSelect client:only="solid-js" transition:persist />
+    </SearchView>
+    <ThemeSelect client:only="solid-js" />
   </div>
 </header>
 
@@ -110,6 +110,11 @@ interface Props {}
 </script>
 
 <style>
+  @keyframes fade-over {
+    from { opacity: 0; }
+  }
+
+
   #header {
     position: sticky;
     top: 0;

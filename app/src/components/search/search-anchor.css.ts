@@ -8,63 +8,52 @@ const EASING = THEME.easing.emphasized;
 
 export const searchAnchorStyle = style({
   WebkitTapHighlightColor: "transparent",
+
   appearance: "none",
   border: "none",
   outline: "none",
-
   position: "relative",
+
+  borderRadius: 9999,
+  cursor: "pointer",
+  backgroundColor: THEME.color.secondaryContainer,
+  minWidth: 40,
   height: 40,
+  vars: {
+    [splashTheme.hoverColor]: THEME.color.onSecondaryContainer,
+    [splashTheme.pressedColor]: THEME.color.onSecondaryContainer,
+  },
+});
+
+export const searchAnchorContentStyle = style({
 
   display: "grid",
   placeItems: "center",
   placeContent: "center",
 
 
-  backgroundColor: THEME.color.secondaryContainer,
-  borderRadius: 9999,
 
   color: THEME.color.onSecondaryContainer,
 
-  cursor: "pointer",
-  overflow: "hidden",
-
-
+  height: "inherit",
+  minWidth: "inherit",
+  borderRadius: "inherit",
 
   gridTemplateColumns: "24px 0fr",
-  paddingInline: 8,
   gap: 0,
+  overflow: "hidden",
 
-  minWidth: 40,
+  paddingInline: 8,
 
-  transitionProperty: "height, color, background-color, min-width, grid-template-columns, padding-inline, gap",
+  transitionProperty: "grid-template-columns, gap, padding-inline",
   transitionDuration: DURATION,
   transitionTimingFunction: EASING,
-
-  vars: {
-    [splashTheme.hoverColor]: THEME.color.onSecondaryContainer,
-    [splashTheme.pressedColor]: THEME.color.onSecondaryContainer,
-  },
   "@media": {
     "only screen and (min-width: 1200px)": {
-      paddingInline: "16px 24px",
       gap: 8,
       gridTemplateColumns: "18px 1fr",
-      minWidth: 100, // TODO: somehow make it auto or smth
+      paddingInline: "16px 24px",
     },
-    // "only screen and (min-width: 1200px)": {
-    //   gridTemplateColumns: "24px 1fr",
-    //   height: 56,
-    //   minWidth: 360,
-    //   maxWidth: 720,
-    //   paddingInline: 16,
-    //   backgroundColor: THEME.color.surfaceContainerHigh,
-    //   color: THEME.color.onSurfaceVariant,
-    //   gap: 16,
-    //   vars: {
-    //     [splashTheme.hoverColor]: THEME.color.onSurfaceVariant,
-    //     [splashTheme.pressedColor]: THEME.color.onSurfaceVariant,
-    //   },
-    // },
   },
 });
 
@@ -74,7 +63,7 @@ export const searchAnchorIconStyle = style({
   height: 24,
   gridColumn: 1,
 
-  transitionProperty: "color, width, height",
+  transitionProperty: "width, height",
   transitionDuration: DURATION,
   transitionTimingFunction: EASING,
 
@@ -84,11 +73,6 @@ export const searchAnchorIconStyle = style({
       width: 18,
       height: 18,
     },
-    // "only screen and (min-width: 1200px)": {
-    //   width: 24,
-    //   height: 24,
-    //   color: THEME.color.onSurface,
-    // },
   },
 });
 export const searchAnchorLabelStyle = style({
@@ -99,10 +83,7 @@ export const searchAnchorLabelStyle = style({
   display: "flex",
   alignItems: "center",
 
-  transitionProperty: `
-    width, opacity, translate,
-    font-family, font-size, font-weight, line-height, letter-spacing
-  `,
+  transitionProperty: "width, opacity, translate",
   transitionDuration: DURATION,
   transitionTimingFunction: EASING,
 
@@ -121,12 +102,5 @@ export const searchAnchorLabelStyle = style({
       translate: 0,
       opacity: 1,
     },
-    // "only screen and (min-width: 1200px)": {
-    //   fontFamily: THEME.text.body.large.family,
-    //   fontSize: THEME.text.body.large.size,
-    //   fontWeight: THEME.text.body.large.weight,
-    //   lineHeight: THEME.text.body.large.lineHeight,
-    //   letterSpacing: THEME.text.body.large.letterSpacing,
-    // },
   },
 });

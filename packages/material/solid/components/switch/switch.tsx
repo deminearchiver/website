@@ -3,6 +3,7 @@ import { switchDisabledStyle, switchHandleContainerStyle, switchHandleStyle, swi
 import { Splash } from "../splash";
 import { resolveFirst } from "@solid-primitives/refs";
 import clsx from "clsx/lite";
+import { Focus } from "../focus";
 
 interface SwitchProps extends JSX.HTMLAttributes<HTMLElement> {
   selected: boolean;
@@ -68,8 +69,8 @@ export const Switch: ParentComponent<SwitchProps> = (props) => {
                 height: "40px",
                 "border-radius": "4px",
               }}>
-                {/* <Focus
-                  for={inputRef} /> */}
+                <Focus
+                  for={inputRef} />
             </div>
             <div
               style={{

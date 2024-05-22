@@ -3,6 +3,7 @@ import { Splash } from "../splash";
 import { buttonStyle } from "./button.css";
 import clsx from "clsx/lite";
 import { Dynamic } from "solid-js/web";
+import { Focus } from "../focus";
 
 type ButtonVariant = "elevated" | "filled" | "tonal" | "outlined" | "text";
 export type ButtonProps = {
@@ -47,6 +48,7 @@ export const Button: ParentComponent<ButtonProps> = (props) => {
         localProps.class
       )}
       {...otherProps}>
+      <Focus for={ref} />
       <Splash for={ref} />
       {localProps.leading}
       {localProps.children}

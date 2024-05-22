@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { fade, slide, ViewTransitions } from "astro:transitions";
 import { Head } from "../components/head";
 
 import "../styles/theme/global.css";
@@ -8,16 +8,94 @@ import "normalize.css";
 
 import "@fontsource-variable/roboto-flex/grad.css";
 import "@fontsource-variable/fira-code";
+import type { TransitionAnimationPair, TransitionAnimationValue, TransitionDirectionalAnimations } from "astro";
+import { THEME } from "../styles/theme";
+
+const emphasized = `linear(
+  0, 0.001, 0.002 1.8%, 0.004 2.3%, 0.01, 0.02 4.9%, 0.034, 0.053,
+  0.074 9.1% 9.1%, 0.1, 0.129 11.4%, 0.128 11.4%, 0.16, 0.194 13.4%, 0.231,
+  0.271 15%, 0.345 16.1%, 0.344 16.1%, 0.477 17.5%, 0.544 18.3%, 0.607,
+  0.66 20.6%, 0.69, 0.717, 0.742, 0.765, 0.788, 0.808, 0.827, 0.845 30.4%,
+  0.865 32.6%, 0.866, 0.865, 0.866 32.7%, 0.869 33.1%, 0.883 35.1%, 0.889 35.9%,
+  0.888, 0.889 35.9%, 0.9 37.7%, 0.901, 0.9, 0.901 37.8%, 0.904 38.4%,
+  0.916 40.6%, 0.929 43.8%, 0.942 47.2%, 0.953 51%, 0.963 55%, 0.972 59.3%,
+  0.979 64%, 0.986 69%, 0.991 74.4%, 0.995 80.2%, 0.998 86.4%, 0.999 93%, 1
+)`;
+
+const sharedAxis = (forwards: boolean): TransitionAnimationPair => {
+  return {
+    old: [
+      {
+        name: "fade-out",
+        duration: THEME.duration.long4,
+        easing: THEME.easing.emphasized,
+        fillMode: "both",
+      },
+      {
+        name: forwards ? "slide-to-left" : "slide-to-right",
+        duration: THEME.duration.long4,
+        easing: THEME.easing.emphasized,
+        fillMode: "both",
+      },
+    ],
+    new: [
+      {
+        name: "fade-in",
+        duration: THEME.duration.long4,
+        easing: THEME.easing.emphasized,
+        fillMode: "both",
+      },
+      {
+        name: forwards ? "slide-from-right" : "slide-from-left",
+        duration: THEME.duration.long4,
+        easing: THEME.easing.emphasized,
+        fillMode: "both",
+      },
+    ],
+  };
+}
+
+const animation = {
+  forwards: sharedAxis(true),
+  backwards: sharedAxis(false),
+}
 ---
 
-<html lang="en">
+<html lang="en" transition:animate={animation}>
   <head>
     <Head
       title="deminearchiver"
       description="" />
-    <ViewTransitions />
+    <ViewTransitions/>
   </head>
   <body>
     <slot />
   </body>
 </html>
+
+<style>
+@keyframes fade-in {
+  0%, 30% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+  0% {opacity: 1; }
+  30%, 100% { opacity: 0; }
+}
+
+@keyframes slide-from-right {
+  from { transform: translateX(56px); }
+}
+
+@keyframes slide-from-left {
+  from { transform: translateX(-56px); }
+}
+@keyframes slide-to-left {
+  to { transform: translateX(-56px); }
+}
+@keyframes slide-to-right {
+  to { transform: translateX(56px); }
+}
+
+</style>

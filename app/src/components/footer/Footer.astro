@@ -93,6 +93,7 @@ const year = new Date().getFullYear();
 
   .link {
     -webkit-tap-highlight-color: transparent;
+    position: relative;
 
     font-family: var(--text-label-large-family);
     font-size: var(--text-label-large-size);
@@ -102,9 +103,6 @@ const year = new Date().getFullYear();
 
     color: var(--color-on-surface-variant);
     text-decoration: none;
-
-
-
 
     height: 40px;
     border-radius: 20px;
@@ -120,9 +118,19 @@ const year = new Date().getFullYear();
 
     font-variation-settings: "GRAD" 0;
 
-    transition-property: grid-template-columns, padding-inline, gap;
-    transition-duration: 600ms;
-    transition-timing-function: var(--easing-emphasized);
+    transition:
+      background-color 15ms linear,
+      color 15ms linear,
+      font-variation-settings 300ms var(--easing-standard),
+      grid-template-columns 600ms var(--easing-emphasized),
+      padding-inline 600ms var(--easing-emphasized),
+      gap 600ms var(--easing-emphasized);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+    }
 
     &:hover {
       gap: 16px;
@@ -135,7 +143,7 @@ const year = new Date().getFullYear();
     }
     &:active {
       background-color: color-mix(in srgb, transparent, var(--color-primary) 10%);
-      font-variation-settings: "GRAD" 0;
+      font-variation-settings: "GRAD" 150;
     }
 
     & .icon {

@@ -5,6 +5,7 @@ import { Dynamic } from "solid-js/web";
 import type { HTMLAttributes } from "astro/types";
 import { mergeRefs } from "@solid-primitives/refs";
 import clsx from "clsx/lite";
+import { Focus } from "../focus";
 
 export type ListItemType = "text" | "button" | "link";
 type BaseListItemProps = {
@@ -48,6 +49,7 @@ export const ListItem: Component<ListItemProps> = (props) => {
       ref={mergeRefs(localProps.ref, setRef)}
       class={clsx(listItemStyle, localProps.class)}
       {...otherProps}>
+        <Focus for={ref} />
         <Splash for={ref} disabled={type() === "text"} />
         {localProps.leading}
         <div class={listItemContentStyle}>

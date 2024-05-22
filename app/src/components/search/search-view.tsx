@@ -3,7 +3,7 @@ import { createEventListener } from "@solid-primitives/event-listener";
 import { createPresence } from "@solid-primitives/presence";
 import { resolveFirst } from "@solid-primitives/refs";
 import { type JSX, splitProps, type Component, createEffect, createSignal, createMemo, Show, createResource, For, Switch, Match } from "solid-js";
-import { searchDialogStyle, searchResultIndex, searchResultStyle, searchResultsMessageStyle, searchSubResultStyle, searchViewBarStyle, searchViewInputStyle, searchViewResultsStyle, searchViewStyle } from "./search.css";
+import { searchDialogStyle, searchResultIndex, searchResultStyle, searchResultsMessageStyle, searchSubResultStyle, searchViewBarStyle, searchViewInputStyle, searchViewResultsStyle, searchViewStyle } from "./search-view.css";
 import { debounce, leadingAndTrailing } from "@solid-primitives/scheduled";
 import { createInfiniteScroll } from "./pagination";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
@@ -21,11 +21,11 @@ import DescriptionIcon from "~icons/material-symbols-rounded/description:outline
 
 import { isServer } from "solid-js/web";
 
-export type SearchProps = {
+export type SearchViewProps = {
   children: JSX.Element;
 }
 
-export const Search: Component<SearchProps> = (props) => {
+export const SearchView: Component<SearchViewProps> = (props) => {
   const [localProps, otherProps] = splitProps(
     props,
     ["children"]
