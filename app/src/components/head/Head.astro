@@ -23,7 +23,7 @@ const {
   rel="alternate"
   type="application/rss+xml"
   title={title}
-  href={`${Astro.site}rss.xml`} />
+  href={`${Astro.site!.href}rss.xml`} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />

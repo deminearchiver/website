@@ -89,8 +89,9 @@ export const drawerHeaderStyle = style({
   width: "100%",
   display: "flex",
   alignItems: "center",
-  gap: 16,
+  gap: 8,
   padding: 8,
+  color: THEME.color.onSurfaceVariant,
 });
 
 export const drawerListStyle = style({

@@ -2,23 +2,18 @@
 import { IconButton } from "../icon-button";
 import { ThemeSelect } from "../theme";
 
-import NavLink from "./NavLink.astro";
-
 import MenuIcon from "~icons/material-symbols-rounded/menu:outlined";
-import HomeIcon from "~icons/material-symbols-rounded/home:outlined";
-import FeedIcon from "~icons/material-symbols-rounded/feed:outlined";
-import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
-import SearchIcon from "~icons/material-symbols-rounded/search:outlined";
-import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 
 import { Logo } from "../logo";
 import { NavigationDrawer } from "../navigation";
-import { SearchView, SearchAnchor, Search } from "../search";
+import { Search } from "../search";
 import { NavigationTab } from "../navigation";
-import { dynamicToStatic, NAVIGATION_DESTINATIONS } from "../navigation/destinations";
+import { dynamicToStatic, getDestinations } from "../navigation/destinations";
 import { fade } from "astro/virtual-modules/transitions.js";
 import type { TransitionAnimationPair } from "astro";
 import { THEME } from "../../styles/theme";
+
+import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 
 interface Props {}
 
@@ -38,7 +33,7 @@ const animate = {
   backwards: fadeOver,
 }
 
-const destinations = dynamicToStatic(Astro.url, NAVIGATION_DESTINATIONS);
+const destinations = dynamicToStatic(Astro.url, getDestinations());
 
 ---
 
@@ -47,7 +42,7 @@ const destinations = dynamicToStatic(Astro.url, NAVIGATION_DESTINATIONS);
     <NavigationDrawer
       client:load
       class="drawer"
-      destinations={destinations}>
+      url={Astro.url}>
         <IconButton>
           <MenuIcon />
         </IconButton>
@@ -68,14 +63,14 @@ const destinations = dynamicToStatic(Astro.url, NAVIGATION_DESTINATIONS);
     </ul>
   </nav>
   <div class="options">
-    <!-- <IconButton
+    <IconButton
       class="option rss"
       variant="tonal"
       href="/rss.xml">
         <RssFeedIcon />
-    </IconButton> -->
+    </IconButton>
     <Search client:only="solid-js" />
-    <ThemeSelect client:only="solid-js" />
+    <ThemeSelect client:load />
   </div>
 </header>
 

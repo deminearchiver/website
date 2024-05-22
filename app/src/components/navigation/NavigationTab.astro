@@ -17,13 +17,19 @@ const className = clsx(
   "navigation-tab", destination.selected && "selected",
   customClass,
 );
+
+const iconProps = { width: 24, height: 24 };
 ---
 
 <a
   class={className}
   href={destination.href}
   {...rest}>
-    <destination.icon width={24} height={24} />
+    {
+      destination.selected
+        ? <destination.icon.selected {...iconProps} />
+        : <destination.icon.unselected {...iconProps} />
+    }
     <span>{destination.label}</span>
 </a>
 

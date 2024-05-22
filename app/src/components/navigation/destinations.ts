@@ -1,10 +1,15 @@
 import type { Icon } from "../icon";
 
-import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
-import FeedIcon from "~icons/material-symbols-rounded/feed:outlined";
+import InfoOutlinedIcon from "~icons/material-symbols-rounded/info:outlined";
+import InfoFilledIcon from "~icons/material-symbols-rounded/info:filled";
+import FeedOutlinedIcon from "~icons/material-symbols-rounded/feed:outlined";
+import FeedFilledIcon from "~icons/material-symbols-rounded/feed:filled";
 
 export type NavigationDestination = {
-  icon: Icon;
+  icon: {
+    unselected: Icon;
+    selected: Icon;
+  };
   label: string;
   href: string;
 };
@@ -14,25 +19,31 @@ export interface DynamicNavigationDestination extends NavigationDestination  {
 };
 
 export interface StaticNavigationDestination extends NavigationDestination {
-  selected?: boolean;
+  selected: boolean;
 }
 
 const startsWith = (value: string) => (url: URL) => url.pathname.startsWith(value);
 
-export const NAVIGATION_DESTINATIONS = [
+export const getDestinations = (): DynamicNavigationDestination[] => [
   {
-    icon: FeedIcon,
+    icon: {
+      unselected: FeedOutlinedIcon,
+      selected: FeedFilledIcon,
+    },
     label: "Blog",
     href: "/blog",
     selected: startsWith("/blog")
   },
   {
-    icon: InfoIcon,
+    icon: {
+      unselected: InfoOutlinedIcon,
+      selected: InfoFilledIcon,
+    },
     label: "About",
     href: "/about",
     selected: startsWith("/about"),
   },
-] satisfies DynamicNavigationDestination[];
+];
 
 export const dynamicToStatic = (
   url: URL,
