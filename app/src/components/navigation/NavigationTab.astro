@@ -2,6 +2,7 @@
 import type { JSX } from "astro/jsx-runtime";
 import clsx from "clsx/lite";
 import type { StaticNavigationDestination } from "./destinations";
+import { fade, slide } from "astro:transitions";
 
 type Props = {
   destination: StaticNavigationDestination;
@@ -31,6 +32,7 @@ const iconProps = { width: 24, height: 24 };
         : <destination.icon.unselected {...iconProps} />
     }
     <span>{destination.label}</span>
+    <div class="indicator" />
 </a>
 
 <style>
@@ -120,8 +122,8 @@ const iconProps = { width: 24, height: 24 };
       font-weight: 500;
       color: var(--color-primary);
 
-      &::after {
-        content: "";
+      & .indicator {
+        /* content: ""; */
         position: absolute;
         bottom: -8px;
 
@@ -136,9 +138,9 @@ const iconProps = { width: 24, height: 24 };
         z-index: 2;
       }
 
-      &:is(:hover,:focus-visible)::after {
+      &:is(:hover,:focus-visible) .indicator {
         height: 8px;
       }
     }
-}
+  }
 </style>

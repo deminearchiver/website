@@ -1,4 +1,4 @@
-import type { Icon } from "../icon";
+import type { Icon } from "../primitives/icon";
 
 import InfoOutlinedIcon from "~icons/material-symbols-rounded/info:outlined";
 import InfoFilledIcon from "~icons/material-symbols-rounded/info:filled";

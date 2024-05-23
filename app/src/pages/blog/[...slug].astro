@@ -6,7 +6,7 @@ import Markdown from "../../components/markdown/Markdown.astro";
 import Page from "../../layouts/Page.astro";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
-import { IconButton } from "../../components/icon-button";
+import { IconButton } from "../../components/primitives/icon-button";
 
 import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined&opticalSize=40";
 
@@ -45,11 +45,13 @@ const { Content } = await post.render();
 </Page>
 
 <script is:inline>
-  const back = document.querySelector(".back");
   document.addEventListener(
-    "astro:after-preparation",
+    "astro:before-preparation",
     event => {
-      event.direction = "backward";
+      const back = document.querySelector(".back");
+      if(event.sourceElement === back) {
+        event.direction = "back";
+      }
     }
   );
 </script>

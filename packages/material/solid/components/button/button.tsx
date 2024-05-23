@@ -34,6 +34,16 @@ export const Button: ParentComponent<ButtonProps> = (props) => {
     return "href" in otherProps ? "a" : "button";
   });
 
+  const className = createMemo(() => {
+    return clsx(
+      buttonStyle({
+        leading: !!localProps.leading,
+        trailing: !!localProps.trailing,
+        variant: localProps.variant,
+      }),
+      localProps.class,
+    );
+  })
 
   return (
     <Dynamic

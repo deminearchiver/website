@@ -11,6 +11,7 @@
     "./components/button": "./components/button/index.ts",
     "./components/icon-button": "./components/icon-button/index.ts",
     "./components/list": "./components/list/index.ts",
+    "./components/card": "./components/card/index.ts",
     "./components/empty": "./components/empty/index.ts"
   },
   "packageManager": "yarn@4.2.2",

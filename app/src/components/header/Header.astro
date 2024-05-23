@@ -1,5 +1,5 @@
 ---
-import { IconButton } from "../icon-button";
+import { IconButton } from "../primitives/icon-button";
 import { ThemeSelect } from "../theme";
 
 import MenuIcon from "~icons/material-symbols-rounded/menu:outlined";
@@ -37,7 +37,7 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
 
 ---
 
-<header id="header" transition:name="header" transition:animate={animate}>
+<header id="header" transition:name="header" transition:animate={animate} data-pagefind-ignore>
   <div class="leading">
     <NavigationDrawer
       client:load
@@ -92,15 +92,23 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
   // window.addEventListener("scroll", onScroll);
 </script>
 
-<script>
-  const header = document.getElementById("header")!;
-  const onScroll = () => {
-    header.style.backgroundColor = window.scrollY > 0
-        ? "var(--color-surface-container)"
-        : "var(--color-surface)";
-  }
-  onScroll();
-  window.addEventListener("scroll", onScroll);
+<script is:inline data-astro-rerun>
+  document.addEventListener(
+    "astro:page-load",
+    () => {
+      const header = document.getElementById("header");
+      const onScroll = () => {
+        const normalBackgroundColor = "var(--color-surface)";
+        const scrolledUnderBackgroundColor = "var(--color-surface-container)";
+        // const scrolledUnderBackgroundColor = `color-mix(in srgb, var(--color-surface-container) 62%, transparent)`;
+        header.style.backgroundColor = window.scrollY > 0
+            ? scrolledUnderBackgroundColor
+            : normalBackgroundColor;
+      }
+      onScroll();
+      window.addEventListener("scroll", onScroll);
+    }
+  );
 </script>
 
 <style>
@@ -125,6 +133,8 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
     /* background-color: color-mix(in srgb, var(--color-surface), var(--color-surface-container) var(--header-scrolled-under-mix, 0%)); */
     background-color: var(--color-surface);
     transition: background-color 300ms var(--easing-standard);
+
+    /* backdrop-filter: blur(8px); */
 
     z-index: 9999;
     isolation: isolate

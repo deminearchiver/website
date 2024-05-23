@@ -1,5 +1,5 @@
 ---
-import { IconButton } from "../icon-button";
+import { IconButton } from "../primitives/icon-button";
 import type { Component } from "solid-js";
 import type { ComponentProps } from "solid-js";
 import type { JSX } from "astro/jsx-runtime";
@@ -37,7 +37,7 @@ interface Props {}
 const year = new Date().getFullYear();
 ---
 
-<footer>
+<footer data-pagefind-ignore>
   <p class="copyright">Copyright &copy; {year} deminearchiver</p>
   <ul class="links">
     <li>{

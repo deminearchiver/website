@@ -252,7 +252,7 @@ export type PagefindModule = {
    */
   destroy: () => void;
   preload: (term: string, options?: PagefindSearchOptions) => Promise<void>;
-  search: (term: string) => Promise<PagefindSearchResults>;
+  search: (term: string, options?: PagefindSearchOptions) => Promise<PagefindSearchResults>;
   /**
    *
    * @param term

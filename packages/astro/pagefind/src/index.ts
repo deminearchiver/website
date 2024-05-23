@@ -5,7 +5,7 @@ export * from "./types";
 export interface Pagefind {
   init: (options?: PagefindOptions) => Promise<void>;
   preload: (term: string) => Promise<void>;
-  search: (term: string) => Promise<PagefindSearchResults>;
+  search: (term: string, options?: PagefindSearchOptions) => Promise<PagefindSearchResults>;
   debouncedSearch: (term: string, options?: PagefindSearchOptions, timeout?: number) => Promise<PagefindSearchResults | null>;
 }
 
@@ -18,18 +18,18 @@ export abstract class PagefindProvider {
 
     const pagefind = await import(/* @vite-ignore */ url.toString()) as PagefindModule;
     return {
-      init: async (options?: PagefindOptions) => {
+      init: async (options) => {
         if(options) await pagefind.options(options);
         pagefind.init();
       },
-      preload: async (term: string) => {
+      preload: async (term) => {
         return await pagefind.preload(term);
       },
 
-      search: async (term: string) => {
-        return await pagefind.search(term);
+      search: async (term, options) => {
+        return await pagefind.search(term, options);
       },
-      debouncedSearch: async (term: string, options?: PagefindSearchOptions, timeout: number = 300) => {
+      debouncedSearch: async (term, options, timeout = 300) => {
         return await pagefind.debouncedSearch(term, options, timeout);
       },
     };

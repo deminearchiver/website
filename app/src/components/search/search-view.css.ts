@@ -1,6 +1,6 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { THEME } from "../../styles/theme/contract.css";
-import { createVar, keyframes, style } from "@vanilla-extract/css";
+import { createVar, fallbackVar, keyframes, style } from "@vanilla-extract/css";
 import { listItemTheme } from "@material/solid/components/list";
 
 const OPEN_DURATION = "600ms";
@@ -63,18 +63,18 @@ const DOCKED_BORDER_RADIUS = "calc(min(100dvw, 720px) / 4)";
 
 const viewDockedEnter = keyframes({
   from: {
-    scale: "0.5 0",
-    translate: "0 -50%",
+    scale: "0",
+    // translate: "0 -50%",
     // opacity: 0,
-    borderRadius: 112,
+    // borderRadius: 112,
   },
 });
 const viewDockedExit = keyframes({
   to: {
-    translate: "0 -32.5%",
-    scale: "0.5 0.35",
+    // translate: "0 -32.5%",
+    // scale: "0.5 0.35",
     opacity: 0,
-    borderRadius: 112,
+    // borderRadius: 112,
   },
 });
 
@@ -126,6 +126,7 @@ export const searchViewStyle = recipe({
   variants: {
     state: {
       entering: {
+        overflow: "hidden",
         animation: `${viewDockedEnter} ${OPEN_DURATION} ${THEME.easing.emphasizedDecelerate} forwards`,
         "@media": {
           "screen and (max-width: 599px)": {
@@ -134,6 +135,7 @@ export const searchViewStyle = recipe({
         },
       },
       exiting: {
+        overflow: "hidden",
         animation: `${viewDockedExit} ${CLOSE_DURATION} ${THEME.easing.emphasizedAccelerate} forwards`,
         "@media": {
           "screen and (max-width: 599px)": {
@@ -195,29 +197,57 @@ export const searchViewInputStyle = style({
 
 export const searchViewResultsStyle = style({
   flexGrow: 1,
+  paddingBottom: 16,
 });
 
-const appearAnimation = keyframes({
-  to: {
-    opacity: 1,
-    translate: 0,
-  },
-});
+// const appearAnimation = keyframes({
+//   to: {
+//     opacity: 1,
+//     translate: 0,
+//   },
+// });
 
 export const searchResultIndex = createVar();
-export const searchResultStyle = style({
-  opacity: 0,
-  translate: "0 32px",
-  animationName: appearAnimation,
-  animationDuration: "600ms",
-  animationTimingFunction: THEME.easing.emphasizedDecelerate,
-  animationDelay: `calc(100ms * ${searchResultIndex})`,
-  animationFillMode: "forwards",
+// export const searchResultStyle = style({
+//   opacity: 0,
+//   translate: "0 32px",
+//   animationName: appearAnimation,
+//   animationDuration: "600ms",
+//   animationTimingFunction: THEME.easing.emphasizedDecelerate,
+//   animationDelay: `calc(100ms * ${searchResultIndex})`,
+//   animationFillMode: "both",
+// });
+// export const searchSubResultStyle = style({
+//   vars: {
+//     [listItemTheme.padding]: "8px 32px",
+//   },
+// });
+export const searchGroupIndex = createVar();
+const searchGroupAnimation = keyframes({
+  from: {
+    opacity: 0,
+    translate: "0 8px",
+  }
 });
-export const searchSubResultStyle = style({
+export const searchGroupStyle = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  justifyContent: "center",
+  // animation: `${searchGroupAnimation} ${THEME.duration.short4} ${THEME.easing.standardDecelerate}`,
+  animationName: searchGroupAnimation,
+  animationDuration: THEME.duration.long4,
+  animationDelay: `calc(150ms * ${searchGroupIndex})`,
+  animationTimingFunction: THEME.easing.emphasizedDecelerate,
+  animationFillMode: "both",
+});
+export const searchItemStyle = style({
+  // animation: `${searchItemAnimation} ${THEME.duration.short3} linear`,
+});
+export const searchSubItemStyle = style({
   vars: {
     [listItemTheme.padding]: "8px 32px",
-  },
+  }
 });
 
 export const searchResultsMessageStyle = style({
@@ -227,11 +257,22 @@ export const searchResultsMessageStyle = style({
   alignItems: "center",
   justifyContent: "center",
   gap: 8,
-  color: THEME.color.onSurfaceVariant,
+
   fontFamily: THEME.text.body.large.family,
   fontSize: THEME.text.body.large.size,
   fontWeight: THEME.text.body.large.weight,
   lineHeight: THEME.text.body.large.lineHeight,
   letterSpacing: THEME.text.body.large.letterSpacing,
+  color: THEME.color.onSurfaceVariant,
   padding: "0 24px 24px 24px",
 });
+
+export const searchLabelStyle = style({
+  fontFamily: THEME.text.label.medium.family,
+  fontSize: THEME.text.label.medium.size,
+  fontWeight: THEME.text.label.medium.weight,
+  lineHeight: THEME.text.label.medium.lineHeight,
+  letterSpacing: THEME.text.label.medium.letterSpacing,
+  color: THEME.color.primary,
+  padding: "12px 16px 8px 16px",
+})

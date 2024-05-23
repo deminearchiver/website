@@ -2,12 +2,12 @@ import { createBreakpoint } from "@material/solid/utils";
 import { createEventListener } from "@solid-primitives/event-listener";
 import { createPresence } from "@solid-primitives/presence";
 import { resolveFirst } from "@solid-primitives/refs";
-import { type JSX, splitProps, type Component, createEffect, createSignal, createMemo, Show, createResource, For, Switch, Match } from "solid-js";
-import { searchDialogStyle, searchResultIndex, searchResultStyle, searchResultsMessageStyle, searchSubResultStyle, searchViewBarStyle, searchViewInputStyle, searchViewResultsStyle, searchViewStyle } from "./search-view.css";
+import { type JSX, splitProps, type Component, createEffect, createSignal, createMemo, Show, createResource, For, Switch, Match, type ParentComponent, type ComponentProps } from "solid-js";
+import { searchDialogStyle, searchLabelStyle, searchItemStyle, searchResultsMessageStyle, searchViewBarStyle, searchViewInputStyle, searchViewResultsStyle, searchViewStyle, searchGroupStyle, searchGroupIndex, searchSubItemStyle } from "./search-view.css";
 import { debounce, leadingAndTrailing } from "@solid-primitives/scheduled";
 import { createInfiniteScroll } from "./pagination";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
-import { PagefindProvider, type Pagefind, type PagefindSearchFragment, type PagefindSearchResult } from "@pagefind/astro";
+import { PagefindProvider, type Pagefind, type PagefindSearchFragment, type PagefindSearchResult, type PagefindSubResult } from "@pagefind/astro";
 
 import { IconButton } from "@material/solid/components/icon-button";
 import { ListItem } from "@material/solid/components/list";
@@ -18,12 +18,46 @@ import SearchIcon from "~icons/material-symbols-rounded/search:outlined";
 import SearchOffIcon from "~icons/material-symbols-rounded/search-off:outlined";
 import TextFieldsAltIcon from "~icons/material-symbols-rounded/text-fields-alt:outlined";
 import DescriptionIcon from "~icons/material-symbols-rounded/description:outlined";
+import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
+import TagIcon from "~icons/material-symbols-rounded/tag:outlined";
 
-import { isServer } from "solid-js/web";
+import { Dynamic, isServer } from "solid-js/web";
+import type { Icon } from "../primitives/icon";
 
 export type SearchViewProps = {
   children: JSX.Element;
 }
+
+const GROUP_LABELS: Record<string, string> = {
+  blog: "Blog",
+  info: "Information",
+}
+
+const getGroupIdByUrl = (url: string): string | undefined => {
+  if(url.startsWith("/blog")) return "blog";
+  if(url.startsWith("/about")) return "info";
+}
+
+const groupResults = (data: PagefindSearchFragment[]): SearchResultGroup[] => {
+  // const results = data.map(fragment => searchResultFromFragment(fragment));
+  const groups: SearchResultGroup[] = [];
+  for(const result of data) {
+    const id = getGroupIdByUrl(result.url);
+    const group = groups.find(group => group.id === id);
+
+    if(group) group.results.push(result);
+    else groups.push({
+      id,
+      results: [result],
+    });
+  }
+  return groups;
+}
+
+type SearchResultGroup = {
+  id?: string;
+  results: PagefindSearchFragment[];
+};
 
 export const SearchView: Component<SearchViewProps> = (props) => {
   const [localProps, otherProps] = splitProps(
@@ -106,51 +140,58 @@ export const SearchView: Component<SearchViewProps> = (props) => {
   });
 
   const [term, setTerm] = createSignal("");
-  const [results, setResults] = createSignal<PagefindSearchResult[]>([]);
+  // const [results, setResults] = createSignal<PagefindSearchResult[]>([]);
+  const [groups, setGroups] = createSignal<SearchResultGroup[]>([]);
 
-  const [
-    pages,
-    infiniteScrollLoader,
-    { refetch, end, setPages }
-  ] = createInfiniteScroll<PagefindSearchFragment>(
-    async (page) => {
-      // const result: PagefindSearchFragment =
-      //   {
-      //     url: "/",
-      //     content: `Result ${page}`,
-      //     excerpt: "Test",
-      //     sub_results: [
-      //     ],
-      //     anchors: [],
-      //     filters: {},
-      //     word_count: 10,
-      //     meta: { title: "Title" },
-      //     locations: [],
-      //     weighted_locations: [],
-      //   }
-      // return new Promise(resolve => resolve(Array(20).fill(result)));
+  // const [
+  //   pages,
+  //   infiniteScrollLoader,
+  //   { refetch, end, setPages }
+  // ] = createInfiniteScroll<PagefindSearchFragment>(
+  //   async (page) => {
+  //     // const result: PagefindSearchFragment =
+  //     //   {
+  //     //     url: "/",
+  //     //     content: `Result ${page}`,
+  //     //     excerpt: "Test",
+  //     //     sub_results: [
+  //     //     ],
+  //     //     anchors: [],
+  //     //     filters: {},
+  //     //     word_count: 10,
+  //     //     meta: { title: "Title" },
+  //     //     locations: [],
+  //     //     weighted_locations: [],
+  //     //   }
+  //     // return new Promise(resolve => resolve(Array(20).fill(result)));
 
-      const RESULTS_PER_PAGE = 5;
-      const from = page * RESULTS_PER_PAGE;
-      const to = from + RESULTS_PER_PAGE;
-      return await Promise.all(
-        results().slice(from, to).map(result => result.data()),
-      );
-    },
-  );
+  //     const RESULTS_PER_PAGE = 5;
+  //     const from = page * RESULTS_PER_PAGE;
+  //     const to = from + RESULTS_PER_PAGE;
+  //     return (await Promise.all(
+  //       results().slice(from, to).map(result => result.data()),
+  //     )).sort(
+  //       (a, b) => a.url.startsWith("/blog") ? b.url.startsWith("/blog") ? 0 : -1 : 1
+  //     );
+  //   },
+  // );
 
   const search = leadingAndTrailing(
     debounce,
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     async (pagefind: Pagefind, term: string) => {
       const search = await pagefind.search(term);
-      setResults(search.results);
-      setPages([]);
-      await refetch();
+      // setResults(search.results);
+      // setPages([]);
+      // await refetch();
+      const results = await Promise.all(
+        search.results.map(result => result.data()),
+      );
+      setGroups(groupResults(results));
     },
     300,
   );
-  createEffect(async () => {
+  createEffect(() => {
     if(pagefind.state !== "ready") return;
     void pagefind().preload(term());
     search(pagefind(), term());
@@ -201,75 +242,206 @@ export const SearchView: Component<SearchViewProps> = (props) => {
                   </IconButton>
                 </Show>
               </div>
-              <Switch fallback={
-              <div class={searchResultsMessageStyle}>
-                <SearchOffIcon width={48} height={48} />
-                <span>Nothing found!</span>
-              </div>
-            }>
-              <Match when={term().length === 0 && pages().length === 0}>
-                <div class={searchResultsMessageStyle}>
-                  <TextFieldsAltIcon width={48} height={48} />
-                  <span>Enter a search term!</span>
-                </div>
-              </Match>
-              <Match when={pages().length > 0}>
-                <ul class={searchViewResultsStyle}>
-                  <For each={pages()}>{
-                    (page, index) => (
-                      <SearchResult
-                        index={index()}
-                        result={page}
-                        close={closeView} />
-                    )
-                  }</For>
-                  <Show when={!end()}>
-                    <span use:infiniteScrollLoader>
-                      Loading
-                    </span>
-                  </Show>
-                </ul>
-              </Match>
-            </Switch>
+              <ul class={searchViewResultsStyle}>
+                <For each={groups()}>{
+                  (group, index) => (
+                    <SearchGroup index={index()}>
+                      <SearchLabel>{group.id ? GROUP_LABELS[group.id] : "Other"}</SearchLabel>
+                      <For each={group.results}>{
+                        (result, index) => (
+                          <SearchItem group={group.id} result={result} />
+                        )
+                      }</For>
+                    </SearchGroup>
+                  )
+                }</For>
+              </ul>
+              {/* <Switch fallback={
+                  <div class={searchResultsMessageStyle}>
+                    <SearchOffIcon width={48} height={48} />
+                    <span>Nothing found!</span>
+                  </div>
+                }>
+                  <Match when={term().length === 0 && pages().length === 0}>
+                    <div class={searchResultsMessageStyle}>
+                      <TextFieldsAltIcon width={48} height={48} />
+                      <span>Enter a search term!</span>
+                    </div>
+                  </Match>
+                  <Match when={pages().length > 0}>
+                    <ul class={searchViewResultsStyle}>
+                      <For each={pages()}>{
+                        (result, index) => (
+                          // <SearchResultSub
+                          //   index={index()}
+                          //   result={page}
+                          //   close={closeView} />
+                          <>
+                            <SearchLabel>
+                              Test
+                            </SearchLabel>
+                            <SearchItem
+                              result={result}
+                              close={closeView} />
+                          </>
+                          // <For each={result.sub_results}>{
+                          //   (subResult, index) => (
+
+                          //   )
+                          // }</For>
+                        )
+                      }</For>
+                      <Show when={!end()}>
+                        <span use:infiniteScrollLoader>
+                          Loading
+                        </span>
+                      </Show>
+                    </ul>
+                  </Match>
+            </Switch> */}
           </search>
       </dialog>
     </div>
   )
 }
 
-type SearchResultProps = {
-  index: number;
-  result: PagefindSearchFragment;
-  close: () => void;
+
+
+const SearchLabel: ParentComponent = (props) => {
+  return (
+    <span class={searchLabelStyle}>{props.children}</span>
+  )
 }
 
-const SearchResult: Component<SearchResultProps> = (props) => {
+type SearchGroupProps = {
+  index?: number;
+}
+const SearchGroup: ParentComponent<SearchGroupProps> = (props) => {
   return (
     <div
-    class={searchResultStyle}
-    style={
-      assignInlineVars({
-        [searchResultIndex]: `${props.index}`,
-      })
-    }>
+      class={searchGroupStyle}
+      style={assignInlineVars({
+        [searchGroupIndex]: props.index ? `${props.index}` : undefined,
+      })}>
+        {props.children}
+    </div>
+  );
+}
+
+type SearchItemProps = {
+  group?: string;
+  result: PagefindSearchFragment;
+  close?: () => void;
+}
+
+const GROUP_ICONS: Record<string, Icon> = {
+  blog: DescriptionIcon,
+  info: InfoIcon,
+  other: SearchIcon,
+};
+const getGroupIcon = (group: string = "other") => {
+  return GROUP_ICONS[group];
+}
+
+type SearchItemIconProps = {
+  group?: string;
+} & Omit<ComponentProps<"svg">, "children">;
+const SearchItemIcon: Component<SearchItemIconProps> = (props) => {
+  const [localProps, otherProps] = splitProps(
+    props,
+    ["group"],
+  );
+  return (
+    <Dynamic
+      component={getGroupIcon(localProps.group)}
+      width={24}
+      height={24}
+      style={{ "min-width": "24px", "min-height": "24px" }}
+      {...otherProps} />
+  )
+}
+
+const SearchItem: Component<SearchItemProps> = (props) => {
+  return (
+    <>
       <ListItem
-        onClick={() => props.close()}
+        class={searchItemStyle}
+        onClick={props.close}
         type="link"
-        leading={<DescriptionIcon width={24} height={24} />}
+        leading={<SearchItemIcon group={props.group} />}
         title={props.result.meta.title}
         href={props.result.url} />
       <For each={props.result.sub_results}>{
         (subResult) => (
-          <ListItem
-            onClick={() => props.close()}
-            class={searchSubResultStyle}
-            type="link"
-            leading={<SearchIcon width={24} height={24} />}
-            title={subResult.title}
-            subtitle={<span innerHTML={subResult.excerpt} />}
-            href={subResult.url} />
+          <SearchSubItem
+            subResult={subResult}
+            group={props.group} />
         )
       }</For>
-    </div>
+    </>
   );
 }
+type SearchSubItemProps = {
+  group?: string;
+  subResult: PagefindSubResult;
+  close?: () => void;
+}
+const SearchSubItem: Component<SearchSubItemProps> = (props) => {
+  return (
+    <ListItem
+      class={searchSubItemStyle}
+      href={props.subResult.url}
+      // leading={<SearchItemIcon group={props.group} />}
+      leading={<TagIcon width={24} height={24} style={{"min-width": "24px", "min-height": "24px"}} />}
+      title={props.subResult.title}
+      subtitle={
+        <span innerHTML={props.subResult.excerpt} />
+      } />
+  );
+}
+
+
+
+
+
+
+
+
+
+
+// type SearchResultSubProps = {
+//   index: number;
+//   result: PagefindSearchFragment;
+//   close: () => void;
+// }
+
+// const SearchResultSub: Component<SearchResultSubProps> = (props) => {
+//   return (
+//     <div
+//     class={searchResultStyle}
+//     style={
+//       assignInlineVars({
+//         [searchResultIndex]: `${props.index}`,
+//       })
+//     }>
+//       <ListItem
+//         onClick={() => props.close()}
+//         type="link"
+//         leading={<DescriptionIcon width={24} height={24} />}
+//         title={props.result.meta.title}
+//         href={props.result.url} />
+//       <For each={props.result.sub_results}>{
+//         (subResult) => (
+//           <ListItem
+//             onClick={() => props.close()}
+//             class={searchSubResultStyle}
+//             type="link"
+//             leading={<SearchIcon width={24} height={24} />}
+//             title={subResult.title}
+//             subtitle={<span innerHTML={subResult.excerpt} />}
+//             href={subResult.url} />
+//         )
+//       }</For>
+//     </div>
+//   );
+// }
