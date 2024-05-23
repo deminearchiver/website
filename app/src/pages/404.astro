@@ -1,4 +1,5 @@
 ---
+import { Button } from "../components/primitives/button";
 import { IconButton } from "../components/primitives/icon-button";
 import { ThemeSelect } from "../components/theme";
 import Page from "../layouts/Page.astro";
@@ -24,10 +25,12 @@ const pathname = Astro.url.pathname;
       </p>
 
       <div class="action">
-        <IconButton variant="filled" href="/">
-            <ArrowBackIcon />
-        </IconButton>
-        <span>Go back</span>
+        <Button
+          variant="filled"
+          href="/">
+          <ArrowBackIcon slot="leading" width={18} height={18} />
+          Go back
+        </Button>
       </div>
     </div>
   </main>

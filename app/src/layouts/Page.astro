@@ -73,6 +73,18 @@ const animation = {
   </body>
 </html>
 
+<script is:inline>
+  document.addEventListener(
+    "astro:before-preparation",
+    event => {
+      const elements = [...document.querySelectorAll(`[data-navigate-back]`)];
+      if(elements.includes(event.sourceElement))
+        event.direction = "back";
+    },
+  );
+</script>
+
+
 <style>
 @keyframes fade-in {
   0%, 30% { opacity: 0; }

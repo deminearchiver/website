@@ -31,7 +31,7 @@ const { Content } = await post.render();
   <Header />
   <main>
     <div class="content">
-      <IconButton class="back" href="/blog">
+      <IconButton class="back" href="/blog" data-navigate-back>
         <ArrowBackIcon width={40} height={40} />
       </IconButton>
       <h1 class="title">{post.data.title}</h1>
@@ -43,18 +43,6 @@ const { Content } = await post.render();
   </main>
   <Footer />
 </Page>
-
-<script is:inline>
-  document.addEventListener(
-    "astro:before-preparation",
-    event => {
-      const back = document.querySelector(".back");
-      if(event.sourceElement === back) {
-        event.direction = "back";
-      }
-    }
-  );
-</script>
 
 <style>
   main {

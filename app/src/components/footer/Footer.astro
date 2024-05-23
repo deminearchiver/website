@@ -38,7 +38,11 @@ const year = new Date().getFullYear();
 ---
 
 <footer data-pagefind-ignore>
-  <p class="copyright">Copyright &copy; {year} deminearchiver</p>
+  <a
+    class="copyright"
+    href="https://github.com/deminearchiver/website/blob/main/LICENSE">
+      Copyright &copy; {year} deminearchiver
+  </a>
   <ul class="links">
     <li>{
       SOCIAL_LINKS.map(link => (
@@ -69,12 +73,49 @@ const year = new Date().getFullYear();
   }
 
   .copyright {
+    position: relative;
+    text-decoration: none;
+
     font-family: var(--text-body-large-family);
     font-size: var(--text-body-large-size);
     font-weight: var(--text-body-large-weight);
     line-height: var(--text-body-large-line-height);
     letter-spacing: var(--text-body-large-letter-spacing);
     color: var(--color-on-surface-variant);
+    font-variation-settings: "GRAD" 0;
+
+    transition-property: color, font-variation-settings;
+    transition-duration: 300ms;
+    transition-timing-function: var(--easing-standard);
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--color-primary);
+        font-variation-settings: "GRAD" 50;
+      }
+    }
+    &:active {
+      color: var(--color-primary);
+      font-variation-settings: "GRAD" 150;
+    }
+
+    &::after {
+      /* content: "→"; */
+      content: "»";
+      position: absolute;
+      right: calc(-1em + 4px);
+      opacity: 0;
+      scale: 1;
+
+      transition-property: scale, right, opacity;
+      transition-duration: 300ms;
+      transition-timing-function: var(--easing-standard);
+    }
+    &:is(:hover, :active)::after {
+      right: -1em;
+      scale: 1.1;
+      opacity: 1;
+    }
   }
 
   .links {
@@ -117,6 +158,8 @@ const year = new Date().getFullYear();
     overflow: hidden;
 
     font-variation-settings: "GRAD" 0;
+
+    outline-color: var(--color-secondary);
 
     transition:
       background-color 15ms linear,
