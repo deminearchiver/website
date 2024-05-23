@@ -23,8 +23,12 @@ const authorsKeys = Object.keys(AUTHORS) as [AuthorsKey, ...AuthorsKey[]];
 export const blogSchema = (context: SchemaContext) => {
   const { image } = context;
   return z.object({
+    visibility: z.enum(["all", "development", "production"]).default("all"),
     title: z.string(),
     description: z.string().optional(),
+    cover: z.object({
+      image: imageSchema(context),
+    }).optional(),
     authors: z.array(authorSchema(context)).min(1),
     // author:
     //   z.enum(authorsKeys)

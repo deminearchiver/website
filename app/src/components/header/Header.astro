@@ -6,7 +6,7 @@ import MenuIcon from "~icons/material-symbols-rounded/menu:outlined";
 
 import { Logo } from "../logo";
 import { NavigationDrawer } from "../navigation";
-import { Search } from "../search";
+import { Search, SearchAnchor, SearchView } from "../search";
 import { NavigationTab } from "../navigation";
 import { dynamicToStatic, getDestinations } from "../navigation/destinations";
 import { fade } from "astro/virtual-modules/transitions.js";
@@ -207,7 +207,7 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
 
     .rss {
       display: inline-flex;
-      animation: appear 300ms linear;
+      /* animation: appear 300ms linear; */
     }
   }
 </style>

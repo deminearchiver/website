@@ -46,6 +46,7 @@
     "astro": "^4.8.7",
     "astro-expressive-code": "^0.35.3",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.11",
     "lightningcss": "^1.24.1",
     "markdown-it": "^14.1.0",
     "normalize.css": "^8.0.1",

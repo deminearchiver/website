@@ -3,9 +3,11 @@ import { SearchView } from "./search-view";
 import { SearchAnchor } from "./search-anchor";
 
 export const Search: Component = () => {
+  let ref!: HTMLButtonElement;
   return (
-    <SearchView>
-      <SearchAnchor />
-    </SearchView>
-  )
+    <>
+      <SearchAnchor ref={ref} />
+      <SearchView for={ref} />
+    </>
+  );
 }

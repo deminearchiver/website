@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",
+    "@types/sanitize-html": "^2.11.0",
     "eslint": "^9.2.0",
     "eslint-plugin-astro": "^1.2.0",
     "eslint-plugin-solid": "^0.14.0",

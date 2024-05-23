@@ -7,11 +7,27 @@ import { Image } from "astro:assets";
 
 import ImageIcon from "~icons/material-symbols-rounded/image:outlined&opticalSize=48";
 import { Filters } from "../../components/filters";
+import type { CollectionEntry } from "astro:content";
 
-const posts = (await getCollection("blog"))
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
+let posts = (await getCollection("blog"))
   .sort(
     (a, b) => a.data.createdAt.valueOf() - b.data.createdAt.valueOf(),
   );
+
+const visibleIn = (post: CollectionEntry<"blog">, environment: "production" | "development") => {
+  return post.data.visibility === "all" || post.data.visibility === environment;
+}
+
+if(import.meta.env.PROD) {
+  posts = posts.filter(post => visibleIn(post, "production"))
+} else if(import.meta.env.DEV) {
+  posts = posts.filter(post => visibleIn(post, "development"))
+}
 
 ---
 
@@ -21,21 +37,32 @@ const posts = (await getCollection("blog"))
     <article>
       <ul class="posts">
         {
-          posts.map(({ slug, data: post }) => {
+          posts.map(({ id, slug, data: post }) => {
             const postUrl = `/blog/${slug}/`;
             const [author, ...authors] = post.authors;
+
+            const date = dayjs(post.editedAt ?? post.createdAt)
+              .utc()
+              .format("DD MMM YYYY")
+              .toUpperCase();
+
+            const anchorId = `post-${id.split(".")[0]}`;
+
             return (
               <li>
                 <div class="post">
                   <a
                     class="card"
                     href={postUrl}>
-                      <div class="cover">
-                        <ImageIcon width={48} height={48} />
-                      </div>
+                        {
+                          post.cover
+                            ? <Image class="cover image" src={post.cover.image.src} alt={post.cover.image.alt} />
+                            : <div class="cover placeholder"><ImageIcon width={48} height={48} /></div>
+                          }
                       <div class="content">
-                        <h3 class="title">{post.title}</h3>
-                        {post.description && <p>{post.description}</p>}
+                        <span class="date">{date}</span>
+                        <h3 id={anchorId} class="title">{post.title}</h3>
+                        {post.description && <p class="description">{post.description}</p>}
                       </div>
                   </a>
                   <div class="authors">
@@ -134,7 +161,7 @@ const posts = (await getCollection("blog"))
         background-color: var(--color-secondary-container);
       }
 
-      &:hover .cover {
+      &:hover .cover.placeholder {
         background-color: var(--color-surface-container-high);
         color: var(--color-on-surface-variant);
       }
@@ -142,7 +169,7 @@ const posts = (await getCollection("blog"))
     &:active {
       background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 10%);
     }
-    &:active .cover {
+    &:active .cover.placeholder {
       background-color: var(--color-surface-container-highest);
       color: var(--color-on-surface);
     }
@@ -172,42 +199,58 @@ const posts = (await getCollection("blog"))
 
   .cover {
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
+    object-fit: cover;
 
-    display: grid;
-    place-items: center;
-    place-content: center;
 
-    background-color: var(--color-surface-container);
+
     border-radius: 28px;
-    color: color-mix(in srgb, var(--color-on-surface-variant) 38%, transparent);
-    transition-property: background-color, color;
-    transition-duration: 105ms;
-    transition-timing-function: linear;
+    &.placeholder {
+      display: grid;
+      place-items: center;
+      place-content: center;
+
+      background-color: var(--color-surface-container);
+      color: color-mix(in srgb, var(--color-on-surface-variant) 38%, transparent);
+      transition-property: background-color, color;
+      transition-duration: 105ms;
+      transition-timing-function: linear;
+    }
   }
   .content {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 8px;
-    padding: 24px;
+    padding: 24px 24px;
   }
 
+  .date {
+    font-family: var(--text-label-small-family);
+    font-size: var(--text-label-small-size);
+    font-weight: var(--text-label-small-weight);
+    line-height: var(--text-label-small-line-height);
+    letter-spacing: var(--text-label-small-letter-spacing);
+    color: var(--color-on-surface-variant);
+  }
   .title {
     font-family: var(--text-headline-small-family);
     font-size: var(--text-headline-small-size);
-    /* font-weight: var(--text-headline-small-weight); */
     font-weight: 500;
     line-height: var(--text-headline-small-line-height);
     letter-spacing: var(--text-headline-small-letter-spacing);
+    color: var(--color-on-surface);
   }
 
   .description {
-    font-family: var(--text-body-small-family);
-    font-size: var(--text-body-small-size);
-    font-weight: var(--text-body-small-weight);
-    line-height: var(--text-body-small-line-height);
-    letter-spacing: var(--text-body-small-letter-spacing);
+    font-family: var(--text-body-medium-family);
+    font-size: var(--text-body-medium-size);
+    font-weight: var(--text-body-medium-weight);
+    line-height: var(--text-body-medium-line-height);
+    letter-spacing: var(--text-body-medium-letter-spacing);
+    color: var(--color-on-surface-variant);
   }
 
   .authors {

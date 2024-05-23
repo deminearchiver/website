@@ -64,6 +64,7 @@ const DOCKED_BORDER_RADIUS = "calc(min(100dvw, 720px) / 4)";
 const viewDockedEnter = keyframes({
   from: {
     scale: "0",
+    opacity: 0,
     // translate: "0 -50%",
     // opacity: 0,
     // borderRadius: 112,
@@ -73,6 +74,7 @@ const viewDockedExit = keyframes({
   to: {
     // translate: "0 -32.5%",
     // scale: "0.5 0.35",
+    scale: "0.35",
     opacity: 0,
     // borderRadius: 112,
   },

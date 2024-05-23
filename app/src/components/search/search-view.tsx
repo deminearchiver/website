@@ -21,11 +21,15 @@ import DescriptionIcon from "~icons/material-symbols-rounded/description:outline
 import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
 import TagIcon from "~icons/material-symbols-rounded/tag:outlined";
 
+import sanitize from "sanitize-html";
+
 import { Dynamic, isServer } from "solid-js/web";
 import type { Icon } from "../primitives/icon";
+import { access, type MaybeAccessor } from "@solid-primitives/utils";
 
 export type SearchViewProps = {
-  children: JSX.Element;
+  for: MaybeAccessor<string | HTMLElement>;
+  // children: JSX.Element;
 }
 
 const GROUP_LABELS: Record<string, string> = {
@@ -60,16 +64,22 @@ type SearchResultGroup = {
 };
 
 export const SearchView: Component<SearchViewProps> = (props) => {
-  const [localProps, otherProps] = splitProps(
-    props,
-    ["children"]
-  );
+  // const [localProps, otherProps] = splitProps(
+  //   props,
+  //   ["children"]
+  // );
 
-  const anchor = resolveFirst(
-    () => localProps.children,
-    (item): item is HTMLElement => item instanceof HTMLElement,
-  );
-  const breakpoint = createBreakpoint("expanded");
+  // const anchor = resolveFirst(
+  //   () => localProps.children,
+  //   (item): item is HTMLElement => item instanceof HTMLElement,
+  // );
+  const anchor = createMemo(() => {
+    const value = access(props.for);
+    return typeof value === "string"
+      ? document.getElementById(value)!
+      : value;
+  });
+  // const breakpoint = createBreakpoint("expanded");
 
   let dialogRef!: HTMLDialogElement;
   let viewRef!: HTMLElement;
@@ -88,7 +98,7 @@ export const SearchView: Component<SearchViewProps> = (props) => {
   }
 
   createEventListener(
-    () => anchor()!,
+    anchor(),
     "click",
     openView
   );
@@ -134,7 +144,8 @@ export const SearchView: Component<SearchViewProps> = (props) => {
   const [pagefind] = createResource(async () => {
     const pagefind = await PagefindProvider.fromPath("/pagefind/pagefind.js");
     await pagefind.init({
-      highlightParam: "highlight"
+      highlightParam: "highlight",
+      excerptLength: 10,
     });
     return pagefind;
   });
