@@ -15,15 +15,25 @@ import metaTags from "astro-meta-tags";
 
 import pagefind from "@pagefind/astro/integration";
 
-import { vanillaExtractPlugin as vanillaExtract} from "@vanilla-extract/vite-plugin";
+import { vanillaExtractPlugin as vanillaExtract } from "@vanilla-extract/vite-plugin";
 
 import unpluginIcons from "unplugin-icons/vite";
+import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import materialSymbols from "@material-symbols/unplugin-icons";
 
 import { FontaineTransform as fontaine } from "fontaine";
 
+import { imageService as unpicImageService } from "@unpic/astro/service";
+
 export default defineConfig({
   site: "https://deminearchiver.pages.dev",
+  // image: {
+  //   service: unpicImageService({
+  //     fallbackService: "sharp",
+  //     placeholder: "blurhash",
+  //     layout: "fullWidth",
+  //   }),
+  // },
   markdown: {
     shikiConfig: {
       theme: "houston",
@@ -75,13 +85,12 @@ export default defineConfig({
     plugins: [
       unpluginIcons({
         compiler: "solid",
-        customCollections: materialSymbols(),
+        customCollections: {
+          ...materialSymbols(),
+          // TODO: add custom icons
+        },
       }),
       vanillaExtract(),
-      // fontaine.vite({
-      //   fallbacks: ["Arial"],
-      //   resolvePath: id => new URL(`./public${id}`, import.meta.url),
-      // }),
     ],
     css: {
       transformer: "lightningcss",

@@ -12,21 +12,18 @@ import type { CollectionEntry } from "astro:content";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
+
 dayjs.extend(utc);
 
 let posts = (await getCollection("blog"))
   .sort(
-    (a, b) => a.data.createdAt.valueOf() - b.data.createdAt.valueOf(),
+    (a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf(),
   );
 
-const visibleIn = (post: CollectionEntry<"blog">, environment: "production" | "development") => {
-  return post.data.visibility === "all" || post.data.visibility === environment;
-}
-
 if(import.meta.env.PROD) {
-  posts = posts.filter(post => visibleIn(post, "production"))
+  posts = posts.filter(post => post.data.hide !== "production");
 } else if(import.meta.env.DEV) {
-  posts = posts.filter(post => visibleIn(post, "development"))
+  posts = posts.filter(post => post.data.hide !== "development");
 }
 
 ---
@@ -154,11 +151,17 @@ if(import.meta.env.PROD) {
     border-radius: 28px;
     outline: none;
 
-    transition: background-color 105ms linear;
+    transition-property: background-color, box-shadow;
+    transition-duration: 105ms;
+    transition-timing-function: linear;
 
     @media (hover: hover) {
       &:hover {
-        background-color: var(--color-secondary-container);
+        /* background-color: var(--color-secondary-container); */
+        background-color: var(--color-surface-container-low);
+        box-shadow:
+          0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+          0px 4px 8px 3px rgba(0, 0, 0, 0.15);
       }
 
       &:hover .cover.placeholder {
@@ -167,7 +170,8 @@ if(import.meta.env.PROD) {
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 10%);
+      /* background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 10%); */
+      background-color: var(--color-secondary-container);
     }
     &:active .cover.placeholder {
       background-color: var(--color-surface-container-highest);
@@ -202,7 +206,6 @@ if(import.meta.env.PROD) {
     height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-
 
 
     border-radius: 28px;

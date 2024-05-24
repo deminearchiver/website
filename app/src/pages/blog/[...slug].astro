@@ -8,7 +8,12 @@ import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
 import { IconButton } from "../../components/primitives/icon-button";
 
+import { Image } from "astro:assets";
+
 import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined&opticalSize=40";
+import ShareIcon from "~icons/material-symbols-rounded/share:filled";
+import dayjs from "dayjs";
+import { Button } from "../../components/primitives/button";
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -25,17 +30,42 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 
+
+const date = dayjs(post.data.editedAt ?? post.data.createdAt)
+              .utc()
+              .format("DD MMM YYYY")
+              .toUpperCase();
+
+
 const { Content } = await post.render();
 ---
 <Page>
   <Header />
   <main>
     <div class="content">
-      <IconButton class="back" href="/blog" data-navigate-back>
-        <ArrowBackIcon width={40} height={40} />
-      </IconButton>
-      <h1 class="title">{post.data.title}</h1>
-      {post.data.description && <p class="description">{post.data.description}</p>}
+      <div class:list={["header", post.data.cover ? "with-cover" : "card"]}>
+        {
+          post.data.cover
+            && <Image
+                  class="cover"
+                  src={post.data.cover.image.src}
+                  alt={post.data.cover.image.alt} />
+        }
+        <div class="actions">
+          <Button variant={post.data.cover ? "elevated" : "text"} class="back" href="/blog" data-navigate-back>
+            <ArrowBackIcon slot="leading" width={18} height={18} />
+            Back
+          </Button>
+          <!-- <IconButton href="/blog" data-navigate-back>
+            <ShareIcon width={24} height={40} />
+          </IconButton> -->
+        </div>
+        <div class="details">
+          <span class="date">{date}</span>
+          <h1 class="title">{post.data.title}</h1>
+          {post.data.description && <p class="description">{post.data.description}</p>}
+        </div>
+      </div>
       <Markdown>
         <Content />
       </Markdown>
@@ -45,9 +75,14 @@ const { Content } = await post.render();
 </Page>
 
 <style>
+  body {
+    display: flex;
+    flex-direction: column;
+  }
   main {
     max-width: 960px;
     margin: 0 auto;
+    flex-grow: 1;
   }
 
   .content {
@@ -57,17 +92,76 @@ const { Content } = await post.render();
     margin: 24px 24px 96px 24px;
   }
 
-  .back {
-    align-self: flex-start;
+  .header {
+    position: relative;
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+
+    &.with-cover {
+      aspect-ratio: 16 / 9;
+    }
+    &.card {
+      gap: 48px;
+      border: 1px solid var(--color-outline-variant);
+      border-radius: 28px;
+    }
+  }
+
+  .cover {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 28px;
+    z-index: -1;
+  }
+
+  :root[data-theme="dark"] .cover {
+    filter: brightness(0.4);
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+  .details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 0 8px;
+  }
+
+  .date {
+    font-family: var(--text-label-large-family);
+    font-size: var(--text-label-large-size);
+    font-weight: var(--text-label-large-weight);
+    line-height: var(--text-label-large-line-height);
+    letter-spacing: var(--text-label-large-letter-spacing);
+    color: var(--color-on-surface-variant);
   }
 
   .title {
+    width: 100%;
+
     font-family: var(--text-display-small-family);
     font-size: var(--text-display-small-size);
-    /* font-weight: var(--text-display-small-weight); */
     font-weight: 500;
     line-height: var(--text-display-small-line-height);
     letter-spacing: var(--text-display-small-letter-spacing);
+    color: var(--color-on-surface);
   }
   .description {
     font-family: var(--text-body-large-family);
@@ -75,5 +169,6 @@ const { Content } = await post.render();
     font-weight: var(--text-body-large-weight);
     line-height: var(--text-body-large-line-height);
     letter-spacing: var(--text-body-large-letter-spacing);
+    color: var(--color-on-surface-variant);
   }
 </style>

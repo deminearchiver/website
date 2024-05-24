@@ -141,15 +141,23 @@ const className = clsx(
     background-color: var(--color-surface-container-low);
     color: var(--color-primary);
 
-    /* box-shadow: 0px 1px 2px 0px black; */
+    box-shadow:
+      0px 1px 2px 0px color-mix(in srgb, var(--color-shadow) 30%, transparent),
+      0px 1px 3px 1px color-mix(in srgb, var(--color-shadow) 15%, transparent);
 
     @media (hover: hover) {
       &:hover {
         background-color: color-mix(in srgb, var(--color-surface-container-low), var(--color-primary) 8%);
+        box-shadow:
+          0px 1px 2px 0px color-mix(in srgb, var(--color-shadow) 30%, transparent),
+          0px 2px 6px 2px color-mix(in srgb, var(--color-shadow) 15%, transparent);
       }
     }
     &:active {
       background-color: color-mix(in srgb, var(--color-surface-container-low), var(--color-primary) 10%);
+      box-shadow:
+        0px 1px 2px 0px color-mix(in srgb, var(--color-shadow) 30%, transparent),
+        0px 1px 3px 1px color-mix(in srgb, var(--color-shadow) 15%, transparent);
     }
   }
   .elevated.acrylic {

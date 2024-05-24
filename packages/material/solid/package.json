@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@deminearchiver/utils": "workspace:*",
-    "@material/material-color-utilities": "workspace:*",
+    "@material/material-color-utilities": "https://gitpkg.now.sh/material-foundation/material-color-utilities/typescript?main",
     "@solid-primitives/event-listener": "^2.3.3",
     "@solid-primitives/media": "^2.2.9",
     "@solid-primitives/raf": "^2.1.16",

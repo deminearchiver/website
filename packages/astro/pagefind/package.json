@@ -8,7 +8,7 @@
   },
   "packageManager": "yarn@4.2.2",
   "dependencies": {
-    "astro": "^4.8.7",
+    "astro": "^4.9.1",
     "astro-integration-kit": "^0.13.2",
     "nanoid": "^5.0.7",
     "pagefind": "^1.1.0",

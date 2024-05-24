@@ -627,7 +627,7 @@ __metadata:
     "@iconify-json/material-symbols": "npm:^1.1.80"
     "@iconify-json/simple-icons": "npm:^1.1.101"
     "@material-symbols/unplugin-icons": "workspace:*"
-    "@material/material-color-utilities": "workspace:*"
+    "@material/material-color-utilities": "https://gitpkg.now.sh/material-foundation/material-color-utilities/typescript?main"
     "@material/solid": "workspace:*"
     "@pagefind/astro": "workspace:*"
     "@playform/compress": "npm:^0.0.4"
@@ -643,13 +643,14 @@ __metadata:
     "@solid-primitives/utils": "npm:^6.2.3"
     "@types/markdown-it": "npm:^14"
     "@types/sanitize-html": "npm:^2"
+    "@unpic/astro": "npm:^0.0.46"
     "@vanilla-extract/css": "npm:^1.15.2"
     "@vanilla-extract/dynamic": "npm:^2.1.1"
     "@vanilla-extract/private": "npm:^1.0.5"
     "@vanilla-extract/recipes": "npm:^0.5.3"
     "@vanilla-extract/sprinkles": "npm:^1.6.2"
     "@vanilla-extract/vite-plugin": "npm:^4.0.10"
-    astro: "npm:^4.8.7"
+    astro: "npm:^4.9.1"
     astro-expressive-code: "npm:^0.35.3"
     astro-meta-tags: "npm:^0.3.0"
     clsx: "npm:^2.1.1"
@@ -1988,7 +1989,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@material-symbols/unplugin-icons@workspace:packages/material-symbols"
   dependencies:
-    astro: "npm:^4.8.7"
+    astro: "npm:^4.9.1"
     typescript: "npm:^5.4.5"
     zod: "npm:^3.23.8"
   languageName: unknown
@@ -2000,7 +2001,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@material/material-color-utilities@workspace:*, @material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript":
+"@material/material-color-utilities@https://gitpkg.now.sh/material-foundation/material-color-utilities/typescript?main":
+  version: 0.2.7
+  resolution: "@material/material-color-utilities@https://gitpkg.now.sh/material-foundation/material-color-utilities/typescript?main"
+  checksum: 10c0/01fdd028a59b83a712d2d52b76c45780b130186462219fee825e256679262f3686d5e74eed9943f7e4d53ee859210f8e4406d9761dac037951804c5898a9a3e6
+  languageName: node
+  linkType: hard
+
+"@material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript":
   version: 0.0.0-use.local
   resolution: "@material/material-color-utilities@workspace:packages/material/material-color-utilities/typescript"
   dependencies:
@@ -2018,7 +2026,7 @@ __metadata:
   dependencies:
     "@deminearchiver/configs": "workspace:*"
     "@deminearchiver/utils": "workspace:*"
-    "@material/material-color-utilities": "workspace:*"
+    "@material/material-color-utilities": "https://gitpkg.now.sh/material-foundation/material-color-utilities/typescript?main"
     "@solid-primitives/event-listener": "npm:^2.3.3"
     "@solid-primitives/media": "npm:^2.2.9"
     "@solid-primitives/raf": "npm:^2.1.16"
@@ -2120,7 +2128,7 @@ __metadata:
   resolution: "@pagefind/astro@workspace:packages/astro/pagefind"
   dependencies:
     "@types/node": "npm:^20.12.12"
-    astro: "npm:^4.8.7"
+    astro: "npm:^4.9.1"
     astro-integration-kit: "npm:^0.13.2"
     nanoid: "npm:^5.0.7"
     pagefind: "npm:^1.1.0"
@@ -2983,6 +2991,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@unpic/astro@npm:^0.0.46":
+  version: 0.0.46
+  resolution: "@unpic/astro@npm:0.0.46"
+  dependencies:
+    "@unpic/core": "npm:0.0.49"
+    "@unpic/pixels": "npm:^1.2.2"
+    "@unpic/placeholder": "npm:^0.1.2"
+    blurhash: "npm:^2.0.5"
+  peerDependencies:
+    astro: ^2.0.0 || ^3.0.0 || ^4.0.0
+  checksum: 10c0/a7b632aa0af8d2fa7cd65bb0a4f6b527476c3914a9e6aea26b0373c3897dcc4b8dbff6efe230174a2dc528da64b4ceb25ea068f6cadd7e0deee6564b924ec817
+  languageName: node
+  linkType: hard
+
+"@unpic/core@npm:0.0.49":
+  version: 0.0.49
+  resolution: "@unpic/core@npm:0.0.49"
+  dependencies:
+    unpic: "npm:^3.18.0"
+  checksum: 10c0/fa1e4b575e1d5b1632ab92ab373a8441f2909a2ecda533d9eb061d36a398ab2d452cf41123680784c098a071fd92fac98102aa504044b3db85403eef4bd79598
+  languageName: node
+  linkType: hard
+
+"@unpic/pixels@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@unpic/pixels@npm:1.2.2"
+  dependencies:
+    jpeg-js: "npm:0.4.4"
+    ofetch: "npm:1.3.3"
+    pngjs: "npm:7.0.0"
+  checksum: 10c0/016cf867bdbd4e9deddea5fc0bbf421c6cab3fbc0efe94ce6a71d6f01f0aa0af73513e5b510eaceadc329a7e48bc5db21754562989a239ca948d8d386e1b0388
+  languageName: node
+  linkType: hard
+
+"@unpic/placeholder@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@unpic/placeholder@npm:0.1.2"
+  dependencies:
+    blurhash: "npm:^2.0.5"
+  checksum: 10c0/02ce2059f090b2dccd066616e4548320d3711de1870a2b8bb803faa5358c550a42d3e17dfe2a01308b2c92784fefb3ba028d9b17c78101517621851317838042
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/babel-plugin-debug-ids@npm:^1.0.6":
   version: 1.0.6
   resolution: "@vanilla-extract/babel-plugin-debug-ids@npm:1.0.6"
@@ -3515,9 +3566,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^4.8.7":
-  version: 4.8.7
-  resolution: "astro@npm:4.8.7"
+"astro@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "astro@npm:4.9.1"
   dependencies:
     "@astrojs/compiler": "npm:^2.8.0"
     "@astrojs/internal-helpers": "npm:0.4.0"
@@ -3588,7 +3639,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/95643cb713802aaf53116ad807b859c99df8d1fd3d675d28a4546f1e1857f3bbe1588f06c51cda8eaddbe55558bfd73380345520dc6d567b77c7037ba5df911f
+  checksum: 10c0/0a8c9cd0fb5eeb9abe0bce34b70a605b183ab2a94545ff93ee807d4b9984a4a2e663dcd4258351d1c2e2f4e3ebfdfdeae54ca1ea75a7efaea6e5117655c9d815
   languageName: node
   linkType: hard
 
@@ -3691,6 +3742,13 @@ __metadata:
   version: 1.2.9
   resolution: "blob-to-buffer@npm:1.2.9"
   checksum: 10c0/ff8d3327f030fcd98b28c7557158721bc36b2102452bb4d8808d7bf497a6feee34623a40f80ec8a097851c866369fc76ef948cee4e78373f34738b70ab3f8cf6
+  languageName: node
+  linkType: hard
+
+"blurhash@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "blurhash@npm:2.0.5"
+  checksum: 10c0/75d5f042b5bb8ead977524a985048378a033af866534abbaee73c80030cc9fc34e6c5b7d483c68bbdb600e0ae438f2ea6140b1f46d75fcfa57a902208ae8b85e
   languageName: node
   linkType: hard
 
@@ -4326,6 +4384,13 @@ __metadata:
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
   checksum: 10c0/f98860cdf58b64991ae10205137c0e97d384c3a4edc7f807603887b7c4b850af1224a33d88012009f150861cbee4fa2d322c4cc04b9313bee312e47f6ecaa888
+  languageName: node
+  linkType: hard
+
+"destr@npm:^2.0.1":
+  version: 2.0.3
+  resolution: "destr@npm:2.0.3"
+  checksum: 10c0/10e7eff5149e2839a4dd29a1e9617c3c675a3b53608d78d74fc6f4abc31daa977e6de08e0eea78965527a0d5a35467ae2f9624e0a4646d54aa1162caa094473e
   languageName: node
   linkType: hard
 
@@ -6320,6 +6385,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jpeg-js@npm:0.4.4":
+  version: 0.4.4
+  resolution: "jpeg-js@npm:0.4.4"
+  checksum: 10c0/4d0d5097f8e55d8bbce6f1dc32ffaf3f43f321f6222e4e6490734fdc6d005322e3bd6fb992c2df7f5b587343b1441a1c333281dc3285bc9116e369fd2a2b43a7
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -7860,6 +7932,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-fetch-native@npm:^1.4.0":
+  version: 1.6.4
+  resolution: "node-fetch-native@npm:1.6.4"
+  checksum: 10c0/78334dc6def5d1d95cfe87b33ac76c4833592c5eb84779ad2b0c23c689f9dd5d1cfc827035ada72d6b8b218f717798968c5a99aeff0a1a8bf06657e80592f9c3
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:^2.6.12":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
@@ -7964,6 +8043,17 @@ __metadata:
   dependencies:
     boolbase: "npm:^1.0.0"
   checksum: 10c0/5fee7ff309727763689cfad844d979aedd2204a817fbaaf0e1603794a7c20db28548d7b024692f953557df6ce4a0ee4ae46cd8ebd9b36cfb300b9226b567c479
+  languageName: node
+  linkType: hard
+
+"ofetch@npm:1.3.3":
+  version: 1.3.3
+  resolution: "ofetch@npm:1.3.3"
+  dependencies:
+    destr: "npm:^2.0.1"
+    node-fetch-native: "npm:^1.4.0"
+    ufo: "npm:^1.3.0"
+  checksum: 10c0/ac4d2519841c6ffcbb3f5dee6db7f29dc273e15d8fd6ee89d9dbfae7c0542cd72a2424e8527ae7147b36eec35667066754aeb69dc7c02e6c8dcb943579e9764e
   languageName: node
   linkType: hard
 
@@ -8344,6 +8434,13 @@ __metadata:
     mlly: "npm:^1.7.0"
     pathe: "npm:^1.1.2"
   checksum: 10c0/c7d167935de7207479e5829086040d70bea289f31fc1331f17c83e996a4440115c9deba2aa96de839ea66e1676d083c9ca44b33886f87bffa6b49740b67b6fcb
+  languageName: node
+  linkType: hard
+
+"pngjs@npm:7.0.0":
+  version: 7.0.0
+  resolution: "pngjs@npm:7.0.0"
+  checksum: 10c0/0d4c7a0fd476a9c33df7d0a2a73e1d56537628a668841f6995c2bca070cf30819f9254a64363266bc14ef2fee47659dd3b4f2b18eec7ab65143015139f497b38
   languageName: node
   linkType: hard
 
@@ -9807,7 +9904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ufo@npm:^1.4.0, ufo@npm:^1.5.3":
+"ufo@npm:^1.3.0, ufo@npm:^1.4.0, ufo@npm:^1.5.3":
   version: 1.5.3
   resolution: "ufo@npm:1.5.3"
   checksum: 10c0/1df10702582aa74f4deac4486ecdfd660e74be057355f1afb6adfa14243476cf3d3acff734ccc3d0b74e9bfdefe91d578f3edbbb0a5b2430fe93cd672370e024
@@ -10056,6 +10153,13 @@ __metadata:
     unist-util-is: "npm:^6.0.0"
     unist-util-visit-parents: "npm:^6.0.0"
   checksum: 10c0/51434a1d80252c1540cce6271a90fd1a106dbe624997c09ed8879279667fb0b2d3a685e02e92bf66598dcbe6cdffa7a5f5fb363af8fdf90dda6c855449ae39a5
+  languageName: node
+  linkType: hard
+
+"unpic@npm:^3.18.0":
+  version: 3.18.0
+  resolution: "unpic@npm:3.18.0"
+  checksum: 10c0/74625e21de696075adaa7debe5fab43302027aba8bc44145f0b809a34f9a55612c2cfad3d0d1fef6fdc52d244ada4faa37ec479d013342aed78ce2305aa88572
   languageName: node
   linkType: hard
 
