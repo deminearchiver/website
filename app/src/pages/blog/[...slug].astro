@@ -101,7 +101,8 @@ const { Content } = await post.render();
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 24px;
+    overflow: hidden;
+    border-radius: 28px;
 
     &.with-cover {
       aspect-ratio: 16 / 9;
@@ -109,7 +110,6 @@ const { Content } = await post.render();
     &.card {
       gap: 48px;
       border: 1px solid var(--color-outline-variant);
-      border-radius: 28px;
     }
   }
 
@@ -121,10 +121,7 @@ const { Content } = await post.render();
     object-fit: contain;
     border-radius: 28px;
     z-index: -1;
-  }
-
-  :root[data-theme="dark"] .cover {
-    filter: brightness(0.4);
+    mask-image: linear-gradient(0deg, transparent, black);
   }
 
   .actions {
@@ -132,6 +129,7 @@ const { Content } = await post.render();
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 24px 24px 0 24px;
   }
 
 
@@ -141,7 +139,13 @@ const { Content } = await post.render();
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-end;
-    padding: 0 8px;
+    padding: 24px;
+  }
+
+  .header.with-cover .details {
+    border-radius: 28px 28px 0 0;
+    backdrop-filter: blur(8px);
+    background-image: linear-gradient(0deg, transparent, color-mix(in srgb, var(--color-surface) 38%, transparent));
   }
 
   .date {
