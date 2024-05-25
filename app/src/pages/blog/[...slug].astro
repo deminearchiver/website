@@ -64,9 +64,10 @@ const { Content } = await post.render();
         <div class="details">
           <span class="date">{date}</span>
           <h1 class="title">{post.data.title}</h1>
-          {post.data.description && <p class="description">{post.data.description}</p>}
+          {post.data.description && <p class="description inner">{post.data.description}</p>}
         </div>
       </div>
+      {post.data.description && <p class="description outer">{post.data.description}</p>}
       <Markdown>
         <Content />
       </Markdown>
@@ -82,6 +83,7 @@ const { Content } = await post.render();
   }
   main {
     max-width: 960px;
+    width: fit-content;
     margin: 0 auto;
     flex-grow: 1;
   }
@@ -184,16 +186,25 @@ const { Content } = await post.render();
     }
     .details {
       padding-top: 0;
+      justify-content: center;
     }
     .date {
       display: none;
     }
-    .title {
+    /* .title {
       font-family: var(--text-headline-medium-family);
       font-size: var(--text-headline-medium-size);
       font-weight: 500;
       line-height: var(--text-headline-medium-line-height);
       letter-spacing: var(--text-headline-medium-letter-spacing);
+    } */
+    .description.inner {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 600px) {
+    .description.outer {
+      display: none;
     }
   }
 </style>

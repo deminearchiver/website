@@ -9,13 +9,17 @@ import { NavigationDrawer } from "../navigation";
 import { Search, SearchAnchor, SearchView } from "../search";
 import { NavigationTab } from "../navigation";
 import { dynamicToStatic, getDestinations } from "../navigation/destinations";
-import { fade } from "astro/virtual-modules/transitions.js";
 import type { TransitionAnimationPair } from "astro";
 import { THEME } from "../../styles/theme";
 
 import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
+import type { JSX } from "astro/jsx-runtime";
 
-interface Props {}
+type Props = Omit<JSX.HTMLAttributes, "id" | "children">;
+
+const {
+  ...rest
+} = Astro.props;
 
 const fadeOver: TransitionAnimationPair = {
   old: {
@@ -34,10 +38,9 @@ const animate = {
 }
 
 const destinations = dynamicToStatic(Astro.url, getDestinations());
-
 ---
 
-<header id="header" transition:name="header" transition:animate={animate} data-pagefind-ignore>
+<header id="header" transition:name="header" transition:animate={animate} data-pagefind-ignore {...rest}>
   <div class="leading">
     <NavigationDrawer
       client:load
@@ -201,7 +204,7 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 8px;
   }
 
   @media only screen and (min-width: 840px) {

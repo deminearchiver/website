@@ -13,6 +13,7 @@ export const GET: APIRoute = async (context) => {
   return rss({
     title: "deminearchiver",
     description: "",
+    // stylesheet: "/rss.xsl",
     items: posts.map(post => ({
       title: post.data.title,
       pubDate: post.data.createdAt,

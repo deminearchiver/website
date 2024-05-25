@@ -3,7 +3,7 @@ import { mergeRefs, resolveFirst } from "@solid-primitives/refs";
 import { For, createEffect, createMemo, createSignal, splitProps, untrack, type Component, type ComponentProps, type JSX, type ParentComponent } from "solid-js";
 
 import { createPresence } from "@solid-primitives/presence";
-import { drawerContentStyle, drawerItemContentStyle, drawerItemStyle, drawerDialogStyle, drawerListStyle, passthroughStyle, drawerHeaderStyle } from "./navigation-drawer.css";
+import { drawerContentStyle, drawerItemContentStyle, drawerItemStyle, drawerDialogStyle, drawerListStyle, passthroughStyle, drawerHeaderStyle, drawerFooterStyle } from "./navigation-drawer.css";
 import { Splash } from "@material/solid/components/splash";
 
 
@@ -15,6 +15,8 @@ import { IconButton } from "@material/solid/components/icon-button";
 import MenuOpenIcon from "~icons/material-symbols-rounded/menu-open:outlined";
 import HomeOutlinedIcon from "~icons/material-symbols-rounded/home:outlined";
 import HomeFilledIcon from "~icons/material-symbols-rounded/home:filled";
+import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
+import { Button } from "@material/solid/components/button";
 
 const GLOBAL_DESTINATIONS: DynamicNavigationDestination[] = [
   {
@@ -131,6 +133,11 @@ export const NavigationDrawer: Component<NavigationDrawerProps> = (props) => {
               )
             }</For>
           </ul>
+          <div class={drawerFooterStyle}>
+            <IconButton variant="tonal" href="/rss.xml">
+              <RssFeedIcon width={24} height={24} />
+            </IconButton>
+          </div>
         </aside>
       </dialog>
     </div>

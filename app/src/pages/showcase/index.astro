@@ -2,8 +2,9 @@
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import Page from "../../layouts/Page.astro";
+import { getShowcaseCollection } from "../../schemas/showcase";
 
-
+const entries = await getShowcaseCollection();
 ---
 
 <Page>

@@ -627,6 +627,7 @@ __metadata:
     "@iconify-json/material-symbols": "npm:^1.1.80"
     "@iconify-json/simple-icons": "npm:^1.1.101"
     "@material-symbols/unplugin-icons": "workspace:*"
+    "@material/astro": "workspace:*"
     "@material/material-color-utilities": "https://gitpkg.now.sh/material-foundation/material-color-utilities/typescript?main"
     "@material/solid": "workspace:*"
     "@pagefind/astro": "workspace:*"
@@ -1995,9 +1996,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@material/astro@workspace:packages/material/astro":
+"@material/astro@workspace:*, @material/astro@workspace:packages/material/astro":
   version: 0.0.0-use.local
   resolution: "@material/astro@workspace:packages/material/astro"
+  dependencies:
+    astro: "npm:^4.9.1"
+    typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft
 

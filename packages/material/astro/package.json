@@ -1,5 +1,14 @@
 {
   "private": true,
   "name": "@material/astro",
-  "packageManager": "yarn@4.2.2"
+  "exports": {
+    "./components": "./components/index.ts"
+  },
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "astro": "^4.9.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
 }

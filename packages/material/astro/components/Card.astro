@@ -1,0 +1,52 @@
+---
+import type { JSX } from 'astro/jsx-runtime';
+
+export type CardVariant = "elevated" | "filled" | "outlined";
+type Props = {
+  variant: CardVariant;
+} & JSX.HTMLAttributes;
+
+const {
+  variant,
+  "class:list": customClass,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "card", variant,
+    customClass,
+  ]}
+  {...rest}>
+    <slot />
+    <div class="outline" />
+</div>
+
+<style>
+  .card {
+    position: relative;
+    border-radius: 12px;
+
+    & .outline {
+      position: absolute;
+      inset: 0;
+      border: 1px solid transparent;
+      border-radius: inherit;
+      z-index: 1;
+    }
+
+    &.elevated {
+      background-color: var(--color-surface-container-low);
+    }
+    &.filled {
+      background-color: var(--color-surface-container-highest);
+    }
+    &.outlined {
+      background-color: var(--color-surface);
+    }
+    &.outlined .outline {
+      border-color: var(--color-outline-variant);
+    }
+  }
+</style>

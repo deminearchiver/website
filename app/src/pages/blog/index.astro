@@ -250,7 +250,7 @@ const posts = (await getBlogCollection())
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 8px;
+    gap: 4px;
     padding-inline: 8px;
   }
 
@@ -287,21 +287,19 @@ const posts = (await getBlogCollection())
     font-variation-settings: "GRAD" 0;
     color: var(--color-on-surface-variant);
 
-
-
     transition-property: background-color, color;
     transition-duration: 105ms;
     transition-timing-function: var(--easing-standard);
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-surface), var(--color-on-surface-variant) 8%);
+        background-color: color-mix(in srgb, transparent, var(--color-on-surface-variant) 8%);
         color: var(--color-primary);
         font-variation-settings: "GRAD" 50;
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-surface), var(--color-on-surface-variant) 10%);
+      background-color: color-mix(in srgb, transparent, var(--color-on-surface-variant) 10%);
       color: var(--color-primary);
       font-variation-settings: "GRAD" 150;
     }

@@ -1,6 +1,6 @@
 ---
 title: Bringing Material You to SolidJS
-description: Eiusmod sint incididunt ea mollit cupidatat ullamco mollit labore laborum ea sit consectetur.
+description: Recreating Material You components in SolidJS, styling with Vanilla Extract.
 cover:
   src: ../../assets/images/covers/material-to-solid.png
 authors:
@@ -8,12 +8,22 @@ authors:
     name: deminearchiver
     avatar:
       src: ../../assets/images/avatars/deminearchiver.png
-createdAt: 2024-05-18
+createdAt: 2024-05-25 # DO NOT CHANGE ANYMORE! Started work on the post 2024-05-25
 ---
 
 import { Aside } from "../../components/aside";
 import { Button } from "../../components/primitives/button";
 import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined";
+
+import DragClickIcon from "~icons/material-symbols-rounded/drag-click:outlined";
+import HighlightKeyboardFocusIcon from "~icons/material-symbols-rounded/highlight-keyboard-focus:outlined";
+
+import ButtonsAltIcon from "~icons/material-symbols-rounded/buttons-alt:outlined";
+import RectangleIcon from "~icons/material-symbols-rounded/rectangle:outlined";
+import PlayCircleIcon from "~icons/material-symbols-rounded/play-circle:outlined";
+
+import SearchIcon from "~icons/material-symbols-rounded/search:outlined";
+import MenuIcon from "~icons/material-symbols-rounded/menu:outlined";
 
 <Aside variant="caution">
   <>This blog post is **WORK IN PROGRESS**. It may contain unfinished and inaccurate content.</>
@@ -21,10 +31,56 @@ import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined";
     slot="action"
     variant="error"
     class="not-content"
-    href="/blog">
+    href="/blog"
+    data-navigate-back>
       <ArrowBackIcon slot="leading" width={18} height={18} />
       <>Go back</>
   </Button>
 </Aside>
 
 ## Showcase
+
+{/* TODO: replace with custom component */}
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Demo</th>
+  </tr>
+  <tr>
+    <th colSpan={2}>Primitives</th>
+  </tr>
+  <tr>
+    <td><DragClickIcon width={24} height={24} />Ripple</td>
+  </tr>
+  <tr>
+    <td><HighlightKeyboardFocusIcon width={24} height={24} />Focus indicator</td>
+  </tr>
+  <tr>
+    <th colSpan={2}>Simple</th>
+  </tr>
+  <tr>
+    <td><ButtonsAltIcon width={24} height={24} />Common buttons</td>
+  </tr>
+  <tr>
+    <td><PlayCircleIcon width={24} height={24} />Icon buttons</td>
+  </tr>
+  <tr>
+    <td><RectangleIcon width={24} height={24} />Cards</td>
+  </tr>
+  <tr>
+    <th colSpan={2}>Complex</th>
+  </tr>
+  <tr>
+    <td>Navigation drawer</td>
+  </tr>
+  <tr>
+    <td>Dialog</td>
+  </tr>
+  <tr>
+    <td><SearchIcon width={24} height={24} />Search</td>
+  </tr>
+  <tr>
+    <td><MenuIcon width={24} height={24} />Menu</td>
+  </tr>
+</table>

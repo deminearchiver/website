@@ -81,6 +81,10 @@ export const drawerContentStyle = recipe({
     position: "absolute",
     inset: 0,
     padding: "12px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "flex-start",
   },
 
 });
@@ -94,8 +98,10 @@ export const drawerHeaderStyle = style({
   color: THEME.color.onSurfaceVariant,
 });
 
+
 export const drawerListStyle = style({
   listStyle: "none",
+  flexGrow: 1,
   width: "100%",
   display: "flex",
   flexDirection: "column",
@@ -181,4 +187,9 @@ export const drawerItemContentStyle = recipe({
       },
     },
   },
+});
+export const drawerFooterStyle = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
 });

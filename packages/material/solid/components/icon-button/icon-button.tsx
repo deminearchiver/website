@@ -1,8 +1,9 @@
-import { type JSX, splitProps, type ParentComponent } from "solid-js";
+import { type JSX, splitProps, type ParentComponent, createMemo, createSignal, type Signal } from "solid-js";
 import { iconButtonStyle } from "./icon-button.css";
 import { Splash } from "../splash";
 import clsx from "clsx/lite";
 import { mergeRefs } from "@solid-primitives/refs";
+import { Dynamic } from "solid-js/web";
 
 type IconButtonVariant =
   | "regular"
@@ -12,7 +13,10 @@ type IconButtonVariant =
 
 export type IconButtonProps = {
   variant?: IconButtonVariant;
-} & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
+} & (
+  | JSX.ButtonHTMLAttributes<HTMLButtonElement>
+  | JSX.AnchorHTMLAttributes<HTMLAnchorElement>
+);
 
 export const IconButton: ParentComponent<IconButtonProps> = (props) => {
   const [localProps, otherProps] = splitProps(
@@ -25,11 +29,17 @@ export const IconButton: ParentComponent<IconButtonProps> = (props) => {
     ],
   );
 
-  let ref!: HTMLElement;
+  const [ref, setRef] = createSignal() as Signal<HTMLElement>;
+
+
+  const tag = createMemo(() => {
+    return "href" in otherProps ? "a" : "button";
+  });
+
   return (
-    <button
-      {...otherProps}
-      ref={mergeRefs(localProps.ref, element => ref = element)}
+    <Dynamic
+      component={tag()}
+      ref={mergeRefs(localProps.ref as HTMLElement, setRef)}
       class={
         clsx(
           iconButtonStyle({
@@ -37,11 +47,12 @@ export const IconButton: ParentComponent<IconButtonProps> = (props) => {
           }),
           localProps.class
         )
-      }>
+      }
+      {...otherProps}>
       <Splash
         for={ref}
-        disabled={props.disabled} />
+        disabled={"disabled" in props && props.disabled} />
       {localProps.children}
-    </button>
+    </Dynamic>
   );
 }
