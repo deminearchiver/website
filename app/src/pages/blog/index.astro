@@ -11,21 +11,15 @@ import type { CollectionEntry } from "astro:content";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { getBlogCollection } from "../../schemas/blog";
 
 
 dayjs.extend(utc);
 
-let posts = (await getCollection("blog"))
+const posts = (await getBlogCollection())
   .sort(
     (a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf(),
   );
-
-if(import.meta.env.PROD) {
-  posts = posts.filter(post => post.data.hide !== "production");
-} else if(import.meta.env.DEV) {
-  posts = posts.filter(post => post.data.hide !== "development");
-}
-
 ---
 
 <Page>
@@ -53,7 +47,7 @@ if(import.meta.env.PROD) {
                     href={postUrl}>
                         {
                           post.cover
-                            ? <Image class="cover image" src={post.cover.image.src} alt={post.cover.image.alt} />
+                            ? <Image class="cover image" src={post.cover.src} alt={post.cover.alt} />
                             : <div class="cover placeholder"><ImageIcon width={48} height={48} /></div>
                           }
                       <div class="content">
@@ -63,6 +57,7 @@ if(import.meta.env.PROD) {
                       </div>
                   </a>
                   <div class="authors">
+                    <span class="by">by</span>
                     <a class="author" href={`/blog/tags/author/${author.id}/`}>
                         {
                           author.avatar
@@ -104,16 +99,11 @@ if(import.meta.env.PROD) {
   .posts {
     list-style: none;
 
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 24px; */
     display: grid;
     place-items: center;
     place-content: center;
     grid-template-columns: repeat(1, 1fr);
-    gap: 24px;
+    gap: 40px 24px;
   }
 
   @media only screen and (min-width: 600px) {
@@ -261,6 +251,16 @@ if(import.meta.env.PROD) {
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
+    padding-inline: 8px;
+  }
+
+  .by {
+    font-family: var(--text-label-large-family);
+    font-size: var(--text-label-large-size);
+    font-weight: var(--text-label-large-weight);
+    line-height: var(--text-label-large-line-height);
+    letter-spacing: var(--text-label-large-letter-spacing);
+    color: var(--color-on-surface-variant);
   }
 
   .author {
@@ -275,7 +275,7 @@ if(import.meta.env.PROD) {
     gap: 8px;
 
     padding-block: 8px;
-    padding-inline: 16px 24px;
+    padding-inline: 8px 16px;
     border-radius: 9999px;
 
     font-family: var(--text-label-large-family);

@@ -14,10 +14,11 @@ import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined&o
 import ShareIcon from "~icons/material-symbols-rounded/share:filled";
 import dayjs from "dayjs";
 import { Button } from "../../components/primitives/button";
+import { getBlogCollection } from "../../schemas/blog";
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getCollection("blog");
+  const posts = await getBlogCollection();
   return posts.map(post => ({
     params: {
       slug: post.slug,
@@ -48,8 +49,8 @@ const { Content } = await post.render();
           post.data.cover
             && <Image
                   class="cover"
-                  src={post.data.cover.image.src}
-                  alt={post.data.cover.image.alt} />
+                  src={post.data.cover.src}
+                  alt={post.data.cover.alt} />
         }
         <div class="actions">
           <Button variant={post.data.cover ? "elevated" : "text"} class="back" href="/blog" data-navigate-back>
@@ -101,6 +102,7 @@ const { Content } = await post.render();
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
     overflow: hidden;
     border-radius: 28px;
 
@@ -174,5 +176,24 @@ const { Content } = await post.render();
     line-height: var(--text-body-large-line-height);
     letter-spacing: var(--text-body-large-letter-spacing);
     color: var(--color-on-surface-variant);
+  }
+
+  @media only screen and (max-width: 599px) {
+    .actions {
+      padding: 16px 16px 0 16px;
+    }
+    .details {
+      padding-top: 0;
+    }
+    .date {
+      display: none;
+    }
+    .title {
+      font-family: var(--text-headline-medium-family);
+      font-size: var(--text-headline-medium-size);
+      font-weight: 500;
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: var(--text-headline-medium-letter-spacing);
+    }
   }
 </style>

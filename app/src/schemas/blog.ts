@@ -1,4 +1,4 @@
-import { defineCollection, z, type SchemaContext } from "astro:content";
+import { defineCollection, getCollection, z, type SchemaContext } from "astro:content";
 import { imageSchema } from "./utils";
 
 import deminearchiverAvatar from "../assets/images/avatars/deminearchiver.png";
@@ -21,19 +21,12 @@ type AuthorsKey = keyof typeof AUTHORS;
 const authorsKeys = Object.keys(AUTHORS) as [AuthorsKey, ...AuthorsKey[]];
 
 export const blogSchema = (context: SchemaContext) => {
-  const { image } = context;
   return z.object({
     hide: z.enum(["development", "production"]).optional(),
     title: z.string(),
     description: z.string().optional(),
-    cover: z.object({
-      image: imageSchema(context),
-    }).optional(),
+    cover: imageSchema(context).optional(),
     authors: z.array(authorSchema(context)).min(1),
-    // author:
-    //   z.enum(authorsKeys)
-    //     .transform(author => AUTHORS[author])
-    //     .pipe(authorSchema(context)),
     createdAt: z.date(),
     editedAt: z.date().optional(),
   });
@@ -44,3 +37,14 @@ export const blogCollection = () =>
     type: "content",
     schema: blogSchema,
   });
+
+export const getBlogCollection = async () => {
+  let entries = await getCollection("blog");
+  if(import.meta.env.PROD) {
+    entries = entries.filter(entry => entry.data.hide !== "production");
+  }
+  if(import.meta.env.DEV) {
+    entries = entries.filter(entry => entry.data.hide !== "development");
+  }
+  return entries;
+}
