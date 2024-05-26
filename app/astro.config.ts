@@ -5,7 +5,6 @@ import { addClassName } from "astro-expressive-code/hast";
 import { pluginLineNumbers as expressiveCodeLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections as expressiveCodeCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 
-
 import mdx from "@astrojs/mdx";
 
 import solid from "@astrojs/solid-js";
