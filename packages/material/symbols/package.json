@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "@material/symbols",
+  "type": "module",
+  "exports": {
+    "./vite": "./vite/index.ts",
+    "./astro": "./astro/index.ts",
+    "./types": "./env.d.ts"
+  },
+  "packageManager": "yarn@4.2.2",
+  "peerDependencies": {
+    "vite": "^5.2.0"
+  },
+  "devDependencies": {
+    "@deminearchiver/configs": "workspace:*",
+    "@types/fontkit": "^2",
+    "@types/node": "^20.12.12",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "@fontsource-variable/material-symbols-rounded": "^5.0.31",
+    "@fontsource-variable/material-symbols-sharp": "^5.0.31",
+    "@rollup/pluginutils": "^5.1.0",
+    "astro": "^4.9.1",
+    "fontkit": "^2.0.2",
+    "pathe": "^1.1.2"
+  }
+}

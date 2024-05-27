@@ -1559,6 +1559,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/material-symbols-rounded@npm:^5.0.31":
+  version: 5.0.31
+  resolution: "@fontsource-variable/material-symbols-rounded@npm:5.0.31"
+  checksum: 10c0/581766a2ce612aaadbb5a26e7d6e2d01291469b24ec7004cdb8c34a4f64363ac7b0515bc7358241450bd3af1012e97a40a0894926343b5f655c2162d21ae806f
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/material-symbols-sharp@npm:^5.0.31":
+  version: 5.0.31
+  resolution: "@fontsource-variable/material-symbols-sharp@npm:5.0.31"
+  checksum: 10c0/d6cc974389873bcd25213eceead7e4ad41cdc595452a32e463369c0b7812b61806705fcaa946fd11b0827d329ea0cfe38fac072c96a2e11e058f45d19113fbd4
+  languageName: node
+  linkType: hard
+
 "@fontsource-variable/roboto-flex@npm:^5.0.15":
   version: 5.0.15
   resolution: "@fontsource-variable/roboto-flex@npm:5.0.15"
@@ -2088,6 +2102,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@material/symbols@workspace:packages/material/symbols":
+  version: 0.0.0-use.local
+  resolution: "@material/symbols@workspace:packages/material/symbols"
+  dependencies:
+    "@deminearchiver/configs": "workspace:*"
+    "@fontsource-variable/material-symbols-rounded": "npm:^5.0.31"
+    "@fontsource-variable/material-symbols-sharp": "npm:^5.0.31"
+    "@rollup/pluginutils": "npm:^5.1.0"
+    "@types/fontkit": "npm:^2"
+    "@types/node": "npm:^20.12.12"
+    astro: "npm:^4.9.1"
+    fontkit: "npm:^2.0.2"
+    pathe: "npm:^1.1.2"
+    vite: "npm:^5.2.11"
+  peerDependencies:
+    vite: ^5.2.0
+  languageName: unknown
+  linkType: soft
+
 "@mdx-js/mdx@npm:^3.0.1":
   version: 3.0.1
   resolution: "@mdx-js/mdx@npm:3.0.1"
@@ -2267,6 +2300,22 @@ __metadata:
   version: 1.0.0-next.25
   resolution: "@polka/url@npm:1.0.0-next.25"
   checksum: 10c0/ef61f0a0fe94bb6e1143fc5b9d5a12e6ca9dbd2c57843ebf81db432c21b9f1005c09e8a1ef8b6d5ddfa42146ca65b640feb2d353bd0d3546da46ba59e48a5349
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@rollup/pluginutils@npm:5.1.0"
+  dependencies:
+    "@types/estree": "npm:^1.0.0"
+    estree-walker: "npm:^2.0.2"
+    picomatch: "npm:^2.3.1"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 10c0/c7bed15711f942d6fdd3470fef4105b73991f99a478605e13d41888963330a6f9e32be37e6ddb13f012bc7673ff5e54f06f59fd47109436c1c513986a8a7612d
   languageName: node
   linkType: hard
 
@@ -2668,6 +2717,15 @@ __metadata:
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
   checksum: 10c0/b3b0e334288ddb407c7b3357ca67dbee75ee22db242ca7c56fe27db4e1a31989cb8af48a84dd401deb787fe10cc6b2ab1ee82dc4783be87ededbe3d53c79c70d
+  languageName: node
+  linkType: hard
+
+"@types/fontkit@npm:^2":
+  version: 2.0.7
+  resolution: "@types/fontkit@npm:2.0.7"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/026ac8673aa1d9662ce86b0fcb3ed5c220ba5285904ef014e2607caa19e92ec503a9308ac27cc3bd4698fed42fc17fb4bd10702541d86b0e8b7a5abc36e58419
   languageName: node
   linkType: hard
 
@@ -5213,6 +5271,13 @@ __metadata:
   version: 0.6.1
   resolution: "estree-walker@npm:0.6.1"
   checksum: 10c0/6dabc855faa04a1ffb17b6a9121b6008ba75ab5a163ad9dc3d7fca05cfda374c5f5e91418d783496620ca75e99a73c40874d8b75f23b4117508cc8bde78e7b41
+  languageName: node
+  linkType: hard
+
+"estree-walker@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "estree-walker@npm:2.0.2"
+  checksum: 10c0/53a6c54e2019b8c914dc395890153ffdc2322781acf4bd7d1a32d7aedc1710807bdcd866ac133903d5629ec601fbb50abe8c2e5553c7f5a0afdd9b6af6c945af
   languageName: node
   linkType: hard
 

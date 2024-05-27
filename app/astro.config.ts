@@ -19,6 +19,7 @@ import { vanillaExtractPlugin as vanillaExtract } from "@vanilla-extract/vite-pl
 import unpluginIcons from "unplugin-icons/vite";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import materialSymbols from "@material-symbols/unplugin-icons";
+import materialSymbolsVite from "@material/symbols/vite";
 
 import { FontaineTransform as fontaine } from "fontaine";
 
@@ -82,6 +83,7 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
+      // materialSymbolsVite(),
       unpluginIcons({
         compiler: "solid",
         customCollections: {
