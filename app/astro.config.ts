@@ -34,15 +34,6 @@ export default defineConfig({
   //     layout: "fullWidth",
   //   }),
   // },
-  markdown: {
-    shikiConfig: {
-      theme: "houston",
-      // themes: {
-      //   light: "github-light-default",
-      //   dark: "github-dark-default",
-      // }
-    },
-  },
   integrations: [
     expressiveCode({
       plugins: [
@@ -58,7 +49,7 @@ export default defineConfig({
         }
       ],
       themes: ["github-dark-default", "github-light-default"],
-      themeCssSelector: (theme, context) =>
+      themeCssSelector: (theme) =>
         `[data-code-theme="${theme.name}"]`,
       styleOverrides: {
         codeFontFamily: `"Fira Code Variable"`,
