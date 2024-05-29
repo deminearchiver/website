@@ -15,9 +15,12 @@ import { THEME } from "../../styles/theme";
 import RssFeedIcon from "~icons/material-symbols-rounded/rss-feed:outlined";
 import type { JSX } from "astro/jsx-runtime";
 
-type Props = Omit<JSX.HTMLAttributes, "id" | "children">;
+type Props = {
+  withHero?: boolean;
+} & Omit<JSX.HTMLAttributes, "id" | "children">;
 
 const {
+  withHero = false,
   ...rest
 } = Astro.props;
 
@@ -39,76 +42,66 @@ const animate = {
 
 const destinations = dynamicToStatic(Astro.url, getDestinations());
 ---
-
-<header id="header" transition:name="header" transition:animate={animate} data-pagefind-ignore {...rest}>
-  <div class="leading">
-    <NavigationDrawer
-      client:load
-      class="drawer"
-      url={Astro.url}>
-        <IconButton>
-          <MenuIcon />
-        </IconButton>
-    </NavigationDrawer>
-    <a class="home" href="/">
-      <Logo class="logo" />
-    </a>
-  </div>
-  <nav>
-    <ul>
-      {
-        destinations.map(destination => (
-          <li>
-            <NavigationTab destination={destination} />
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-  <div class="options">
-    <IconButton
-      class="option rss"
-      variant="tonal"
-      href="/rss.xml">
-        <RssFeedIcon />
-    </IconButton>
-    <Search client:only="solid-js" />
-    <ThemeSelect client:load />
+<header
+  id="header"
+  class:list={[withHero && "with-hero"]}
+  transition:name="header"
+  transition:animate={animate}
+  data-pagefind-ignore {...rest}>
+  <div class="content">
+    <div class="leading">
+      <NavigationDrawer
+        client:load
+        class="drawer"
+        url={Astro.url}>
+          <IconButton>
+            <MenuIcon />
+          </IconButton>
+      </NavigationDrawer>
+      <a class="home" href="/">
+        <Logo class="logo" />
+      </a>
+    </div>
+    <nav>
+      <ul>
+        {
+          destinations.map(destination => (
+            <li>
+              <NavigationTab destination={destination} />
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="options">
+      <IconButton
+        class="option rss"
+        variant="tonal"
+        href="/rss.xml">
+          <RssFeedIcon />
+      </IconButton>
+      <Search client:only="solid-js" />
+      <ThemeSelect client:load />
+    </div>
   </div>
 </header>
-
-<script>
-  // const normalize = (value: number, min: number, max: number) => (value - min) / (max - min);
-  // const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
-
-  // const header = document.getElementById("header")!;
-
-  // let offset: number = -1;
-  // const onScroll = () => {
-  //   const rect = header.getBoundingClientRect();
-  //   if(offset < 0) offset = rect.top;
-  //   const scroll = rect.top === 0 ? window.scrollY - offset : 0;
-  //   const value = clamp(normalize(scroll, 0, rect.height), 0, 1);
-  //   header.style.setProperty("--header-scrolled-under-mix", `${value * 100}%`);
-  // }
-  // onScroll();
-  // window.addEventListener("scroll", onScroll);
-</script>
 
 <script is:inline data-astro-rerun>
   document.addEventListener(
     "astro:page-load",
     () => {
       const header = document.getElementById("header");
+      let withHero = header.classList.contains("with-hero");
       const onScroll = () => {
-        const normalBackgroundColor = "var(--color-surface)";
-        const scrolledUnderBackgroundColor = "var(--color-surface-container)";
-        // const scrolledUnderBackgroundColor = `color-mix(in srgb, var(--color-surface-container) 62%, transparent)`;
-        header.style.backgroundColor = window.scrollY > 0
-            ? scrolledUnderBackgroundColor
-            : normalBackgroundColor;
+        if(withHero && window.scrollY > 144) {
+          header.classList.add("scrolled-under");
+          header.classList.remove("with-hero");
+          withHero = false;
+        } else if(!withHero) {
+          header.classList.toggle("scrolled-under", window.scrollY > 0);
+        }
       }
-      onScroll();
+      // onScroll();
       window.addEventListener("scroll", onScroll);
     }
   );
@@ -128,19 +121,35 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
     height: 72px;
 
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-inline-start: 24px;
-
-    /* background-color: color-mix(in srgb, var(--color-surface), var(--color-surface-container) var(--header-scrolled-under-mix, 0%)); */
     background-color: var(--color-surface);
     transition: background-color 300ms var(--easing-standard);
-
-    /* backdrop-filter: blur(8px); */
-
     z-index: 9999;
-    isolation: isolate
+    isolation: isolate;
+    overflow: hidden;
+
+    &.scrolled-under {
+      background-color: var(--color-surface-container);
+    }
+
+    & .content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline-start: 24px;
+
+      transition: bottom 600ms var(--easing-emphasized);
+    }
+    &.with-hero:not(.scrolled-under) {
+      background-color: transparent;
+      & .content {
+        bottom: 72px;
+      }
+    }
+
   }
 
   .leading {

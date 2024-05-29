@@ -10,6 +10,8 @@ export const showcaseCollection = () =>
 export const showcaseSchema = (context: SchemaContext) => {
   return z.object({
     hide: z.enum(["development", "production"]).optional(),
+    type: z.enum(["internal", "external"]).default("internal"),
+    logo: imageSchema(context).optional(),
     title: z.string(),
     description: z.string().optional(),
     cover: imageSchema(context).optional(),

@@ -45,15 +45,15 @@ export const getDestinations = (): DynamicNavigationDestination[] => [
     href: "/blog",
     selected: startsWith("/blog")
   },
-  {
-    icon: {
-      unselected: InfoOutlinedIcon,
-      selected: InfoFilledIcon,
-    },
-    label: "About",
-    href: "/about",
-    selected: startsWith("/about"),
-  },
+  // {
+  //   icon: {
+  //     unselected: InfoOutlinedIcon,
+  //     selected: InfoFilledIcon,
+  //   },
+  //   label: "About",
+  //   href: "/about",
+  //   selected: startsWith("/about"),
+  // },
 ];
 
 export const dynamicToStatic = (

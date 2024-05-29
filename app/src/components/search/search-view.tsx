@@ -21,8 +21,6 @@ import DescriptionIcon from "~icons/material-symbols-rounded/description:outline
 import InfoIcon from "~icons/material-symbols-rounded/info:outlined";
 import TagIcon from "~icons/material-symbols-rounded/tag:outlined";
 
-import sanitize from "sanitize-html";
-
 import { Dynamic, isServer } from "solid-js/web";
 import type { Icon } from "../primitives/icon";
 import { access, type MaybeAccessor } from "@solid-primitives/utils";

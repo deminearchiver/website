@@ -1,29 +1,82 @@
 ---
+import { Button } from '../primitives/button'
+import FeedIcon from "~icons/material-symbols-rounded/feed:filled";
+import GalleryThumbnailIcon from "~icons/material-symbols-rounded/gallery-thumbnail:filled";
+import ArrowForwardIcon from "~icons/material-symbols-rounded/arrow-forward:outlined";
+
 interface Props {
 
 }
 ---
 
-<div class="hero">
+<article class="hero">
   <section class="content">
-    <h1 set:text="deminearchiver." />
+    <div class="image">
+      <!-- TODO: Add image -->
+    </div>
+    <div class="details">
+      <div>
+        <h1 class="title">deminearchiver</h1>
+        <p class="subtitle">
+          <span class="emphasize">Programming</span>
+          and
+          <span class="emphasize">animation</span>
+          enthusiast
+        </p>
+        <div class="actions">
+          <Button class="action" variant="filled" href="/showcase">
+            <GalleryThumbnailIcon slot="leading" width={18} height={18} />
+            Portfolio
+            <ArrowForwardIcon slot="trailing" width={18} height={18} />
+          </Button>
+          <Button class="action" variant="tonal" href="/blog">
+            <FeedIcon slot="leading" width={18} height={18} />
+            Blog
+            <ArrowForwardIcon slot="trailing" width={18} height={18} />
+          </Button>
+        </div>
+      </div>
+    </div>
   </section>
-</div>
+</article>
 
 <style>
   .hero {
+    display: block;
     min-height: 460px;
     max-height: 960px;
     height: 70vh;
-    padding: 32px 40px
+    padding: 32px 40px;
+    overflow: hidden;
   }
 
   .content {
+    width: 100%;
+    max-width: 960px;
     height: 100%;
+    margin: 0 auto;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between
+  }
+
+  .details {
+    max-width: 540px;
+    height: 100%;
+    margin-right: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  @media only screen and (min-width: 840px) {
+    .content {
+      flex-direction: row-reverse;
+      align-items: flex-start
+    }
+    .details {
+    }
   }
 
   @property --hero-gradient-1 {
@@ -37,18 +90,15 @@ interface Props {
     initial-value: #FF0027;
   }
 
-  h1 {
+  .title {
     position: relative;
 
     /* font-family: var(--text-display-large-family); */
     font-family: "Fira Code Variable", monospace;
-    font-variant-ligatures: contextual;
     font-size: var(--text-display-medium-size);
     font-weight: 400;
     line-height: var(--text-display-medium-line-height);
     letter-spacing: 0;
-
-    width: fit-content;
 
 
     color: transparent;
@@ -66,5 +116,82 @@ interface Props {
       --hero-gradient-1: blue;
       --hero-gradient-2: red;
     }
+  }
+
+  .subtitle {
+    margin-top: 10px;
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: var(--text-body-large-weight);
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
+    color: var(--color-on-surface-variant);
+  }
+
+  .emphasize {
+    position: relative;
+    z-index: 1;
+    font-variation-settings: "GRAD" 0;
+    transition-property: color, font-variation-settings;
+    transition-duration: 300ms;
+    transition-timing-function: var(--easing-standard);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      right: 50%;
+      bottom: 0;
+      height: 2px;
+      border-radius: 9999px;
+      z-index: -1;
+      background-color: var(--color-primary);
+      transition-property: right, left, bottom, height;
+      transition-duration: 300ms;
+      transition-timing-function: var(--easing-standard);
+    }
+
+    &:hover {
+      font-variation-settings: "GRAD" 100;
+      /* color: var(--color-primary); */
+      color: var(--color-on-surface);
+      &::before {
+        left: -2px;
+        right: -2px;
+      }
+    }
+    &:active {
+      font-variation-settings: "GRAD" 150;
+      color: var(--color-on-primary);
+      &::before {
+        left: -8px;
+        right: -8px;
+        height: calc(100% + 4px);
+        bottom: -2px;
+      }
+    }
+  }
+
+  .actions {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .action {
+    width: 100%;
+  }
+
+
+  .image {
+    /* aspect-ratio: 1 / 1; */
+    width: 100%;
+    height: 100%;
+
+    border-radius: 28px;
+
+    background-color: var(--color-secondary-container);
+    border: 4px solid var(--color-secondary);
   }
 </style>

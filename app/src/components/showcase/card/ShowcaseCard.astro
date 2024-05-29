@@ -1,0 +1,181 @@
+---
+import type { JSX } from "astro/jsx-runtime";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import clsx from "clsx/lite";
+
+type Props = {
+  entry: CollectionEntry<"showcase">;
+} & Omit<JSX.AnchorHTMLAttributes, "href" | "children">;
+
+const {
+  entry,
+  class: customClass,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={`/showcase/${entry.slug}/`}
+  class={clsx("showcase-card", customClass)}
+  {...rest}>
+    {
+      entry.data.cover
+        && <Image
+              class="cover"
+              src={entry.data.cover.src}
+              alt={entry.data.cover.alt} />
+    }
+    <div class:list={["content", entry.data.cover && "with-cover"]}>
+      {
+        entry.data.logo
+        && <Image
+              class="logo"
+              src={entry.data.logo.src}
+              alt={entry.data.logo.alt} />}
+      <div class="details">
+        <h3 class="title">{entry.data.title}</h3>
+        {entry.data.description && <p class="description">{entry.data.description}</p>}
+      </div>
+    </div>
+    <div class="outline" />
+</a>
+
+<style>
+  .showcase-card {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+
+    border-radius: 28px;
+    background-color: var(--color-surface);
+
+    outline: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+
+    text-decoration: none;
+    color: var(--color-on-surface);
+
+    transition-property: background-color, box-shadow;
+    transition-duration: 105ms;
+    transition-timing-function: linear;
+
+    /* aspect-ratio: 2 / 1; */
+    min-height: 144px;
+    overflow: hidden;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-surface-container-low);
+        box-shadow:
+          0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+          0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+
+        & .content.with-cover {
+          backdrop-filter: blur(4px);
+        }
+      }
+    }
+    &:is(:active, :focus-visible) {
+      background-color: var(--color-secondary-container);
+      box-shadow:
+        0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+        0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+      & .outline {
+        border-color: var(--color-outline);
+      }
+
+      & .content.with-cover {
+        backdrop-filter: blur(2px);
+      }
+    }
+
+    & .outline {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+      border: 1px solid var(--color-outline-variant);
+      pointer-events: none;
+      transition: border-color 105ms linear;
+    }
+
+    &:focus-visible {
+      & .outline {
+        border-color: var(--color-outline);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        outline: 3px solid var(--color-secondary);
+        z-index: 2;
+
+        animation-name: focus-grow, focus-shrink;
+        animation-delay: 0ms, 150ms;
+        animation-duration: 150ms, 450ms;
+        animation-timing-function: cubic-bezier(0, 0.2, 0, 1);
+      }
+    }
+  }
+
+  .cover {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    mask-image: linear-gradient(0deg, transparent, black);
+  }
+
+  .content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+
+    &.with-cover {
+      backdrop-filter: blur(8px);
+      transition: backdrop-filter 105ms linear;
+    }
+  }
+
+  .details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .title {
+    font-family: var(--text-headline-small-family);
+    font-size: var(--text-headline-small-size);
+    font-weight: var(--text-headline-small-weight);
+    line-height: var(--text-headline-small-line-height);
+    letter-spacing: var(--text-headline-small-letter-spacing);
+    color: var(--color-on-surface);
+  }
+
+  .description {
+    font-family: var(--text-body-large-family);
+    font-size: var(--text-body-large-size);
+    font-weight: var(--text-body-large-weight);
+    line-height: var(--text-body-large-line-height);
+    letter-spacing: var(--text-body-large-letter-spacing);
+    color: var(--color-on-surface-variant);
+  }
+</style>
+

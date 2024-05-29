@@ -5,8 +5,9 @@ import dayjs from 'dayjs';
 import Page from '../../layouts/Page.astro';
 import { Header } from '../../components/header';
 import { Footer } from '../../components/footer';
-import Markdown from '../../components/markdown/Markdown.astro';
+import Markdown from '../../components/content/markdown/Markdown.astro';
 import { getShowcaseCollection } from '../../schemas/showcase';
+import { Image } from 'astro:assets';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getShowcaseCollection();
@@ -28,9 +29,51 @@ const { Content } = await entry.render();
 <Page>
   <Header />
   <main>
+    <section class="card">
+      {
+        entry.data.logo
+        && <Image
+              class="logo"
+              src={entry.data.logo.src}
+              alt={entry.data.logo.alt} />}
+      <div class="details">
+        <h1>{entry.data.title}</h1>
+        {entry.data.description && <p class="description">{entry.data.description}</p>}
+      </div>
+      <div class="outline" />
+    </section>
     <Markdown>
       <Content />
     </Markdown>
   </main>
   <Footer />
 </Page>
+
+<style>
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    min-height: 70vh;
+    padding: 0 24px;
+  }
+
+  .card {
+    position: relative;
+    padding: 24px;
+
+    border-radius: 28px;
+  }
+
+  .outline {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid var(--color-outline-variant);
+  }
+
+  .logo {
+    width: 64px;
+    height: 64px;
+  }
+</style>

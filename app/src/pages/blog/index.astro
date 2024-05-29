@@ -6,7 +6,6 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
 import ImageIcon from "~icons/material-symbols-rounded/image:outlined&opticalSize=48";
-import { Filters } from "../../components/filters";
 import type { CollectionEntry } from "astro:content";
 
 import dayjs from "dayjs";
@@ -85,6 +84,9 @@ const posts = (await getBlogCollection())
 </Page>
 
 <style>
+  main {
+    min-height: 70vh;
+  }
   article {
     width: 100%;
     max-width: 840px;
@@ -102,13 +104,13 @@ const posts = (await getBlogCollection())
     display: grid;
     place-items: center;
     place-content: center;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
     gap: 40px 24px;
   }
 
   @media only screen and (min-width: 600px) {
     .posts {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
     }
   }
 
