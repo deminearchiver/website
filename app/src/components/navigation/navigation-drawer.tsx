@@ -1,6 +1,6 @@
 import { createEventListener } from "@solid-primitives/event-listener";
 import { mergeRefs, resolveFirst } from "@solid-primitives/refs";
-import { For, createEffect, createMemo, createSignal, splitProps, untrack, type Component, type ComponentProps, type JSX, type ParentComponent } from "solid-js";
+import { For, createEffect, createMemo, createSignal, on, splitProps, untrack, type Component, type ComponentProps, type JSX, type ParentComponent } from "solid-js";
 
 import { createPresence } from "@solid-primitives/presence";
 import { drawerContentStyle, drawerItemContentStyle, drawerItemStyle, drawerDialogStyle, drawerListStyle, passthroughStyle, drawerHeaderStyle, drawerFooterStyle } from "./navigation-drawer.css";
@@ -76,17 +76,17 @@ export const NavigationDrawer: Component<NavigationDrawerProps> = (props) => {
     exitDuration: 300,
   });
 
-  createEffect<boolean>((mounted) => {
-    document.body.toggleAttribute("data-dialog-open", open());
-    if(isMounted() === mounted) return isMounted();
-    if(isMounted()) {
-      dialogRef.showModal();
-    }
-    else {
-      dialogRef.close();
-    }
-    return isMounted();
-  }, isMounted());
+  createEffect(
+    on(isMounted, (mounted) => {
+      document.body.toggleAttribute("data-dialog-open", open());
+      if(mounted) {
+        dialogRef.showModal();
+      }
+      else {
+        dialogRef.close();
+      }
+    })
+  );
 
   const state = createMemo(() => isEntering() ? "enter" : isExiting() ? "exit" : undefined);
 

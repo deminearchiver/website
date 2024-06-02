@@ -46,7 +46,7 @@
     "@vanilla-extract/private": "^1.0.5",
     "@vanilla-extract/recipes": "^0.5.3",
     "@vanilla-extract/sprinkles": "^1.6.2",
-    "astro": "^4.9.1",
+    "astro": "^4.9.2",
     "astro-expressive-code": "^0.35.3",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
@@ -62,10 +62,11 @@
   "devDependencies": {
     "@iconify-json/material-symbols": "^1.1.80",
     "@iconify-json/simple-icons": "^1.1.101",
-    "@types/markdown-it": "^14",
-    "@types/sanitize-html": "^2",
+    "@types/markdown-it": "^14.1.1",
+    "@types/sanitize-html": "^2.11.0",
     "@vanilla-extract/vite-plugin": "^4.0.10",
     "astro-meta-tags": "^0.3.0",
-    "unplugin-icons": "^0.19.0"
+    "unplugin-icons": "^0.19.0",
+    "unplugin-turbo-console": "^1.8.6"
   }
 }

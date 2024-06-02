@@ -1,24 +1,33 @@
 import { defineCollection, getCollection, z, type SchemaContext } from "astro:content";
 import { imageSchema } from "./utils";
 
-import deminearchiverAvatar from "../assets/images/avatars/deminearchiver.png";
-
-const authorSchema = (context: SchemaContext) =>
-  z.object({
-    id: z.string(),
-    name: z.string(),
-    avatar: imageSchema(context).optional(),
-  });
-
-type Author = z.infer<ReturnType<typeof authorSchema>>
+type Author = {
+  name: string;
+  avatar?: {
+    src: Promise<{ default: ImageMetadata; }>;
+    alt?: string;
+  };
+};
 const AUTHORS = {
   deminearchiver: {
-    id: "deminearchiver",
-    name: "deminearchiver"
+    name: "deminearchiver",
+    avatar: {
+      src: import("../assets/images/avatars/deminearchiver.png"),
+      alt: "deminearchiver",
+    },
   },
 } satisfies Record<string, Author>;
 type AuthorsKey = keyof typeof AUTHORS;
 const authorsKeys = Object.keys(AUTHORS) as [AuthorsKey, ...AuthorsKey[]];
+
+const TAGS = {
+  solidJs: "SolidJS",
+  vanillaExtract: "Vanilla Extract",
+  materialDesign: "Material Design",
+}
+type TagsKey = keyof typeof TAGS;
+const tagsKeys = Object.keys(TAGS) as [TagsKey, ...TagsKey[]];
+
 
 export const blogSchema = (context: SchemaContext) => {
   return z.object({
@@ -26,7 +35,35 @@ export const blogSchema = (context: SchemaContext) => {
     title: z.string(),
     description: z.string().optional(),
     cover: imageSchema(context).optional(),
-    authors: z.array(authorSchema(context)).min(1),
+    authors: z.array(z.enum(authorsKeys))
+      .transform(async (ids, { addIssue }) => {
+        ids = [...new Set(ids)];
+        if(ids.length === 0) addIssue({
+          type: "array",
+          code: "too_small",
+          minimum: 1,
+          inclusive: true,
+          fatal: true,
+        });
+        return Promise.all(ids.map(async id => {
+          const { name, avatar } = AUTHORS[id] as Author;
+          return {
+            id,
+            name: name,
+            avatar: avatar && {
+              src: (await avatar.src).default,
+              alt: avatar.alt ?? name,
+            },
+          };
+        }));
+      }),
+    tags: z.array(z.enum(tagsKeys))
+      .default([])
+      .transform((ids, { addIssue }) => {
+        return [...new Set(ids)].map(
+          id => ({ id, name: TAGS[id] }),
+        );
+      }),
     createdAt: z.date(),
     editedAt: z.date().optional(),
   });

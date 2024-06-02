@@ -6,7 +6,7 @@
   },
   "packageManager": "yarn@4.2.2",
   "dependencies": {
-    "astro": "^4.9.1"
+    "astro": "^4.9.2"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

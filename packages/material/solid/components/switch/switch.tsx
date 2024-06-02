@@ -35,6 +35,11 @@ export const Switch: ParentComponent<SwitchProps> = (props) => {
   return (
     <div
       class={clsx(switchStyle, localProps.class)}
+      onKeyDown={event => {
+        const ignoreEvent = event.defaultPrevented || event.key !== "Enter";
+        if (ignoreEvent || localProps.disabled) return;
+        inputRef.click();
+      }}
       classList={{
         [switchSelectedStyle]: props.selected,
         [switchUnselectedStyle]: !props.selected,

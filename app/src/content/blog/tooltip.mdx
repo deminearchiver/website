@@ -1,0 +1,141 @@
+---
+hide: production
+title: Tooltips using Popover API & Floating UI
+description: |
+  In this post I'll show how to create a simple tooltip component for SolidJS using the Popover API and the FloatingUI library
+authors: [deminearchiver]
+createdAt: 2024-06-02
+tags:
+  - solidJs
+---
+
+As you may know, Popover API has recently [**landed in Baseline**](https://web.dev/blog/popover-api), which means it will soon come to all major browsers.
+
+```bash
+yarn add @floating-ui/dom
+yarn add @solid-primitives/refs @solid-primitives/event-listener @solid-primitives/presence
+```
+
+```tsx title="tooltip.tsx"
+import { type Accessor, type JSX, type Component, createSignal, splitProps, createEffect, onCleanup, on } from "solid-js";
+import { createSignal, computePosition, autoUpdate, flip, shift, offset } from "@floating-ui/dom";
+
+import { createEventListenerMap } from "@solid-primitives/event-listener";
+import { mergeRefs } from "@solid-primitives/refs";
+import { createPresence } from "@solid-primitives/presence";
+
+import styles from "./tooltip.module.css";
+
+export type TooltipProps = {
+  for: HTMLElement;
+} & JSX.HTMLAttributes<HTMLElement>;
+
+type FloatingState = {
+  x: number;
+  y: number;
+}
+
+export const Tooltip: Component<TooltipProps> = (props) => {
+  const [localProps, otherProps] = splitProps(
+    props,
+    ["ref", "class", "children"],
+  );
+
+  let ref!: HTMLElement;
+
+  const [visible, setVisible] = createSignal(false);
+  const [hovered, setHovered] = createSignal(false);
+
+  const { isMounted, isVisible } = createPresence(
+    visible, { transitionDuration: 100 },
+  );
+
+  const [floatingState, setFloatingState] = createSignal<FloatingState>(
+    { x: 0, y: 0 },
+  );
+
+  createEffect(() => {
+    const anchor = localProps.for;
+    const cleanup = autoUpdate(
+      anchor, ref,
+      () => {
+        computePosition(anchor, ref, {
+          middleware: [
+            flip(),
+            shift(),
+            offset(4),
+          ],
+        }).then(({ x, y }) => setFloatingState({ x, y }));
+      },
+    );
+    onCleanup(cleanup);
+  });
+
+  createEffect(
+    on(isMounted, mounted => {
+      if(mounted) ref.showPopover();
+      else ref.hidePopover();
+    })
+  );
+
+  createEventListenerMap(
+    localProps.for,
+    {
+      pointerenter: async () => {
+        setHovered(true);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        if(hovered()) setVisible(true);
+      },
+      pointerleave: () => {
+        setHovered(false);
+        setVisible(false);
+      }
+    }
+  );
+
+  return (
+    <div
+      ref={ref as HTMLDivElement}
+      class={styles["tooltip"]}
+      style={{
+        left: `${floatingState().x}px`,
+        top: `${floatingState().y}px`,
+      }}>
+        {localProps.children}
+    </div>
+  );
+}
+```
+
+```css title="tooltip.module.css"
+.tooltip {
+  /* Required for Floating UI */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+
+  /* Design */
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 8px;
+  background-color: darkslateblue;
+  color: white;
+  border-radius: 4px;
+
+  pointer-events: none;
+
+  transition: opacity 100ms linear;
+
+  /* Remove annoying user agent styles */
+  margin: 0;
+  border: none;
+}
+```
+
+
+## Conclusion
+
+You can see the final result in [**Material You for SolidJS**](/showcase/material-solid).

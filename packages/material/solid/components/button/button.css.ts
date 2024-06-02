@@ -1,6 +1,7 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { THEME } from "../../theme/contract.css";
 import { splashTheme } from "../splash";
+import { style } from "@vanilla-extract/css";
 
 export const buttonStyle = recipe({
   base: {
@@ -86,4 +87,15 @@ export const buttonStyle = recipe({
       },
     }
   }
+});
+
+export const buttonOutlineStyle = style({
+  position: "absolute",
+  inset: 0,
+  border: `1px solid ${THEME.color.outline}`,
+  selectors: {
+    [`${buttonStyle.classNames.base}:focus-visible > &`]: {
+      borderColor: THEME.color.primary,
+    },
+  },
 });

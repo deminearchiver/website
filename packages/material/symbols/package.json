@@ -3,26 +3,53 @@
   "name": "@material/symbols",
   "type": "module",
   "exports": {
-    "./vite": "./vite/index.ts",
-    "./astro": "./astro/index.ts",
-    "./types": "./env.d.ts"
+    "./astro": "./src/astro.ts",
+    "./esbuild": "./src/esbuild.ts",
+    "./rollup": "./src/rollup.ts",
+    "./vite": "./src/vite.ts",
+    "./rspack": "./src/rspack.ts",
+    "./webpack": "./src/webpack.ts",
+    "./types": "./src/types.ts",
+    "./types/solid": "./types/solid.d.ts"
   },
   "packageManager": "yarn@4.2.2",
-  "peerDependencies": {
-    "vite": "^5.2.0"
-  },
-  "devDependencies": {
-    "@deminearchiver/configs": "workspace:*",
-    "@types/fontkit": "^2",
-    "@types/node": "^20.12.12",
-    "vite": "^5.2.11"
-  },
   "dependencies": {
     "@fontsource-variable/material-symbols-rounded": "^5.0.31",
     "@fontsource-variable/material-symbols-sharp": "^5.0.31",
-    "@rollup/pluginutils": "^5.1.0",
-    "astro": "^4.9.1",
-    "fontkit": "^2.0.2",
-    "pathe": "^1.1.2"
+    "astro": "^4.9.2",
+    "unplugin": "^1.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.13.0",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "@nuxt/kit": "^3",
+    "@nuxt/schema": "^3",
+    "esbuild": "*",
+    "rollup": "^3",
+    "solid-js": "*",
+    "vite": ">=3",
+    "webpack": "^4 || ^5"
+  },
+  "peerDependenciesMeta": {
+    "@nuxt/kit": {
+      "optional": true
+    },
+    "@nuxt/schema": {
+      "optional": true
+    },
+    "esbuild": {
+      "optional": true
+    },
+    "rollup": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
   }
 }

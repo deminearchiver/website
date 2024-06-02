@@ -1,6 +1,6 @@
 import { type JSX, createMemo, createSignal, splitProps, type ParentComponent, type Signal } from "solid-js";
 import { Splash } from "../splash";
-import { buttonStyle } from "./button.css";
+import { buttonOutlineStyle, buttonStyle } from "./button.css";
 import clsx from "clsx/lite";
 import { Dynamic } from "solid-js/web";
 import { Focus } from "../focus";
@@ -63,6 +63,7 @@ export const Button: ParentComponent<ButtonProps> = (props) => {
       {localProps.leading}
       {localProps.children}
       {localProps.trailing}
+      <div class={buttonOutlineStyle} />
     </Dynamic>
   );
 }

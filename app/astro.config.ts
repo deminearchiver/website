@@ -19,11 +19,13 @@ import { vanillaExtractPlugin as vanillaExtract } from "@vanilla-extract/vite-pl
 import unpluginIcons from "unplugin-icons/vite";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import materialSymbols from "@material-symbols/unplugin-icons";
-import materialSymbolsVite from "@material/symbols/vite";
+import materialSymbolsIntegration from "@material/symbols/astro";
 
 import { FontaineTransform as fontaine } from "fontaine";
 
 import { imageService as unpicImageService } from "@unpic/astro/service";
+
+import turboConsole from "unplugin-turbo-console/astro";
 
 export default defineConfig({
   site: "https://deminearchiver.pages.dev",
@@ -35,6 +37,8 @@ export default defineConfig({
   //   }),
   // },
   integrations: [
+    turboConsole({}),
+    materialSymbolsIntegration(),
     expressiveCode({
       plugins: [
         expressiveCodeLineNumbers(),

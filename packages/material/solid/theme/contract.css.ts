@@ -18,68 +18,65 @@ export const THEME = createThemeContract({
      */
     short1: "",
     /**
-     * 50ms
+     * 100ms
      */
     short2: "",
     /**
-     * 100ms
+     * 150ms
      */
     short3: "",
     /**
-     * 150ms
+     * 200ms
      */
     short4: "",
     /**
-     * 200ms
+     * 250ms
      */
     medium1: "",
     /**
-     * 250ms
+     * 300ms
      */
     medium2: "",
     /**
-     * 300ms
+     * 350ms
      */
     medium3: "",
     /**
-     * 350ms
+     * 400ms
      */
     medium4: "",
     /**
-     * 400ms
+     * 450ms
      */
     long1: "",
     /**
-     * 450ms
+     * 500ms
      */
     long2: "",
     /**
-     * 500ms
+     * 550ms
      */
     long3: "",
     /**
-     * 550ms
+     * 600ms
      */
     long4: "",
     /**
-     * 600ms
+     * 700ms
      */
     extraLong1: "",
     /**
-     * 700ms
+     * 800ms
      */
     extraLong2: "",
     /**
-     * 800ms
+     * 900ms
      */
     extraLong3: "",
     /**
-     * 900ms
-     */
-    extraLong4: "",
-    /**
      * 1000ms
      */
+    extraLong4: "",
   },
   text: DEFAULT_TYPOGRAPHY,
 });
