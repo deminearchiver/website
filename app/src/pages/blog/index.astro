@@ -86,7 +86,7 @@ const posts = (await getBlogCollection())
                   </a>
                   <div class="authors">
                     <span class="by">by</span>
-                    <a class="author" href={`/blog/tags/author/${author.id}/`}>
+                    <a class="author">
                         {
                           author.avatar
                             && <Image
@@ -98,7 +98,7 @@ const posts = (await getBlogCollection())
                     </a>
                     {
                       authors.length > 0
-                        && <a class="author more" href={postUrl}>+{authors.length} more</a>
+                        && <a class="author more">+{authors.length} more</a>
                     }
                   </div>
                 </div>
