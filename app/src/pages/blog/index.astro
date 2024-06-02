@@ -10,8 +10,25 @@ import ImageIcon from "~icons/material-symbols-rounded/image:outlined&opticalSiz
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { getBlogCollection } from "../../schemas/blog";
+import type { ActionError } from "astro:actions";
 
 dayjs.extend(utc);
+
+const AVATAR_PATHS = import.meta.glob<{ default: ImageMetadata }>("/src/assets/images/avatars/*.{jpeg,jpg,png,gif}");
+const AVATARS: Record<string, ImageMetadata> = {};
+for(const path in AVATAR_PATHS) {
+  const importer = AVATAR_PATHS[path];
+  AVATARS[path] = (await importer()).default;
+}
+
+type ResolvedAuthor = {
+  id: string;
+  name: string;
+  avatar?: {
+    src: ImageMetadata;
+    alt: string;
+  };
+};
 
 const posts = (await getBlogCollection())
   .sort(
@@ -27,7 +44,20 @@ const posts = (await getBlogCollection())
         {
           posts.map(({ id, slug, data: post }) => {
             const postUrl = `/blog/${slug}/`;
-            const [author, ...authors] = post.authors;
+            const [author, ...authors] = post.authors
+              .map(({ id, name, avatar }) => {
+                const avatarImage = avatar
+                  && AVATARS[`/src/assets/images/avatars/${avatar.src}`];
+                return {
+                  id, name,
+                  avatar: avatarImage
+                    ? {
+                      src: avatarImage,
+                      alt: avatar.alt ?? name,
+                    }
+                    : undefined,
+                } as ResolvedAuthor;
+              });
 
             const date = dayjs(post.editedAt ?? post.createdAt)
               .utc()

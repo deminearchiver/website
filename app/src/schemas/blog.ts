@@ -4,7 +4,7 @@ import { imageSchema } from "./utils";
 type Author = {
   name: string;
   avatar?: {
-    src: Promise<{ default: ImageMetadata; }>;
+    src: string;
     alt?: string;
   };
 };
@@ -12,7 +12,7 @@ const AUTHORS = {
   deminearchiver: {
     name: "deminearchiver",
     avatar: {
-      src: import("../assets/images/avatars/deminearchiver.png"),
+      src: "deminearchiver.png",
       alt: "deminearchiver",
     },
   },
@@ -36,7 +36,7 @@ export const blogSchema = (context: SchemaContext) => {
     description: z.string().optional(),
     cover: imageSchema(context).optional(),
     authors: z.array(z.enum(authorsKeys))
-      .transform(async (ids, { addIssue }) => {
+      .transform((ids, { addIssue }) => {
         ids = [...new Set(ids)];
         if(ids.length === 0) addIssue({
           type: "array",
@@ -45,25 +45,23 @@ export const blogSchema = (context: SchemaContext) => {
           inclusive: true,
           fatal: true,
         });
-        return Promise.all(ids.map(async id => {
+        return ids.map(id => {
           const { name, avatar } = AUTHORS[id] as Author;
           return {
             id,
             name: name,
-            avatar: avatar && {
-              src: (await avatar.src).default,
-              alt: avatar.alt ?? name,
-            },
+            avatar,
           };
-        }));
+        });
       }),
     tags: z.array(z.enum(tagsKeys))
       .default([])
-      .transform((ids, { addIssue }) => {
-        return [...new Set(ids)].map(
-          id => ({ id, name: TAGS[id] }),
-        );
-      }),
+      .transform(ids => [...new Set(ids)]
+        .map(id => ({
+          id,
+          name: TAGS[id]
+        })),
+      ),
     createdAt: z.date(),
     editedAt: z.date().optional(),
   });
