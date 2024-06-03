@@ -108,6 +108,7 @@ export const searchViewStyle = recipe({
     borderRadius: 28,
     overflowX: "hidden",
     overflowY: "auto",
+    scrollbarWidth: "thin",
     display: "flex",
     flexDirection: "column",
 

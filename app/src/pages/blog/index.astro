@@ -11,6 +11,9 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { getBlogCollection } from "../../schemas/blog";
 import type { ActionError } from "astro:actions";
+import type { JSX } from "astro/jsx-runtime";
+
+import { TAGS, type Tag } from "../../schemas/blog";
 
 dayjs.extend(utc);
 
@@ -81,7 +84,21 @@ const posts = (await getBlogCollection())
                         <span class="date">{date}</span>
                         <h3 id={anchorId} class="title">{post.title}</h3>
                         {post.description && <p class="description">{post.description}</p>}
-                        {post.tags && <ul class="tags">{post.tags.map(tag => <li class="tag">{tag.name}</li>)}</ul>}
+                        {post.tags
+                          && <ul class="tags">{
+                              post.tags.map(id => {
+                                const value = TAGS[id];
+                                const tag: Tag = typeof value === "string"
+                                  ? { label: value }
+                                  : { ...value };
+                                return (
+                                  <li class:list={["tag", tag.icon && "with-icon"]}>
+                                    {tag.icon && <tag.icon width={18} height={18} />}
+                                    {tag.label}
+                                  </li>
+                                );
+                              })
+                            }</ul>}
                       </div>
                   </a>
                   <div class="authors">
@@ -375,6 +392,7 @@ const posts = (await getBlogCollection())
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
 
     background-color: var(--color-secondary-container);
     border-radius: 8px;
@@ -389,5 +407,9 @@ const posts = (await getBlogCollection())
     text-decoration: none;
     font-variation-settings: "GRAD" 0;
     color: var(--color-on-secondary-container);
+
+    &.with-icon {
+      padding-inline-start: 8px;
+    }
   }
 </style>

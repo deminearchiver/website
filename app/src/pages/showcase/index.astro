@@ -18,9 +18,6 @@ const entries = (await getShowcaseCollection())
         entries.map(entry => {
           return (
             <li>
-              {/* <a href={`/showcase/${entry.slug}/`}>
-                {entry.data.title}
-              </a> */}
               <ShowcaseCard class="card" entry={entry} />
             </li>
           );
@@ -54,7 +51,7 @@ const entries = (await getShowcaseCollection())
     }
   }
 
-  li {
+  .entries > li {
     display: contents;
   }
 

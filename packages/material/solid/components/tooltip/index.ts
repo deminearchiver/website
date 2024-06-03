@@ -1,6 +1,7 @@
-import { PlainTooltip as Plain } from "./plain-tooltip";
-import { RichTooltip as Rich } from "./rich-tooltip";
+import { tooltipFactory } from "./tooltip";
+export const Tooltip = {
+  Plain: tooltipFactory("plain"),
+  Rich: tooltipFactory("rich"),
+};
 
-export const Tooltip = { Plain, Rich };
-
-export type { PlainTooltipProps } from "./plain-tooltip";
+export type { TooltipProps as PlainTooltipProps } from "./tooltip";
