@@ -1,4 +1,4 @@
-import { type Component, type JSX, createSignal, splitProps, createMemo, type ParentComponent, children } from "solid-js";
+import { type Component, type JSX, createSignal, splitProps, createMemo, type ParentComponent, children, createEffect } from "solid-js";
 import { switchDisabledStyle, switchHandleContainerStyle, switchHandleStyle, switchIconsStyle, switchInputStyle, switchSelectedStyle, switchStyle, switchTrackStyle, switchUnselectedStyle } from "./switch.css";
 import { Splash } from "../splash";
 import { resolveFirst } from "@solid-primitives/refs";
@@ -29,9 +29,6 @@ export const Switch: ParentComponent<SwitchProps> = (props) => {
 
   let inputRef!: HTMLInputElement;
 
-  // const state = () => selected() ? "selected" : "unselected";
-  const state = createMemo(() => props.selected ? "selected" : "unselected");
-
   return (
     <div
       class={clsx(switchStyle, localProps.class)}
@@ -59,12 +56,12 @@ export const Switch: ParentComponent<SwitchProps> = (props) => {
         type="checkbox"
         aria-hidden="true" />
       <div class={switchTrackStyle({
-        state: state(),
+        selected: props.selected,
       })}>
         <div
           class={
             switchHandleContainerStyle({
-              state: state(),
+              selected: props.selected,
             })
           }>
             <div
@@ -92,7 +89,7 @@ export const Switch: ParentComponent<SwitchProps> = (props) => {
                 selected: props.selected,
                 icon: !!resolved(),
               })}>
-                <div class={switchIconsStyle({ state: state() })}>
+                <div class={switchIconsStyle({ selected: props.selected })}>
                   {resolved()}
               </div>
             </div>

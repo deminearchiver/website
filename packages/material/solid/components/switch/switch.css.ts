@@ -62,14 +62,14 @@ export const switchTrackStyle = recipe({
     },
   },
   variants: {
-    state: {
-      unselected: {
+    selected: {
+      false: {
         "::before": {
           backgroundColor: THEME.color.surfaceContainerHighest,
           border: `2px solid ${THEME.color.outline}`,
         },
       },
-      selected: {
+      true: {
         "::before": {
           backgroundColor: THEME.color.primary,
         },
@@ -90,11 +90,11 @@ export const switchHandleContainerStyle = recipe({
     borderRadius: "inherit",
   },
   variants: {
-    state: {
-      unselected: {
+    selected: {
+      false: {
         marginInlineEnd: 52 - 32,
       },
-      selected: {
+      true: {
         marginInlineStart: 52 - 32,
       },
     },
@@ -174,11 +174,11 @@ export const switchIconsStyle = recipe({
     placeContent: "center",
   },
   variants: {
-    state: {
-      unselected: {
+    selected: {
+      false: {
         color: THEME.color.surfaceContainerHighest,
       },
-      selected: {
+      true: {
         color: THEME.color.onPrimaryContainer,
       },
     }

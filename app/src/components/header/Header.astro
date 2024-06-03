@@ -81,7 +81,7 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
           <RssFeedIcon />
       </IconButton>
       <Search client:only="solid-js" />
-      <ThemeSelect client:load />
+      <ThemeSelect client:only="solid-js" />
     </div>
   </div>
 </header>

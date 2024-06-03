@@ -11,7 +11,7 @@ import { Switch as Match, Match as When } from "solid-js";
 
 import { Switch } from "@material/solid/components/switch";
 import { isServer, type Falsy, type FalsyValue } from "@solid-primitives/utils";
-import { themeSelectControlStyle, themeSelectLabelStyle, themeSelectStyle, themeSelectSubtitleStyle } from "./theme-select.css";
+import { themeSelectLabelStyle, themeSelectSplashStyle, themeSelectStyle, themeSelectSubtitleStyle } from "./theme-select.css";
 import { Splash } from "@material/solid/components/splash";
 
 import { createBreakpoint } from "@material/solid/utils";
@@ -19,14 +19,6 @@ import { createBreakpoint } from "@material/solid/utils";
 type Theme = "light" | "dark";
 
 const STORAGE_KEY = "theme_auto";
-
-
-const themeFromPrefersDark = (prefersDark: boolean, inverse: boolean = false) => {
-  return inverse
-    ? prefersDark ? "light" : "dark"
-    : prefersDark ? "dark" : "light";
-}
-
 
 export interface ThemeSelectProps {
   type?: "small" | "medium" | "large";
@@ -37,64 +29,41 @@ export const ThemeSelect: Component<ThemeSelectProps> = (props) => {
 
   const [useAuto, setUseAuto] = makePersisted(
     createSignal(true),
-    { name: STORAGE_KEY, },
+    { name: STORAGE_KEY },
   );
 
   const prefersDark = createPrefersDark(true);
 
   const theme = createMemo<Theme>(() => {
-    return themeFromPrefersDark(prefersDark(), !useAuto())
+    return !useAuto()
+    ? prefersDark() ? "light" : "dark"
+    : prefersDark() ? "dark" : "light";
   });
-
-  const breakpoint = createBreakpoint("compact");
 
   createEffect(() => {
     document.documentElement.dataset.theme = theme();
   });
 
-  const showLarge = createMemo(() => {
-    return (props.type && props.type !== "small") || breakpoint.gt("compact");
-  });
-  const showWide = () =>
-    (!props.type && breakpoint.gte("extraLarge")) || (props.type === "large");
-
-  const Control: Component = () => (
-    <Switch
-      class={themeSelectControlStyle({
-        contained: showLarge(),
-      })}
-      selected={useAuto()}
-      onChanged={value => void setUseAuto(value)}
-      title="Theme">
-        <ThemeIcon theme={theme()} />
-    </Switch>
-  );
-
   const label = createMemo(
     () => `${useAuto() ? "Auto" : "Inverse"} (${theme()})`
   );
-
   return (
     <>
-      <Show
-        when={showLarge()}
-        fallback={<Control />}>
-          <label
-            ref={ref as HTMLLabelElement}
-            class={themeSelectStyle({
-              wide: showWide(),
-            })}
-            title={label()}>
-              <Splash for={ref} />
-              <div class={themeSelectLabelStyle}>
-                <p>Theme</p>
-                <Show when={showWide()}>
-                  <p class={themeSelectSubtitleStyle}>{label()}</p>
-                </Show>
-              </div>
-              <Control />
-          </label>
-      </Show>
+      <label
+        ref={ref as HTMLLabelElement}
+        class={themeSelectStyle}>
+          <Splash class={themeSelectSplashStyle} for={ref} />
+          <div class={themeSelectLabelStyle}>
+            <p>Theme</p>
+            <p class={themeSelectSubtitleStyle}>{label()}</p>
+          </div>
+          <Switch
+            selected={useAuto()}
+            onChanged={setUseAuto}
+            title="Theme">
+              <ThemeIcon theme={theme()} />
+          </Switch>
+      </label>
     </>
   );
 }
