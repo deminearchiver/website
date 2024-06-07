@@ -1,4 +1,4 @@
-import { DynamicColor, DynamicScheme, MaterialDynamicColors, SchemeTonalSpot, hexFromArgb, type Hct } from "@material/material-color-utilities";
+import { DynamicColor, DynamicScheme, MaterialDynamicColors, SchemeFidelity, SchemeTonalSpot, hexFromArgb, type Hct } from "@material/material-color-utilities";
 export type ColorsRecord<O, T = DynamicColor> = {
   [P in keyof O as O[P] extends DynamicColor ? P : never]: T;
 }

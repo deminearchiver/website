@@ -1,0 +1,15 @@
+---
+import Page from "../../layouts/Page.astro";
+import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
+import { GitHubCalendar } from "../../components/labs/github-calendar";
+---
+
+<Page>
+  <Header />
+  <main>
+    <h1>GitHub Calendar</h1>
+    <GitHubCalendar client:only="solid-js" />
+  </main>
+  <Footer />
+</Page>

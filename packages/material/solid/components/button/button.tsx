@@ -1,4 +1,4 @@
-import { type JSX, createMemo, createSignal, splitProps, type ParentComponent, type Signal } from "solid-js";
+import { type JSX, createMemo, createSignal, splitProps, type ParentComponent, type Signal, Show } from "solid-js";
 import { Splash } from "../splash";
 import { buttonOutlineStyle, buttonStyle } from "./button.css";
 import clsx from "clsx/lite";
@@ -63,7 +63,9 @@ export const Button: ParentComponent<ButtonProps> = (props) => {
       {localProps.leading}
       {localProps.children}
       {localProps.trailing}
-      <div class={buttonOutlineStyle} />
+      <Show when={localProps.variant === "outlined"}>
+        <div class={buttonOutlineStyle} />
+      </Show>
     </Dynamic>
   );
 }

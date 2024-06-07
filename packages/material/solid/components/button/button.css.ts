@@ -17,6 +17,7 @@ export const buttonStyle = recipe({
     appearance: "none",
     background: "none",
     border: "none",
+    outline: "none",
 
     textDecoration: "none",
     userSelect: "none",
@@ -72,7 +73,7 @@ export const buttonStyle = recipe({
       },
       outlined: {
         color: THEME.color.primary,
-        border: `1px solid ${THEME.color.outline}`,
+        // border: `1px solid ${THEME.color.outline}`,
         vars: {
           [splashTheme.hoverColor]: THEME.color.primary,
           [splashTheme.pressedColor]: THEME.color.primary,
@@ -93,6 +94,7 @@ export const buttonOutlineStyle = style({
   position: "absolute",
   inset: 0,
   border: `1px solid ${THEME.color.outline}`,
+  borderRadius: "inherit",
   selectors: {
     [`${buttonStyle.classNames.base}:focus-visible > &`]: {
       borderColor: THEME.color.primary,
