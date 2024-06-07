@@ -2578,7 +2578,7 @@ __metadata:
     astro: "npm:^4.10.0"
     fontkit: "npm:^2.0.2"
     pathe: "npm:^1.1.2"
-    vite: "npm:^5.2.11"
+    vite: "npm:^5.2.13"
   peerDependencies:
     vite: ^5.2.0
   languageName: unknown
@@ -11733,7 +11733,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.2.12":
+"vite@npm:^5.2.12, vite@npm:^5.2.13":
   version: 5.2.13
   resolution: "vite@npm:5.2.13"
   dependencies:

@@ -15,7 +15,7 @@
     "@deminearchiver/configs": "workspace:*",
     "@types/fontkit": "^2.0.7",
     "@types/node": "^20.13.0",
-    "vite": "^5.2.11"
+    "vite": "^5.2.13"
   },
   "dependencies": {
     "@fontsource-variable/material-symbols-rounded": "^5.0.31",
