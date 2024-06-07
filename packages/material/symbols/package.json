@@ -16,7 +16,7 @@
   "dependencies": {
     "@fontsource-variable/material-symbols-rounded": "^5.0.31",
     "@fontsource-variable/material-symbols-sharp": "^5.0.31",
-    "astro": "^4.9.2",
+    "astro": "^4.10.0",
     "unplugin": "^1.10.1"
   },
   "devDependencies": {

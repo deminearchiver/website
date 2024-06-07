@@ -21,7 +21,7 @@
     "@fontsource-variable/material-symbols-rounded": "^5.0.31",
     "@fontsource-variable/material-symbols-sharp": "^5.0.31",
     "@rollup/pluginutils": "^5.1.0",
-    "astro": "^4.9.2",
+    "astro": "^4.10.0",
     "fontkit": "^2.0.2",
     "pathe": "^1.1.2"
   }

@@ -49,7 +49,7 @@
     "@vanilla-extract/private": "^1.0.5",
     "@vanilla-extract/recipes": "^0.5.3",
     "@vanilla-extract/sprinkles": "^1.6.2",
-    "astro": "^4.9.2",
+    "astro": "^4.10.0",
     "astro-expressive-code": "^0.35.3",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
