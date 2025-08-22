@@ -30,6 +30,6 @@
     "wrangler": "^4.32.0"
   },
   "resolutions": {
-    "@material/material-color-utilities": "git@github.com:deminearchiver/material-color-utilities-typescript.git#commit=1241176ff15d5143a2febdfc8b194931e5b1f146"
+    "@material/material-color-utilities": "npm:@materialx/material-color-utilities@0.4.5"
   }
 }
