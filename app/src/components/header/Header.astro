@@ -42,9 +42,9 @@ const animate = {
 
 const destinations = dynamicToStatic(Astro.url, getDestinations());
 ---
+<!-- class:list={[withHero && "with-hero"]} -->
 <header
   id="header"
-  class:list={[withHero && "with-hero"]}
   transition:name="header"
   transition:animate={animate}
   data-pagefind-ignore {...rest}>
@@ -93,13 +93,13 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
       const header = document.getElementById("header");
       let withHero = header.classList.contains("with-hero");
       const onScroll = () => {
-        if(withHero && window.scrollY > 144) {
-          header.classList.add("scrolled-under");
-          header.classList.remove("with-hero");
-          withHero = false;
-        } else if(!withHero) {
+        // if(withHero && window.scrollY > 144) {
+        //   header.classList.add("scrolled-under");
+        //   header.classList.remove("with-hero");
+        //   withHero = false;
+        // } else if(!withHero) {
           header.classList.toggle("scrolled-under", window.scrollY > 0);
-        }
+        // }
       }
       // onScroll();
       window.addEventListener("scroll", onScroll);

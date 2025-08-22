@@ -1,7 +1,5 @@
-import { globalStyle, createGlobalTheme, assignVars } from "@vanilla-extract/css";
 import { createMaterialTheme } from "@material/solid/theme";
 import { Hct } from "@material/material-color-utilities";
-import { test } from "./astro.css";
 
 const { contract, dark, light } = createMaterialTheme({
   color: {

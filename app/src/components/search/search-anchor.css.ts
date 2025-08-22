@@ -1,6 +1,5 @@
 import { splashTheme } from "@material/solid/components/splash";
 import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 import { THEME } from "../../styles/theme";
 
 const DURATION = "600ms";
@@ -16,24 +15,21 @@ export const searchAnchorStyle = style({
 
   borderRadius: 9999,
   cursor: "pointer",
-  backgroundColor: THEME.color.secondaryContainer,
+  backgroundColor: THEME.color.surfaceContainer,
   minWidth: 40,
   height: 40,
   vars: {
-    [splashTheme.hoverColor]: THEME.color.onSecondaryContainer,
-    [splashTheme.pressedColor]: THEME.color.onSecondaryContainer,
+    [splashTheme.hoverColor]: THEME.color.surfaceContainer,
+    [splashTheme.pressedColor]: THEME.color.surfaceContainer,
   },
 });
 
 export const searchAnchorContentStyle = style({
-
   display: "grid",
   placeItems: "center",
   placeContent: "center",
 
-
-
-  color: THEME.color.onSecondaryContainer,
+  color: THEME.color.onSurfaceVariant,
 
   height: "inherit",
   minWidth: "inherit",
@@ -51,8 +47,8 @@ export const searchAnchorContentStyle = style({
   "@media": {
     "only screen and (min-width: 1200px)": {
       gap: 8,
-      gridTemplateColumns: "18px 1fr",
-      paddingInline: "16px 24px",
+      gridTemplateColumns: "20px 1fr",
+      paddingInline: 16,
     },
   },
 });
@@ -70,8 +66,8 @@ export const searchAnchorIconStyle = style({
 
   "@media": {
     "only screen and (min-width: 1200px)": {
-      width: 18,
-      height: 18,
+      width: 20,
+      height: 20,
     },
   },
 });

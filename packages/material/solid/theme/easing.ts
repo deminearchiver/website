@@ -1,11 +1,10 @@
-import { svgPathProperties as SVGPathProperties } from "svg-path-properties";
+import { getLength, getPointAtLength } from "@remotion/paths";
 
 export type LinearData = [position: number, value: number][];
 
 const pointsLength = 10_000;
 export const processSVGData = (pathData: string): LinearData => {
-  const parsedPath = new SVGPathProperties(pathData);
-  const totalLength = parsedPath.getTotalLength();
+  const totalLength = getLength(pathData);
 
   if (totalLength === 0) throw new TypeError("Path is zero length");
 
@@ -15,7 +14,7 @@ export const processSVGData = (pathData: string): LinearData => {
     { length: pointsLength },
     (_, i) => {
       const pos = (i / (pointsLength - 1)) * totalLength;
-      const point = parsedPath.getPointAtLength(pos);
+      const point = getPointAtLength(pathData, pos);
 
       // Prevent paths going back on themselves
       lastX = Math.max(lastX, point.x);
@@ -25,9 +24,6 @@ export const processSVGData = (pathData: string): LinearData => {
 
   return points;
 }
-
-
-
 
 // square distance from a point to a segment
 function getSqSegDist(

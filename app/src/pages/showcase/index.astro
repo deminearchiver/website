@@ -1,13 +1,12 @@
 ---
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
-import { Search } from "../../components/search";
 import { ShowcaseCard } from "../../components/showcase/card";
 import Page from "../../layouts/Page.astro";
 import { getShowcaseCollection } from "../../schemas/showcase";
 
 const entries = (await getShowcaseCollection())
-  .filter(entry => entry.slug.split("/").length === 1);
+  .filter(entry => entry.id.split("/").length === 1);
 ---
 
 <Page>

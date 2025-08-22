@@ -7,22 +7,22 @@
     "./astro": "./astro/index.ts",
     "./types": "./env.d.ts"
   },
-  "packageManager": "yarn@4.2.2",
+  "packageManager": "yarn@4.9.3",
   "peerDependencies": {
     "vite": "^5.2.0"
   },
   "devDependencies": {
-    "@deminearchiver/configs": "workspace:*",
-    "@types/fontkit": "^2.0.7",
-    "@types/node": "^20.13.0",
-    "vite": "^5.2.13"
+    "@deminearchiver/configs": "workspace:^",
+    "@types/fontkit": "^2.0.8",
+    "@types/node": "^24.3.0",
+    "vite": "^7.1.3"
   },
   "dependencies": {
-    "@fontsource-variable/material-symbols-rounded": "^5.0.31",
-    "@fontsource-variable/material-symbols-sharp": "^5.0.31",
-    "@rollup/pluginutils": "^5.1.0",
-    "astro": "^4.10.0",
-    "fontkit": "^2.0.2",
-    "pathe": "^1.1.2"
+    "@fontsource-variable/material-symbols-rounded": "^5.2.19",
+    "@fontsource-variable/material-symbols-sharp": "^5.2.19",
+    "@rollup/pluginutils": "^5.2.0",
+    "astro": "^5.13.2",
+    "fontkit": "^2.0.4",
+    "pathe": "^2.0.3"
   }
 }

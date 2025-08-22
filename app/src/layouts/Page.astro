@@ -1,5 +1,5 @@
 ---
-import { fade, slide, ViewTransitions } from "astro:transitions";
+import { fade, slide, ClientRouter } from "astro:transitions";
 import { Head } from "../components/head";
 
 import "../styles/theme/global.css";
@@ -66,7 +66,7 @@ const animation = {
     <Head
       title="deminearchiver"
       description="" />
-    <ViewTransitions/>
+    <ClientRouter />
   </head>
   <body>
     <slot />

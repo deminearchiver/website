@@ -1,19 +1,19 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
-import dayjs from 'dayjs';
+import { type CollectionEntry } from 'astro:content';
 import Page from '../../layouts/Page.astro';
 import { Header } from '../../components/header';
 import { Footer } from '../../components/footer';
 import Markdown from '../../components/content/markdown/Markdown.astro';
 import { getShowcaseCollection } from '../../schemas/showcase';
 import { Image } from 'astro:assets';
+import { render } from 'astro:content';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getShowcaseCollection();
   return entries.map(entry => ({
     params: {
-      slug: entry.slug,
+      slug: entry.id,
     },
     props: entry,
   }));
@@ -23,7 +23,7 @@ type Props = CollectionEntry<"showcase">;
 
 const entry = Astro.props;
 
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <Page>

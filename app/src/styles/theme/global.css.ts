@@ -6,7 +6,6 @@ const createSelector = (theme: "light" | "dark"): string => {
   return `:root[data-theme="${theme}"], [data-theme="${theme}"] ::backdrop`;
 }
 
-
 createGlobalTheme(
   createSelector("light"),
   THEME, LIGHT_THEME,

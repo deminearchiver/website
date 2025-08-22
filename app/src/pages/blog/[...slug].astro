@@ -1,27 +1,23 @@
 ---
 import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content"
 import Markdown from "../../components/content/markdown/Markdown.astro";
 import Page from "../../layouts/Page.astro";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
-import { IconButton } from "../../components/primitives/icon-button";
-
 import { Image } from "astro:assets";
-
 import ArrowBackIcon from "~icons/material-symbols-rounded/arrow-back:outlined&opticalSize=40";
-import ShareIcon from "~icons/material-symbols-rounded/share:filled";
 import dayjs from "dayjs";
 import { Button } from "../../components/primitives/button";
 import { getBlogCollection } from "../../schemas/blog";
+import { render } from "astro:content";
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getBlogCollection();
   return posts.map(post => ({
     params: {
-      slug: post.slug,
+      slug: post.id,
     },
     props: post,
   }));
@@ -38,7 +34,7 @@ const date = dayjs(post.data.editedAt ?? post.data.createdAt)
               .toUpperCase();
 
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 <Page>
   <Header />

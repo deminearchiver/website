@@ -1,11 +1,5 @@
-import { defineCollection, getCollection, z, type SchemaContext } from "astro:content";
+import {  getCollection, z, type SchemaContext } from "astro:content";
 import { imageSchema } from "./utils";
-
-export const showcaseCollection = () =>
-  defineCollection({
-    type: "content",
-    schema: showcaseSchema,
-  });
 
 export const showcaseSchema = (context: SchemaContext) => {
   return z.object({

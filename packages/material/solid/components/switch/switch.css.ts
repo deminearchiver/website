@@ -137,7 +137,7 @@ export const switchHandleStyle = recipe({
         },
         selectors: {
           [`${switchStyle}:hover &::before`]: {
-            "backgroundColor": THEME.color.onSurfaceVariant,
+            "backgroundColor": THEME.color.outline,
           },
         },
       },
@@ -149,7 +149,7 @@ export const switchHandleStyle = recipe({
         },
         selectors: {
           [`${switchStyle}:hover &::before`]: {
-            "backgroundColor": THEME.color.primaryContainer,
+            "backgroundColor": THEME.color.onPrimary,
           },
         },
       },
@@ -179,7 +179,7 @@ export const switchIconsStyle = recipe({
         color: THEME.color.surfaceContainerHighest,
       },
       true: {
-        color: THEME.color.onPrimaryContainer,
+        color: THEME.color.primary,
       },
     }
   }

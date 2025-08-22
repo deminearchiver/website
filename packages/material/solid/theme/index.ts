@@ -1,15 +1,12 @@
-import { DynamicColor, DynamicScheme, Hct, MaterialDynamicColors, SchemeTonalSpot } from "@material/material-color-utilities";
-import { schemeToColors, type ColorsRecord, type MaterialDynamicColorsRecord } from "./color";
+import { DynamicScheme, Hct, Platform, SpecVersion, Variant } from "@material/material-color-utilities";
+import { schemeToColors } from "./color";
 import { createThemeContract } from "@vanilla-extract/css";
 import { THEME } from "./contract.css";
-import { emphasizedAccurate } from "./emphasized";
 import { DEFAULT_DURATION, DEFAULT_EASING } from "./default/motion";
 import { DEFAULT_TYPOGRAPHY } from "./default/typography";
 import { capitalize } from "@deminearchiver/utils";
-import type { CSSVarFunction, MapLeafNodes } from "./utils";
+import type { CSSVarFunction } from "./utils";
 
-type Prefix<T extends string, S extends string> = `${S}${T}`;
-type Suffix<T extends string, S extends string> = `${T}${S}`;
 
 type On<T extends string> = `on${Capitalize<T>}`;
 type Container<T extends string> = `${T}Container`;
@@ -41,8 +38,22 @@ export interface CreateMaterialThemeOptions<CustomColors extends string[]> {
 
 
 export const createMaterialTheme = <const CustomColors extends string[]>(options: CreateMaterialThemeOptions<CustomColors>) => {
-  const lightScheme = new SchemeTonalSpot(options.color.seed, false, 0);
-  const darkScheme = new SchemeTonalSpot(options.color.seed, true, 0);
+  const lightScheme = DynamicScheme.from({
+    sourceColorHct: options.color.seed,
+    isDark: false,
+    contrastLevel: 0,
+    variant: Variant.EXPRESSIVE,
+    platform: Platform.PHONE,
+    specVersion: SpecVersion.SPEC_2025,
+  });
+  const darkScheme = DynamicScheme.from({
+    sourceColorHct: options.color.seed,
+    isDark: true,
+    contrastLevel: 0,
+    variant: Variant.EXPRESSIVE,
+    platform: Platform.PHONE,
+    specVersion: SpecVersion.SPEC_2025,
+  });
 
   const factory = (scheme: DynamicScheme) => {
     return (customColors?: ColorRoles<CustomColors, string>) => {
@@ -75,7 +86,7 @@ export const createMaterialTheme = <const CustomColors extends string[]>(options
   return {
     contract: (options: ContractOptions = { global: false }) => {
       if(options.global) {
-        const prefix = options.prefix ?? "";
+        // const prefix = options.prefix ?? "";
       }
       return {
         color: {

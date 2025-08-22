@@ -1,16 +1,13 @@
-import { addDts, createResolver, defineIntegration } from "astro-integration-kit";
+import { createResolver, defineIntegration } from "astro-integration-kit";
 import { spawn } from "child_process";
-import { readFileSync } from "fs";
 import { dirname, relative } from "path";
 import sirv from "sirv";
 import { fileURLToPath } from "url";
-
-import pagefind from "pagefind";
 import { ServerPort } from "./toolbar/port/server";
 
 export default defineIntegration({
   name: "astro-pagefind",
-  setup: ({ name, options }) => {
+  setup: ({ }) => {
     const { resolve } = createResolver(import.meta.url);
 
     let outDir: string;

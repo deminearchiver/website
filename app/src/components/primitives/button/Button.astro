@@ -4,6 +4,10 @@ import clsx from "clsx/lite";
 
 import { AstroError } from "astro/errors";
 
+const SIZES = ["extra-small", "small", "medium", "large", "extra-large"];
+
+const SHAPES = ["round", "square"];
+
 const VARIANTS = [
   "elevated",
   "filled",
@@ -14,57 +18,64 @@ const VARIANTS = [
   "success",
 ] as const;
 
-export type ButtonVariant = typeof VARIANTS[number];
+export type ButtonSize = (typeof SIZES)[number];
+export type ButtonShape = (typeof SHAPES)[number];
+export type ButtonVariant = (typeof VARIANTS)[number];
 
 type Props = {
-  variant: ButtonVariant;
+  size?: ButtonSize;
+  shape?: ButtonShape;
+  variant?: ButtonVariant;
   acrylic?: boolean;
 } & (JSX.ButtonHTMLAttributes | JSX.AnchorHTMLAttributes);
 
 const {
-  variant,
+  size = "small",
+  shape = "round",
+  variant = "filled",
   acrylic = false,
   class: customClass,
   ...props
 } = Astro.props;
 
 if (!VARIANTS.includes(variant)) {
-	throw new AstroError(
-		"Invalid `variant` prop passed to the `<Button>` component.\n",
-		`Received: ${JSON.stringify(variant)}\n`
-    + `Expected one of ${VARIANTS.map((variant) => JSON.stringify(variant)).join(', ')}`,
-	);
+  throw new AstroError(
+    "Invalid `variant` prop passed to the `<Button>` component.\n",
+    `Received: ${JSON.stringify(variant)}\n` +
+      `Expected one of ${VARIANTS.map((variant) => JSON.stringify(variant)).join(", ")}`
+  );
 }
-
 
 const hasLeading = Astro.slots.has("leading");
 const hasTrailing = Astro.slots.has("trailing");
 
 const className = clsx(
   "not-content",
-  "button", variant, acrylic && "acrylic",
+  "button",
+  size,
+  shape,
+  variant,
+  acrylic && "acrylic",
   hasLeading && "with-leading",
   hasTrailing && "with-trailing",
-  customClass,
+  customClass
 );
 ---
 
 {
-  "href" in props
-  ? <a
-      {...props}
-      class={className}>
-        <slot name="leading" />
-        <slot />
-        <slot name="trailing" />
+  "href" in props ? (
+    <a {...props} class={className}>
+      <slot name="leading" />
+      <slot />
+      <slot name="trailing" />
     </a>
-  : <button
-      {...props as JSX.ButtonHTMLAttributes}
-      class={className}>
-        <slot name="leading" />
-        <slot />
-        <slot name="trailing" />
+  ) : (
+    <button {...(props as JSX.ButtonHTMLAttributes)} class={className}>
+      <slot name="leading" />
+      <slot />
+      <slot name="trailing" />
     </button>
+  )
 }
 
 <style>
@@ -93,7 +104,6 @@ const className = clsx(
     align-items: center;
     justify-content: center;
 
-    gap: 8px;
 
     height: 40px;
     border-radius: 9999px;
@@ -106,22 +116,9 @@ const className = clsx(
 
     outline: none;
 
-    font-family: var(--text-label-large-family);
-    font-size: var(--text-label-large-size);
-    font-weight: var(--text-label-large-weight);
-    line-height: var(--text-label-large-line-height);
-    letter-spacing: var(--text-label-large-letter-spacing);
-
     transition:
       background-color 15ms linear,
       box-shadow 105ms linear;
-
-    &.with-leading {
-      padding-left: 16px;
-    }
-    &.with-trailing {
-      padding-right: 16px;
-    }
 
     &:focus-visible::after {
       content: "";
@@ -138,6 +135,71 @@ const className = clsx(
     }
   }
 
+  .extra-small {
+    min-height: 32px;
+    padding-block: 6px;
+    padding-inline: 12px;
+    gap: 4px;
+
+    font-family: var(--text-label-large-family);
+    font-size: var(--text-label-large-size);
+    font-weight: var(--text-label-large-weight);
+    line-height: var(--text-label-large-line-height);
+    letter-spacing: var(--text-label-large-letter-spacing);
+  }
+
+  .small {
+    min-height: 40px;
+    padding-block: 10px;
+    padding-inline: 16px;
+    gap: 8px;
+
+    font-family: var(--text-label-large-family);
+    font-size: var(--text-label-large-size);
+    font-weight: var(--text-label-large-weight);
+    line-height: var(--text-label-large-line-height);
+    letter-spacing: var(--text-label-large-letter-spacing);
+  }
+
+  .medium {
+    min-height: 56px;
+    padding-block: 16px;
+    padding-inline: 24px;
+    gap: 8px;
+
+    font-family: var(--text-title-medium-family);
+    font-size: var(--text-title-medium-size);
+    font-weight: var(--text-title-medium-weight);
+    line-height: var(--text-title-medium-line-height);
+    letter-spacing: var(--text-title-medium-letter-spacing);
+  }
+
+  .large {
+    min-height: 96px;
+    padding-block: 32px;
+    padding-inline: 48px;
+    gap: 12px;
+
+    font-family: var(--text-headline-small-family);
+    font-size: var(--text-headline-small-size);
+    font-weight: var(--text-headline-small-weight);
+    line-height: var(--text-headline-small-line-height);
+    letter-spacing: var(--text-headline-small-letter-spacing);
+  }
+
+  .extra-large {
+    min-height: 136px;
+    padding-block: 48px;
+    padding-inline: 48px;
+    gap: 16px;
+
+    font-family: var(--text-headline-large-family);
+    font-size: var(--text-headline-large-size);
+    font-weight: var(--text-headline-large-weight);
+    line-height: var(--text-headline-large-line-height);
+    letter-spacing: var(--text-headline-large-letter-spacing);
+  }
+
   .button.acrylic {
     backdrop-filter: blur(8px);
   }
@@ -151,30 +213,52 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-surface-container-low), var(--color-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-surface-container-low),
+          var(--color-primary) 8%
+        );
         box-shadow:
-          0px 1px 2px 0px color-mix(in srgb, var(--color-shadow) 30%, transparent),
-          0px 2px 6px 2px color-mix(in srgb, var(--color-shadow) 15%, transparent);
+          0px 1px 2px 0px
+            color-mix(in srgb, var(--color-shadow) 30%, transparent),
+          0px 2px 6px 2px
+            color-mix(in srgb, var(--color-shadow) 15%, transparent);
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-surface-container-low), var(--color-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-surface-container-low),
+        var(--color-primary) 10%
+      );
       box-shadow:
         0px 1px 2px 0px color-mix(in srgb, var(--color-shadow) 30%, transparent),
         0px 1px 3px 1px color-mix(in srgb, var(--color-shadow) 15%, transparent);
     }
   }
   .elevated.acrylic {
-    background-color: color-mix(in srgb, var(--color-surface-container-low) 60%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-surface-container-low) 60%,
+      transparent
+    );
     color: var(--elevatedText);
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-surface-container-low) 60%, var(--color-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-surface-container-low) 60%,
+          var(--color-primary) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-surface-container-low) 60%, var(--color-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-surface-container-low) 60%,
+        var(--color-primary) 10%
+      );
     }
   }
   .filled {
@@ -183,11 +267,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-primary),
+          var(--color-on-primary) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-primary),
+        var(--color-on-primary) 10%
+      );
     }
   }
   .tonal {
@@ -196,24 +288,44 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-secondary-container),
+          var(--color-on-secondary-container) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-secondary-container), var(--color-on-secondary-container) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-secondary-container),
+        var(--color-on-secondary-container) 10%
+      );
     }
   }
   .tonal.acrylic {
-    background-color: color-mix(in srgb, var(--color-secondary-container) 62%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-secondary-container) 62%,
+      transparent
+    );
     color: var(--color-on-secondary-container);
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-secondary-container) 62%, var(--color-on-secondary-container) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-secondary-container) 62%,
+          var(--color-on-secondary-container) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-secondary-container) 62%, var(--color-on-secondary-container) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-secondary-container) 62%,
+        var(--color-on-secondary-container) 10%
+      );
     }
   }
   .outlined {
@@ -223,11 +335,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, transparent, var(--color-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          transparent,
+          var(--color-primary) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, transparent, var(--color-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        transparent,
+        var(--color-primary) 10%
+      );
     }
   }
   .outlined.acrylic {
@@ -237,11 +357,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-surface) 32%, var(--color-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-surface) 32%,
+          var(--color-primary) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-surface) 32%, var(--color-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-surface) 32%,
+        var(--color-primary) 10%
+      );
     }
   }
   .text {
@@ -250,11 +378,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, transparent, var(--color-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          transparent,
+          var(--color-primary) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, transparent, var(--color-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        transparent,
+        var(--color-primary) 10%
+      );
     }
   }
   .text.acrylic {
@@ -263,11 +399,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-surface) 24%, var(--color-primary) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-surface) 24%,
+          var(--color-primary) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-surface) 24%, var(--color-primary) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-surface) 24%,
+        var(--color-primary) 10%
+      );
     }
   }
 
@@ -277,11 +421,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-error), var(--color-on-error) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-error),
+          var(--color-on-error) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-error), var(--color-on-error) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-error),
+        var(--color-on-error) 10%
+      );
     }
   }
   .success {
@@ -290,11 +442,19 @@ const className = clsx(
 
     @media (hover: hover) {
       &:hover {
-        background-color: color-mix(in srgb, var(--color-success), var(--color-on-success) 8%);
+        background-color: color-mix(
+          in srgb,
+          var(--color-success),
+          var(--color-on-success) 8%
+        );
       }
     }
     &:active {
-      background-color: color-mix(in srgb, var(--color-success), var(--color-on-success) 10%);
+      background-color: color-mix(
+        in srgb,
+        var(--color-success),
+        var(--color-on-success) 10%
+      );
     }
   }
 </style>

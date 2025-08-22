@@ -1,7 +1,6 @@
 import { defineCollection, getCollection, z, type SchemaContext } from "astro:content";
 import { imageSchema } from "./utils";
-import { basename, parse } from "pathe";
-import type { Component, ComponentProps, JSX } from "solid-js";
+import type { Component, ComponentProps } from "solid-js";
 
 import JavaScriptIcon from "~icons/simple-icons/javascript";
 import TypeScriptIcon from "~icons/simple-icons/typescript";
@@ -23,6 +22,7 @@ import NextJsIcon from "~icons/simple-icons/nextdotjs";
 import ReactIcon from "~icons/simple-icons/react";
 import ElectronIcon from "~icons/simple-icons/electron";
 import TauriIcon from "~icons/simple-icons/tauri";
+import { glob } from "astro/loaders";
 
 type Author = {
   name: string;
@@ -183,12 +183,6 @@ export const blogSchema = (context: SchemaContext) => {
     editedAt: z.date().optional(),
   });
 }
-
-export const blogCollection = () =>
-  defineCollection({
-    type: "content",
-    schema: blogSchema,
-  });
 
 export const getBlogCollection = async () => {
   let entries = (await getCollection("blog"));

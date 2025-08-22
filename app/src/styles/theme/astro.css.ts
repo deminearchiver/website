@@ -1,6 +1,3 @@
-import { createGlobalTheme, globalStyle } from "@vanilla-extract/css";
-import { THEME } from ".";
-
 type Theme = {
   [key: string]: string | Theme;
 }

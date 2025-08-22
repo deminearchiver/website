@@ -9,6 +9,7 @@ export default (options?: Options): AstroIntegration => ({
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       config.vite.plugins ||= [];
       config.vite.plugins.push(
+        // @ts-expect-error
         unplugin.vite(options)
       );
     },

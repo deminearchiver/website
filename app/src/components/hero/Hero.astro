@@ -3,10 +3,6 @@ import { Button } from '../primitives/button'
 import FeedIcon from "~icons/material-symbols-rounded/feed:filled";
 import GalleryThumbnailIcon from "~icons/material-symbols-rounded/gallery-thumbnail:filled";
 import ArrowForwardIcon from "~icons/material-symbols-rounded/arrow-forward:outlined";
-
-interface Props {
-
-}
 ---
 
 <article class="hero">
@@ -24,16 +20,16 @@ interface Props {
           enthusiast
         </p>
         <div class="actions">
-          <Button class="action" variant="filled" href="/showcase">
-            <GalleryThumbnailIcon slot="leading" width={18} height={18} />
-            Portfolio
-            <ArrowForwardIcon slot="trailing" width={18} height={18} />
-          </Button>
-          <Button class="action" variant="tonal" href="/blog">
-            <FeedIcon slot="leading" width={18} height={18} />
+          <Button class="action" size="large" variant="filled" href="/blog">
+            <FeedIcon slot="leading" width={32} height={32} />
             Blog
-            <ArrowForwardIcon slot="trailing" width={18} height={18} />
+            <ArrowForwardIcon slot="trailing" width={32} height={32} />
           </Button>
+          <!-- <Button class="action" size="medium" variant="tonal" href="/showcase">
+            <GalleryThumbnailIcon slot="leading" width={24} height={24} />
+            Portfolio
+            <ArrowForwardIcon slot="trailing" width={24} height={24} />
+          </Button> -->
         </div>
       </div>
     </div>

@@ -17,13 +17,13 @@ import pagefind from "@pagefind/astro/integration";
 import { vanillaExtractPlugin as vanillaExtract } from "@vanilla-extract/vite-plugin";
 
 import unpluginIcons from "unplugin-icons/vite";
-import { FileSystemIconLoader } from "unplugin-icons/loaders";
+// import { FileSystemIconLoader } from "unplugin-icons/loaders";
 import materialSymbols from "@material-symbols/unplugin-icons";
 import materialSymbolsIntegration from "@material/symbols/astro";
 
-import { FontaineTransform as fontaine } from "fontaine";
+// import { FontaineTransform as fontaine } from "fontaine";
 
-import { imageService as unpicImageService } from "@unpic/astro/service";
+// import { imageService as unpicImageService } from "@unpic/astro/service";
 
 import turboConsole from "unplugin-turbo-console/astro";
 
@@ -79,6 +79,7 @@ export default defineConfig({
   vite: {
     plugins: [
       // materialSymbolsVite(),
+      // @ts-expect-error Astro supports Vite 6 only
       unpluginIcons({
         compiler: "solid",
         customCollections: {
@@ -86,6 +87,7 @@ export default defineConfig({
           // TODO: add custom icons
         },
       }),
+      // @ts-expect-error Astro supports Vite 6 only
       vanillaExtract(),
     ],
     css: {
