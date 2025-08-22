@@ -19,8 +19,8 @@ export const searchAnchorStyle = style({
   minWidth: 40,
   height: 40,
   vars: {
-    [splashTheme.hoverColor]: THEME.color.surfaceContainer,
-    [splashTheme.pressedColor]: THEME.color.surfaceContainer,
+    [splashTheme.hoverColor]: THEME.color.onSurfaceVariant,
+    [splashTheme.pressedColor]: THEME.color.onSurfaceVariant,
   },
 });
 
