@@ -71,6 +71,7 @@
     "astro-meta-tags": "^0.4.0",
     "unplugin-icons": "^22.4.1",
     "unplugin-turbo-console": "^2.2.0",
+    "vercel": "^48.1.6",
     "vite": "^7.1.7"
   }
 }
