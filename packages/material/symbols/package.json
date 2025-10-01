@@ -12,7 +12,7 @@
     "./types": "./src/types.ts",
     "./types/solid": "./types/solid.d.ts"
   },
-  "packageManager": "yarn@4.9.3",
+  "packageManager": "yarn@4.10.3",
   "dependencies": {
     "@fontsource-variable/material-symbols-rounded": "^5.2.19",
     "@fontsource-variable/material-symbols-sharp": "^5.2.19",

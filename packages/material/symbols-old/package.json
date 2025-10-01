@@ -7,7 +7,7 @@
     "./astro": "./astro/index.ts",
     "./types": "./env.d.ts"
   },
-  "packageManager": "yarn@4.9.3",
+  "packageManager": "yarn@4.10.3",
   "peerDependencies": {
     "vite": "^5.2.0"
   },

@@ -3,7 +3,7 @@
   "name": "@deminearchiver/website",
   "version": "0.0.1",
   "type": "module",
-  "packageManager": "yarn@4.9.3",
+  "packageManager": "yarn@4.10.3",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

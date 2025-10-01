@@ -15,7 +15,7 @@
     "./components/tooltip": "./components/tooltip/index.ts",
     "./components/empty": "./components/empty/index.ts"
   },
-  "packageManager": "yarn@4.9.3",
+  "packageManager": "yarn@4.10.3",
   "devDependencies": {
     "@deminearchiver/configs": "workspace:^",
     "typescript": "^5.9.2"
