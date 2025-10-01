@@ -1,13 +1,12 @@
 import {
   DynamicColor,
   DynamicScheme,
-  MaterialDynamicColors,
   Platform,
   SpecVersion,
   Variant,
   hexFromArgb,
   type Hct,
-} from "@material/material-color-utilities";
+} from "@materialx/material-color-utilities";
 export type ColorsRecord<O, T = DynamicColor> = {
   [P in keyof O as O[P] extends DynamicColor ? P : never]: T;
 };

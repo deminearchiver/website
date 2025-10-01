@@ -23,7 +23,7 @@
   "dependencies": {
     "@deminearchiver/utils": "workspace:^",
     "@floating-ui/dom": "^1.7.4",
-    "@material/material-color-utilities": "workspace:^",
+    "@materialx/material-color-utilities": "^0.4.6",
     "@remotion/paths": "^4.0.339",
     "@solid-primitives/event-listener": "^2.4.3",
     "@solid-primitives/media": "^2.3.3",

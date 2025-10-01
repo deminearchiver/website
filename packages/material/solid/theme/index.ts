@@ -1,4 +1,4 @@
-import { DynamicScheme, Hct, Platform, SpecVersion, Variant } from "@material/material-color-utilities";
+import { DynamicScheme, Hct, Platform, SpecVersion, Variant } from "@materialx/material-color-utilities";
 import { schemeToColors } from "./color";
 import { createThemeContract } from "@vanilla-extract/css";
 import { THEME } from "./contract.css";

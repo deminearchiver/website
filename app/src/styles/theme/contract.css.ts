@@ -1,5 +1,5 @@
 import { createMaterialTheme } from "@material/solid/theme";
-import { Hct } from "@material/material-color-utilities";
+import { Hct } from "@materialx/material-color-utilities";
 
 const { contract, dark, light } = createMaterialTheme({
   color: {
