@@ -15,7 +15,7 @@ export const searchAnchorStyle = style({
 
   borderRadius: 9999,
   cursor: "pointer",
-  backgroundColor: THEME.color.surfaceContainer,
+  backgroundColor: THEME.color.surfaceBright,
   minWidth: 40,
   height: 40,
   vars: {

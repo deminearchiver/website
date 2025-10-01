@@ -50,7 +50,7 @@ globalStyle(
 globalStyle(
   `body`,
   {
-    backgroundColor: THEME.color.surface,
+    backgroundColor: THEME.color.surfaceContainer,
     color: THEME.color.onSurface,
     overflowX: "clip",
     minHeight: "100dvh",

@@ -76,7 +76,7 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
     <div class="options">
       <IconButton
         class="option rss"
-        variant="tonal"
+        variant="regular"
         href="/rss.xml">
           <RssFeedIcon />
       </IconButton>
@@ -121,7 +121,7 @@ const destinations = dynamicToStatic(Astro.url, getDestinations());
     height: 72px;
 
 
-    background-color: var(--color-surface);
+    background-color: var(--color-surface-container);
     transition: background-color 300ms var(--easing-standard);
     z-index: 9999;
     isolation: isolate;
