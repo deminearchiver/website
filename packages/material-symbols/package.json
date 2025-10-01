@@ -6,8 +6,8 @@
   },
   "packageManager": "yarn@4.10.3",
   "devDependencies": {
-    "astro": "^5.13.2",
-    "typescript": "^5.9.2"
+    "astro": "^5.14.1",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "zod": "^3.25.76"

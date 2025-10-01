@@ -1,5 +1,17 @@
-/// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
-/// <reference types="unplugin-icons/types/solid" />
-
 /// <reference types="@material/symbols/types/solid" />
+
+declare module "virtual:icons/*" {
+  import type { ComponentProps, JSX } from "solid-js"
+
+  const component: (props: ComponentProps<"svg">) => JSX.Element
+  export default component
+}
+declare module "~icons/*" {
+  import type { ComponentProps, JSX } from "solid-js"
+
+  const component: (props: ComponentProps<"svg">) => JSX.Element
+  export default component
+}
+
+
